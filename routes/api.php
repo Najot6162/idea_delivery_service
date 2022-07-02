@@ -21,15 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::group(['middleware' => ['auth:sanctum']],function (){
-    Route::get('/ok', function () {
-        return "ok";
-    });
+    Route::post('/logout',[AuthController::class, 'logout']);
 });
 
-Route::post('/register',[AuthController:: class,'register']);
 Route::post('/login',[AuthController:: class,'login']);
 
 
-
-Route::post('/logout',[AuthController::class, 'logout']);
 

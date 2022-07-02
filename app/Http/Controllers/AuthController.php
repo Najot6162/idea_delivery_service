@@ -48,7 +48,6 @@ class AuthController extends Controller
         if($request->user()){
             $request->user()->tokens()->delete();
         }
-        echo $request;
         // Auth::logout();
         // // $request->user()->currentAccessToken()->delete();
         return response() ->json([
