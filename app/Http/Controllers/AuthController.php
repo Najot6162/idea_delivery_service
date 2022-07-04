@@ -22,9 +22,7 @@ class AuthController extends Controller
                 'status_code'=>400,
                 'message'=>'Bad Request'
             ]);
-
         }
-
         $credentials = request(['login','password']);
 
         if(!Auth::attempt($credentials))
