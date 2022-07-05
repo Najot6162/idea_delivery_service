@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
+                'name'=>'admin',
                 'login'=>'dell',
                 'password'=>bcrypt('dell123'),
                 'role'=>'admin'

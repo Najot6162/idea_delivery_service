@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('login')->unique();
-            $table->timestamp('login_verified_at')->nullable();
-            $table->string('password');
-            $table->string('role');
-            $table->rememberToken();
+        Schema::create('delivery_logs', function (Blueprint $table) {
+            $table->id();
+            $table->text('date');
+            $table->datetime('date_pub');
+            $table->integer('for_up');
+            $table->string('method');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('delivery_logs');
     }
 };

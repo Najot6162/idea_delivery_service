@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AuthController;
-use \App\Http\Controllers\PostController;
+use \App\Http\Controllers\DeliveryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,7 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::post('/logout',[AuthController::class, 'logout']);
+    Route::post('/create_delivery',[DeliveryController::class,'CreateDelivery']);
 });
+
+
 
 Route::post('/login',[AuthController:: class,'login']);
 
