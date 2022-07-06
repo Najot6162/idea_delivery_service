@@ -23,6 +23,10 @@ class User extends Authenticatable
         'role'
     ];
 
+    public function deliveryApp(){
+        return $this->belongsTo(DeliveryApp::class);
+    }
+    
     /**
      * The attributes that should be hidden for serialization.
      *

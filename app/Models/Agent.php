@@ -11,4 +11,8 @@ class Agent extends Model
     protected $fillable = [
         'agent','agent_id'
     ];
+
+    public function deliveryApp(){
+        return $this->belongsTo(DeliveryApp::class);
+    }
 }

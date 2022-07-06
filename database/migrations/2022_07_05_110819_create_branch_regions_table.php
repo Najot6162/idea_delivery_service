@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('car_models', function (Blueprint $table) {
+        Schema::create('branch_regions', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
-            $table->string('model');
-            $table->integer('active');
-            $table->integer('is_del');
-            $table->integer('used');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('car_models');
+        Schema::dropIfExists('branch_regions');
     }
 };

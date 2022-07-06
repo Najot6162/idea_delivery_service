@@ -12,4 +12,8 @@ class Files extends Model
     protected $fillable = [
         'app_id','type','order_url','order_url_magazine'
     ];
+
+    public function deliveryApp(){
+        return $this->belongsTo(DeliveryApp::class);
+    }
 }

@@ -22,12 +22,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::post('/logout',[AuthController::class, 'logout']);
-    Route::post('/create_delivery',[DeliveryController::class,'CreateDelivery']);
+    Route::post('/create-delivery',[DeliveryController::class,'CreateDelivery']);
 });
 
-
-
+Route::post('/create-branch',[DeliveryController::class,'createBranch']);
+Route::put('/update-branch/{id}',[DeliveryController::class,'updateBranch']);
+Route::get('/get-all-branchs',[DeliveryController::class,'getAllBranch']);
 Route::post('/login',[AuthController:: class,'login']);
 
+Route::get('/get-all-delivery',[DeliveryController::class,'gettAllDelivery']);
 
 

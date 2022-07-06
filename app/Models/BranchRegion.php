@@ -5,11 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DeliveryLog extends Model
+class BranchRegion extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'date','date_pub','for_up','method'
+        'name'
     ];
+
+    public function branch(){
+        return $this->hasOne(BranchList::class, 'region_id', 'id');
+    }
 }

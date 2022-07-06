@@ -17,4 +17,29 @@ class DeliveryApp extends Model
         'config_time_id','end_time','status_time','different_status_time','add_hours',
         'delivery_type','delivered_branch','confirm_cancelled','driver_manager'
     ];
+
+    public function agent(){
+        return $this->hasOne(Agent::class, 'agent_id', 'agent_id');
+    }
+    public function branch(){
+        return $this->hasOne(BranchList::class, 'id', 'branch_id');
+    }
+    public function branch_sale(){
+        return $this->hasOne(BranchList::class, 'id', 'branch_sale_id');
+    }
+    public function files(){
+        return $this->hasOne(Files::class, 'app_id', 'id');
+    }
+    public function user(){
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+    public function pickup_time(){
+        return $this->hasOne(PickupTime::class, 'app_id', 'id');
+    }
+    public function delivery_product(){
+        return $this->hasOne(DeliveryProduct::class, 'delivery_id', 'id');
+    }
+    public function delivery_client(){
+        return $this->hasOne(Client::class, 'client_id', 'client_id');
+    }
 }

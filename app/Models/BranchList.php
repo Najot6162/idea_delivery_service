@@ -5,13 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PickupTime extends Model
+class BranchList extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'app_id','step','user_id','data_pub','month_uniq','comment','active'
+        'title','token','region_id'
     ];
+
+  
+    public function region(){
+        return $this->belongsTo(BranchRegion::class);
+    }
 
     public function deliveryApp(){
         return $this->belongsTo(DeliveryApp::class);

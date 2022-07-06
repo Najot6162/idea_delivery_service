@@ -2,49 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BranchResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\DeliveryApp;
 use App\Models\Agent;
 use App\Models\Branch;
 use App\Models\Files;
+use App\Models\Client;
 use App\Models\User;
 use App\Models\PickupTime;
 use App\Models\DeliveryProduct;
 use App\Models\DeliveryProductType; 
+use App\Models\BranchList;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
 class DeliveryController extends Controller
 {
     public function CreateDelivery(Request $request){
 
-        $validator = Validator::make($request->all(),[
-            $request[0]['AGENTID'] => 'required',
-            $request[0]['AGENT'] => 'required',
-            $request[0]['DokumentId'] => 'required',
-            $request[0]['PRAVODKA'] =>'required',
-            $request[0]['DataOrder'] => 'required',
-            $request[0]['Content'] => 'required',
-            $request[0]['Orinter'] => 'required',
-            $request[0]['DataCreate'] => 'required',
-            $request[0]['Sklad'] => 'required',
-            $request[0]['SkladID'] => 'required',
-            $request[0]['SkladSale'] => 'required',
-            $request[0]['SkladSaleID'] => 'required',
-            $request[0]['Online'] => 'required',
-            $request[0]['DostavkaStore'] => 'required',
-            $request[0]['NamerOrder'] => 'required',
-            $request[0]['GUID'] => 'required',
-            $request[0]['GUIDID'] => 'required',
-            $request[0]['GroupPrice'] => 'required',
-            $request[0]['VidOplata'] => 'required',
-            $request[0]['Oplachena'] => 'required',
-            $request[0]['Id1C'] => 'required',
-        ]);
+        // $validator = Validator::make($request->all(),[
+        //     $request[0]['AGENTID'] => 'required',
+        //     $request[0]['AGENT'] => 'required',
+        //     $request[0]['DokumentId'] => 'required',
+        //     $request[0]['PRAVODKA'] =>'required',
+        //     $request[0]['DataOrder'] => 'required',
+        //     $request[0]['Content'] => 'required',
+        //     $request[0]['Orinter'] => 'required',
+        //     $request[0]['DataCreate'] => 'required',
+        //     $request[0]['Sklad'] => 'required',
+        //     $request[0]['SkladID'] => 'required',
+        //     $request[0]['SkladSale'] => 'required',
+        //     $request[0]['SkladSaleID'] => 'required',
+        //     $request[0]['Online'] => 'required',
+        //     $request[0]['DostavkaStore'] => 'required',
+        //     $request[0]['NamerOrder'] => 'required',
+        //     $request[0]['GUID'] => 'required',
+        //     $request[0]['GUIDID'] => 'required',
+        //     $request[0]['GroupPrice'] => 'required',
+        //     $request[0]['VidOplata'] => 'required',
+        //     $request[0]['Oplachena'] => 'required',
+        //     $request[0]['Id1C'] => 'required',
+        // ]);
         
         // if($validator->fails())
         // {
-        //     return response()->json([
+        //     return response()->json([    
         //         'status_code'=>400,
         //         'message'=>'Bad Request'
         //     ]);
@@ -52,7 +55,45 @@ class DeliveryController extends Controller
 
         $dt = new DateTime();
         $user = Auth::user();
+        $branches = [
+            'branch_id'=>[],
+            'branch_sale_id'=>[]
+        ];
+        $branch = BranchList::where('token', $request[0]['SkladID'])->get();
+            
+        if($branch->isEmpty()){
+            $branchList = new BranchList();
+
+            $branchList->title = $request[0]['Sklad'];
+            $branchList->token=$request[0]['SkladID'];
+    
+            if($branchList->save()){
+                echo "BranchList saved  ";
+            };
+            $branch = BranchList::where('token', $request[0]['SkladID'])->get();
+            array_push($branches['branch_id'], $branch[0]['id']);
+        }else{ 
+           array_push($branches['branch_id'], $branch[0]['id']);
+        }
+
         
+
+        $branch = BranchList::where('token', $request[0]['SkladSaleID'])->get();  
+    if($branch->isEmpty()){
+        $branchList = new BranchList();
+
+        $branchList->title = $request[0]['SkladSale'];
+        $branchList->token=$request[0]['SkladSaleID'];
+
+        if($branchList->save()){
+            echo "BranchList saved  ";
+        };
+        $branch = BranchList::where('token', $request[0]['SkladSaleID'])->get();
+        array_push($branches['branch_sale_id'], $branch[0]['id']);
+    }else{ 
+       array_push($branches['branch_sale_id'], $branch[0]['id']);
+    }
+            
         $delivery = new DeliveryApp();
         $delivery->agent_id = $request[0]['AGENTID'];
         $delivery->date_pub =$dt->format('Y-m-d H:i:s');   
@@ -78,7 +119,8 @@ class DeliveryController extends Controller
         //$delivery->status = ?
         //$delivery->dallon = ?; 
         //$delivery->car_model_id = ?  
-        $delivery->branch_id = $request[0]['SkladID'];  
+        $delivery->branch_id = $branches['branch_id'][0];  
+        $delivery->branch_sale_id = $branches['branch_sale_id'][0];  
         //$delivery->change_date = $dt->? 
         //$delivery->change_status = ?  
         //$delivery->config_time_id = ? 
@@ -92,7 +134,7 @@ class DeliveryController extends Controller
         //$delivery->driver_manager = ?
 
         if($delivery->save()){
-            echo "delivery_app  saved";
+            echo " Delivery_app  saved  ";
         }
 
         $agent = new Agent();
@@ -100,19 +142,10 @@ class DeliveryController extends Controller
         $agent->agent_id=$request[0]['AGENTID'];
         
        if($agent->save()){
-        echo "saved agent ";
+        echo " Agent saved  ";
        };
        
-        $branch = new Branch();
-        $branch ->branch = $request[0]['Sklad'];
-        $branch ->branch_id = $request[0]['SkladID'];
-        $branch ->branch_sale = $request[0]['SkladSale'];
-        $branch ->branch_sale_id = $request[0]['SkladSaleID'];
-       
-        if($branch->save()){
-            echo "saved branch ";
-        };
-
+        
 
         // $pickup_time = new PickupTime();
         // $pickup_time->app_id = 0;
@@ -138,10 +171,9 @@ class DeliveryController extends Controller
         $delivery_products->sales_id = $good['salesid'];
 
          if($delivery_products->save()){
-            echo "delivery_products saved  ";
+            echo " Delivery_products saved  ";
         };
         };
-
         $delivery_client = new Client();
         $delivery_client->date_pub =$dt->format('Y-m-d H:i:s');   
         $delivery_client->name = $request[0]['AGENT'];
@@ -155,12 +187,69 @@ class DeliveryController extends Controller
         //$delivery_client->status?
 
         if($delivery_client->save()){
-            echo "delivery_client saved  ";
+            echo " Delivery_client saved  ";
         };
+
+        return " All data saved.";
     }
 
     public function updateDelivery(Request $request){
-        
 
-    };
+        return true;
+    }
+
+    public function gettAllDelivery(Request $request){
+        $search = $request['search']??"";
+        $pageCount = $request['page']??"10";
+        $deliveries = DeliveryApp::with('agent')->where('client','LIKE',"%$search%")->paginate($pageCount);
+
+        foreach($deliveries as $delivery){
+            $branch = $delivery->branch;
+            $branch_sale = $delivery->branch_sale;
+            $files = $delivery->files;
+            $user = $delivery->user;
+            $pickup_time = $delivery->pickup_time;
+            $delivery_product = $delivery->delivery_product;
+            $client = $delivery->delivery_client;
+        }
+
+        return BranchResource::collection($deliveries);
+    }
+
+    public function createBranch(Request $request){
+
+       $request->validate([
+            'title'=>'required',
+            'token'=>'required',
+            'region_id'=>'required'
+        ]);
+
+        $branchList = new BranchList();
+
+        $branchList->title = $request->title;
+        $branchList->token=$request->token;
+        $branchList->region_id = $request->region_id;
+
+        if($branchList->save()){
+            echo "branchList saved  ";
+        };
+
+    }
+
+    public function updateBranch(Request $request,$id){
+
+        $branch = BranchList::findOrFail($id);
+        $branch->region_id = $request->region_id;
+
+        if($branch->save()){
+            echo "branchList updated  ";
+        };
+    }
+
+    public function getAllBranch(Request $request){
+        $search = $request['search']??"";
+        $pageCount = $request['page']??"10";
+        $br = BranchList::with('region')->where('title','LIKE',"%$search%")->paginate($pageCount);
+        return BranchResource::collection($br);
+    }
 }
