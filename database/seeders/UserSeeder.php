@@ -18,10 +18,29 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
+                'email'=>'admin@gmail.com',
+                'is_admin'=>1,
+                'phone'=>'+998901234567',
+                'address'=>'Yunusobod',
+                'active'=>1,
+                'branch_id'=>1,
                 'name'=>'admin',
                 'login'=>'dell',
                 'password'=>bcrypt('dell123'),
                 'role'=>'admin'
+            ],
+            [
+                'email'=>'driver@gmail.com',
+                'is_admin'=>0,
+                'phone'=>'+998901234567',
+                'address'=>'Yunusobod',
+                'car_model'=>'LABO 01097FHA',
+                'active'=>1,
+                'branch_id'=>1,
+                'name'=>'driver',
+                'login'=>'driver',
+                'password'=>bcrypt('driver'),
+                'role'=>'driver'
             ]
             ];
         $car_models = [

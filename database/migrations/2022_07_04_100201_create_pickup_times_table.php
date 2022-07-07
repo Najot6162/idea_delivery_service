@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('pickup_times', function (Blueprint $table) {
             $table->id();
-            $table->integer('app_id');
-            $table->integer('step')->nullable();
+            $table->uuid('app_uuid');
+            $table->integer('step');
             $table->integer('user_id')->nullable();
-            $table->datetime('date_pub')->nullable();
+            $table->integer('branch_id')->nullable();
             $table->integer('month_uniq')->nullable();
             $table->text('comment')->nullable();
-            $table->enum('active',['0','1'])->nullable();
+            $table->enum('active',['0','1'])->default('0')->nullable();
             $table->timestamps();
         });
     }

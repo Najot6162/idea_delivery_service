@@ -10,6 +10,6 @@ class Client extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date_pub','name','address','address_real','address_passport','client_id','code','phone','passport','status'
+        'name','address','address_real','address_passport','client_id','code','phone','passport','status'
     ];
 }

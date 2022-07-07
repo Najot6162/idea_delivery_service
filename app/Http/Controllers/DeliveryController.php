@@ -16,42 +16,38 @@ use App\Models\DeliveryProduct;
 use App\Models\DeliveryProductType; 
 use App\Models\BranchList;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 use DateTime;
 class DeliveryController extends Controller
 {
     public function CreateDelivery(Request $request){
+        $uuid = Str::uuid()->toString();
 
-        // $validator = Validator::make($request->all(),[
-        //     $request[0]['AGENTID'] => 'required',
-        //     $request[0]['AGENT'] => 'required',
-        //     $request[0]['DokumentId'] => 'required',
-        //     $request[0]['PRAVODKA'] =>'required',
-        //     $request[0]['DataOrder'] => 'required',
-        //     $request[0]['Content'] => 'required',
-        //     $request[0]['Orinter'] => 'required',
-        //     $request[0]['DataCreate'] => 'required',
-        //     $request[0]['Sklad'] => 'required',
-        //     $request[0]['SkladID'] => 'required',
-        //     $request[0]['SkladSale'] => 'required',
-        //     $request[0]['SkladSaleID'] => 'required',
-        //     $request[0]['Online'] => 'required',
-        //     $request[0]['DostavkaStore'] => 'required',
-        //     $request[0]['NamerOrder'] => 'required',
-        //     $request[0]['GUID'] => 'required',
-        //     $request[0]['GUIDID'] => 'required',
-        //     $request[0]['GroupPrice'] => 'required',
-        //     $request[0]['VidOplata'] => 'required',
-        //     $request[0]['Oplachena'] => 'required',
-        //     $request[0]['Id1C'] => 'required',
-        // ]);
-        
-        // if($validator->fails())
-        // {
-        //     return response()->json([    
-        //         'status_code'=>400,
-        //         'message'=>'Bad Request'
-        //     ]);
-        // }
+        $validator = Validator::make($request->all(),[
+            $request[0]['AGENTID'] => 'required',
+            $request[0]['AGENT'] => 'required',
+            $request[0]['DokumentId'] => 'required',
+            $request[0]['PRAVODKA'] =>'required',
+            $request[0]['DataOrder'] => 'required',
+            $request[0]['Content'] => 'required',
+            $request[0]['Orinter'] => 'required',
+            $request[0]['DataCreate'] => 'required',
+            $request[0]['Sklad'] => 'required',
+            $request[0]['SkladID'] => 'required',
+            $request[0]['SkladSale'] => 'required',
+            $request[0]['SkladSaleID'] => 'required',
+            $request[0]['Online'] => 'required',
+            $request[0]['DostavkaStore'] => 'required',
+            $request[0]['NamerOrder'] => 'required',
+            $request[0]['GUID'] => 'required',
+            $request[0]['GUIDID'] => 'required',
+            $request[0]['GroupPrice'] => 'required',
+            $request[0]['VidOplata'] => 'required',
+            $request[0]['Oplachena'] => 'required',
+            $request[0]['Id1C'] => 'required',
+        ]);
+      
 
         $dt = new DateTime();
         $user = Auth::user();
@@ -95,8 +91,9 @@ class DeliveryController extends Controller
     }
             
         $delivery = new DeliveryApp();
+        $delivery->uuid = $uuid;
         $delivery->agent_id = $request[0]['AGENTID'];
-        $delivery->date_pub =$dt->format('Y-m-d H:i:s');   
+        // $delivery->date_pub =$dt->format('Y-m-d H:i:s');   
         $delivery->user_id = $user->id;
         $delivery->order_id = $request[0]['NamerOrder'];
         $delivery->online = $request[0]['Online']; 
@@ -115,8 +112,8 @@ class DeliveryController extends Controller
         //$delivery->step_one = ?
         //$delivery->step_two = ?
         //$delivery->step_six = ? 
-        //$delivery->step = ?   
-        //$delivery->status = ?
+        // $delivery->step = 1;   
+        $delivery->status = 1;
         //$delivery->dallon = ?; 
         //$delivery->car_model_id = ?  
         $delivery->branch_id = $branches['branch_id'][0];  
@@ -145,22 +142,21 @@ class DeliveryController extends Controller
         echo " Agent saved  ";
        };
        
-        
+    //    $pickup_time = new PickupTime();
+    //    $pickup_time->app_uuid = $uuid;
+    //    $pickup_time->user_id = $user->id;
+    //    $pickup_time->step = 1; 
+    //    //$pickup_time->active=1;
 
-        // $pickup_time = new PickupTime();
-        // $pickup_time->app_id = 0;
-        // $pickup_time->user_id = $user->id;
-        // $pickup_time->date_pub =$dt->format('Y-m-d H:i:s');   
-        // $pickup_time->active=1;
+    //    if($pickup_time->save()){
+    //        echo "pickup_time saved  ";
+    //    };
 
-        // if($pickup_time->save()){
-        //     echo "pickup_time saved  ";
-        // };
+   
 
         foreach($request[0]['goods'] as $good){
         $delivery_products = new DeliveryProduct(); 
-        $delivery_products->date_pub =$dt->format('Y-m-d H:i:s');   
-        $delivery_products->delivery_id = 1;
+        $delivery_products->delivery_uuid = $uuid;
         $delivery_products->product_name = $good['Good'];
         $delivery_products->product_id = $good['GoodId'];
         $delivery_products->imel = $good['IMEI'];
@@ -175,7 +171,6 @@ class DeliveryController extends Controller
         };
         };
         $delivery_client = new Client();
-        $delivery_client->date_pub =$dt->format('Y-m-d H:i:s');   
         $delivery_client->name = $request[0]['AGENT'];
         //$delivery_client->address =?
         //$delivery_client->address_real = ?
@@ -193,21 +188,55 @@ class DeliveryController extends Controller
         return " All data saved.";
     }
 
-    public function updateDelivery(Request $request){
+    public function updateDelivery(Request $request,$id){
+        $delivery = DeliveryApp::findOrFail($id);
+        if($request->step!==1){
+              $delivery-> driver_id = $request->user_id;
+        }
+        if($request->branch_step){
+            $delivery->branch_step = $request->branch_step;
+        }
+        $delivery-> status = $request->status;
+        $pickup_time = new PickupTime();
+        $pickup_time-> app_uuid = $delivery->uuid;
+        $pickup_time-> step = $request->step;
+        if($request->branch_step){
+            $pickup_time -> branch_id = $request->branch_step;
+        }else{
+              $pickup_time -> user_id = $request->user_id;
+        }
 
-        return true;
+        if($pickup_time->save()){
+            echo "pickup_time saved  ";
+        };
+
+        if($delivery->save()){
+            echo "delivery updated  ";
+        };
+        return "Ok";
     }
 
-    public function gettAllDelivery(Request $request){
+    public function gettAllDelivery(Request $request){  
         $search = $request['search']??"";
         $pageCount = $request['page']??"10";
-        $deliveries = DeliveryApp::with('agent')->where('client','LIKE',"%$search%")->paginate($pageCount);
+        $deliveries = DeliveryApp::with('pickup_time')->where('client','LIKE',"%$search%")->paginate($pageCount);
 
         foreach($deliveries as $delivery){
+            //$user = User::where('id', $delivery->pickup_time->user_id)->get();
+            $agent = $delivery->agent;
             $branch = $delivery->branch;
             $branch_sale = $delivery->branch_sale;
             $files = $delivery->files;
             $user = $delivery->user;
+            foreach($delivery->pickup_time as $pickup){
+                if($pickup->user){
+                      $pickup->user;
+                }else{
+                    $pickup->branch;
+                }
+              
+            }
+            $steps_four = $delivery->steps_four;
             $pickup_time = $delivery->pickup_time;
             $delivery_product = $delivery->delivery_product;
             $client = $delivery->delivery_client;

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('delivery_apps', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
             $table->string('agent_id', 255);
-            $table->datetime('date_pub');
             $table->integer('uniq_day')->nullable();
             $table->integer('user_id');
             $table->string('order_id');
@@ -33,11 +33,9 @@ return new class extends Migration
             $table->string('vip_oplata');
             $table->string('id_1c');
             $table->string('oplachena');
-            $table->integer('step_one')->nullable();
-            $table->integer('step_two')->nullable();
-            $table->integer('step_six')->nullable();
-            $table->integer('step')->nullable();;
-            $table->integer('status')->nullable();;
+            $table->integer('driver_id')->nullable();
+            $table->integer('status')->nullable();
+            $table->integer('branch_step')->nullable();
             $table->enum('dallon',['0','1'])->nullable();
             $table->integer('car_model_id')->nullable();
             $table->string('branch_id');

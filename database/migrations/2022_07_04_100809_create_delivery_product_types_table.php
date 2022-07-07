@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('delivery_product_types', function (Blueprint $table) {
             $table->id();
-            $table->datetime('date_pub');
             $table->string('good');
             $table->string('good_id');
             $table->string('code');

@@ -10,6 +10,6 @@ class DeliveryLog extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date','date_pub','for_up','method'
+        'date','for_up','method'
     ];
 }

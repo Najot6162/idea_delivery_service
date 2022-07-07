@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->datetime('date_pub');
             $table->string('name');
             $table->string('address')->nullable();;
             $table->string('address_real')->nullable();;

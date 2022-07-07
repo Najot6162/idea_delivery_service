@@ -18,15 +18,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'login',
-        'password',
-        'role'
+        'email', 'is_admin','phone','address','car_model','active',
+        'branch_id','name','login','password','role'
     ];
 
     public function deliveryApp(){
         return $this->belongsTo(DeliveryApp::class);
     }
-    
+
     /**
      * The attributes that should be hidden for serialization.
      *

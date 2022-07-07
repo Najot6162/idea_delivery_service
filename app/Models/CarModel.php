@@ -12,4 +12,8 @@ class CarModel extends Model
     protected $fillable = [
         'number','model','active','is_del','used'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

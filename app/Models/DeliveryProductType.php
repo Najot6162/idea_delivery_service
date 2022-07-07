@@ -10,6 +10,6 @@ class DeliveryProductType extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date_pub','good','good_id','code'
+        'good','good_id','code'
     ];
 }

@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('delivery_logs', function (Blueprint $table) {
             $table->id();
             $table->text('date');
-            $table->datetime('date_pub');
             $table->integer('for_up');
             $table->string('method');
             $table->timestamps();

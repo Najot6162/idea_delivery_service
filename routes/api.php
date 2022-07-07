@@ -31,5 +31,5 @@ Route::get('/get-all-branchs',[DeliveryController::class,'getAllBranch']);
 Route::post('/login',[AuthController:: class,'login']);
 
 Route::get('/get-all-delivery',[DeliveryController::class,'gettAllDelivery']);
-
+Route::put('/update-delivery/{id}',[DeliveryController::class,'updateDelivery']);
 

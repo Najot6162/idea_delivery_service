@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('delivery_products', function (Blueprint $table) {
             $table->id();
-            $table->datetime('date_pub');
-            $table->integer('delivery_id');
+            $table->uuid('delivery_uuid');
             $table->string('product_name');
             $table->string('product_id');
             $table->string('imel');
@@ -26,7 +25,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('sales');
             $table->string('sales_id');
-            $table->integer('sales_id_our')->nullable();
+            $table->integer('sales_id_our')->nullable();;;
             $table->timestamps();
         });
     }
