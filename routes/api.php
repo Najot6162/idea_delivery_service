@@ -28,8 +28,14 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
 Route::post('/create-branch',[DeliveryController::class,'createBranch']);
 Route::put('/update-branch/{id}',[DeliveryController::class,'updateBranch']);
 Route::get('/get-all-branchs',[DeliveryController::class,'getAllBranch']);
+
 Route::post('/login',[AuthController:: class,'login']);
 
 Route::get('/get-all-delivery',[DeliveryController::class,'gettAllDelivery']);
 Route::put('/update-delivery/{id}',[DeliveryController::class,'updateDelivery']);
 
+Route::get('/check-time',[DeliveryController::class, 'checkTime']);
+
+Route::post('/crete-config-time',[DeliveryController::class,'creteConfigTime']);
+Route::put('/update-config-time/{id}',[DeliveryController::class,'updateConfigTime']);
+Route::get('/get-all-config-time',[DeliveryController::class, 'getAllConfigTime']);

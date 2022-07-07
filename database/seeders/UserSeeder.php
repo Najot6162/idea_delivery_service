@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\CarModel;
 use App\Models\BranchRegion;
+use App\Models\ConfigTime;
 class UserSeeder extends Seeder
 {
     /**
@@ -77,6 +78,23 @@ class UserSeeder extends Seeder
             ]
             ];
 
+            $config_time = [
+                [
+                    'user_id'=>1,
+                    'time'=>48,
+                    'active'=>1,
+                ],
+                [
+                    'user_id'=>2,
+                    'time'=>72,
+                    'active'=>0,
+                ],
+                [
+                    'user_id'=>1,
+                    'time'=>36,
+                    'active'=>0,
+                ]
+            ];
 
 
             foreach ($users as $key => $value){
@@ -89,6 +107,9 @@ class UserSeeder extends Seeder
 
             foreach ($regions as $key => $value){
                 BranchRegion::create($value);
+            }
+            foreach ($config_time as $key => $value){
+                ConfigTime::create($value);
             }
     }
 }

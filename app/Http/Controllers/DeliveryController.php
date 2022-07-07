@@ -15,9 +15,10 @@ use App\Models\PickupTime;
 use App\Models\DeliveryProduct;
 use App\Models\DeliveryProductType; 
 use App\Models\BranchList;
+use App\Models\ConfigTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Carbon;
 use DateTime;
 class DeliveryController extends Controller
 {
@@ -280,5 +281,70 @@ class DeliveryController extends Controller
         $pageCount = $request['page']??"10";
         $br = BranchList::with('region')->where('title','LIKE',"%$search%")->paginate($pageCount);
         return BranchResource::collection($br);
+    }
+
+    public function checkTime(Request $request){
+        $deliveries = DeliveryApp::whereNotIn('status', ['4'])->get();
+        $config_time = ConfigTime::where('active','1')->first();
+        $time = $config_time->time;
+        $t1 = $time/3;
+        $t2 = $t1*2;
+        
+        foreach($deliveries as $delivery){
+            $start_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $delivery->order_date);
+            $current_date = Carbon::now()->toDateTimeString();  
+            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $current_date);
+            //echo "current";   echo $to; echo "current";
+            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $start_date);
+           // echo $from; echo "-----";
+            $diff_in_hours = $to->diffInHours($from);
+            // echo " ------------------";
+            if($t1>=$diff_in_hours){
+                $delivery->status_time = 1;
+            }if($t2>=$diff_in_hours){
+                $delivery->status_time = 2;
+            }if($time>=$diff_in_hours){
+                $delivery->status_time = 3;
+            }else{
+                $delivery->status_time = 4;
+            }
+
+            if($delivery->save()){
+                echo "status time updated";
+            };
+        }
+        
+        //return $deliveries;
+    }
+
+    public function creteConfigTime(Request $request){
+        $request->validate([
+            'user_id'=>'required',
+            'time'=>'required',
+        ]);
+
+        $config_time = new ConfigTime();
+        $config_time->user_id = $request->user_id;
+        $config_time->time = $request->time;
+        //$config_time->count_app = $request->count_app;
+        $config_time->active = $request->active;
+
+        if($config_time->save()){
+            echo "config_time saved  ";
+        };
+    }
+
+    public function updateConfigTime(Request $request,$id){
+        $config_time = ConfigTime::findOrFail($id);
+        $config_time->time = $request->time;
+        $config_time->active = $request->active;
+
+        if($config_time->save()){
+            echo "config_time updated  ";
+        };
+    }
+    public function getAllConfigTime(Request $request){
+        $config_times = ConfigTime::get();
+        return $config_times;
     }
 }
