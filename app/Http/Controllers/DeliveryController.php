@@ -90,6 +90,7 @@ class DeliveryController extends Controller
     }else{ 
        array_push($branches['branch_sale_id'], $branch[0]['id']);
     }
+        $order_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder']);
             
         $delivery = new DeliveryApp();
         $delivery->uuid = $uuid;
@@ -98,7 +99,7 @@ class DeliveryController extends Controller
         $delivery->user_id = $user->id;
         $delivery->order_id = $request[0]['NamerOrder'];
         $delivery->online = $request[0]['Online']; 
-        $delivery->order_date = $request[0]['DataOrder'];
+        $delivery->order_date = $order_date;
         $delivery->date_create = $request[0]['DataCreate'];  
         $delivery->document_id = $request[0]['DokumentId'];  
         $delivery->provodka = $request[0]['PRAVODKA'];  
@@ -220,10 +221,20 @@ class DeliveryController extends Controller
     public function gettAllDelivery(Request $request){  
         $search = $request['search']??"";
         $pageCount = $request['page']??"10";
-        $deliveries = DeliveryApp::with('pickup_time')->where('client','LIKE',"%$search%")->paginate($pageCount);
+        $start_date = $request->start_date;
+        $end_date = $request->end_date; 
+        echo $start_date;
+        echo "  ";
+        echo $end_date;
+        $deliveries = DeliveryApp::with('pickup_time')->whereBetween('order_date', [$start_date,$end_date])
+                                                      ->orwhereIn('status',$request->status??[])
+                                                      ->orwhereIn('status_time',$request->status_time??[])
+                                                      ->orwhereIn('driver_id',$request->driver_id??[])
+                                                      ->orwhereIn('branch_id',$request->branch_id??[])
+                                                      ->orwhere('online',$request->online)
+                                                      ->paginate($pageCount);
 
         foreach($deliveries as $delivery){
-            //$user = User::where('id', $delivery->pickup_time->user_id)->get();
             $agent = $delivery->agent;
             $branch = $delivery->branch;
             $branch_sale = $delivery->branch_sale;
@@ -235,14 +246,12 @@ class DeliveryController extends Controller
                 }else{
                     $pickup->branch;
                 }
-              
             }
             $steps_four = $delivery->steps_four;
             $pickup_time = $delivery->pickup_time;
             $delivery_product = $delivery->delivery_product;
             $client = $delivery->delivery_client;
         }
-
         return BranchResource::collection($deliveries);
     }
 
@@ -284,11 +293,11 @@ class DeliveryController extends Controller
     }
 
     public function checkTime(Request $request){
-        $deliveries = DeliveryApp::whereNotIn('status', ['4'])->get();
+        $deliveries = DeliveryApp::whereNotIn('status', ['4','5','6','7','8'])->get();
         $config_time = ConfigTime::where('active','1')->first();
         $time = $config_time->time;
-        $t1 = $time/3;
-        $t2 = $t1*2;
+        $time1 = $time/3;
+        $time2 = $t1*2; 
         
         foreach($deliveries as $delivery){
             $start_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $delivery->order_date);
@@ -299,9 +308,9 @@ class DeliveryController extends Controller
            // echo $from; echo "-----";
             $diff_in_hours = $to->diffInHours($from);
             // echo " ------------------";
-            if($t1>=$diff_in_hours){
+            if($time1>=$diff_in_hours){
                 $delivery->status_time = 1;
-            }if($t2>=$diff_in_hours){
+            }if($time2>=$diff_in_hours){
                 $delivery->status_time = 2;
             }if($time>=$diff_in_hours){
                 $delivery->status_time = 3;
@@ -346,5 +355,24 @@ class DeliveryController extends Controller
     public function getAllConfigTime(Request $request){
         $config_times = ConfigTime::get();
         return $config_times;
+    }
+    public function uploadFile(Request $request){
+        $validatedData = $request->validate([
+            'app_uuid'=>'required',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+           ]);
+    
+           //$name = $request->file('image')->getClientOriginalName();
+    
+           $path = $request->file('image')->store('public/images');
+
+           $file = new Files;
+           $file->app_uuid = $request->app_uuid;
+           //$file->name = $name;
+           $file->order_url = $path;
+           
+           if($file->save()){
+            echo " file saved  ";
+           };
     }
 }

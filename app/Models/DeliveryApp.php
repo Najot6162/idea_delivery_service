@@ -31,7 +31,7 @@ class DeliveryApp extends Model
         return $this->hasOne(BranchList::class, 'id', 'branch_step');
     }
     public function files(){
-        return $this->hasOne(Files::class, 'app_id', 'id');
+        return $this->hasMany(Files::class, 'app_uuid', 'uuid');
     }
     public function user(){
         return $this->hasOne(User::class, 'id', 'user_id');

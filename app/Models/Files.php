@@ -10,7 +10,7 @@ class Files extends Model
     use HasFactory;
 
     protected $fillable = [
-        'app_id','type','order_url','order_url_magazine'
+        'app_uuid','type','order_url','order_url_magazine'
     ];
 
     public function deliveryApp(){

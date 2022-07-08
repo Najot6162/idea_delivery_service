@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->integer('app_id')->nullable();
+            $table->string('app_uuid');
             $table->string('type')->nullable();
-            $table->text('order_url')->nullable();
+            $table->text('order_url');
             $table->text('order_url_magazine')->nullable();
             $table->timestamps();
         });
