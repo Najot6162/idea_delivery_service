@@ -95,7 +95,6 @@ class DeliveryController extends Controller
         $delivery = new DeliveryApp();
         $delivery->uuid = $uuid;
         $delivery->agent_id = $request[0]['AGENTID'];
-        // $delivery->date_pub =$dt->format('Y-m-d H:i:s');   
         $delivery->user_id = $user->id;
         $delivery->order_id = $request[0]['NamerOrder'];
         $delivery->online = $request[0]['Online']; 
@@ -111,13 +110,7 @@ class DeliveryController extends Controller
         $delivery->vip_oplata = $request[0]['VidOplata'];  
         $delivery->id_1c = $request[0]['Id1C'];  
         $delivery->oplachena = $request[0]['Oplachena'];  
-        //$delivery->step_one = ?
-        //$delivery->step_two = ?
-        //$delivery->step_six = ? 
-        // $delivery->step = 1;   
         $delivery->status = 1;
-        //$delivery->dallon = ?; 
-        //$delivery->car_model_id = ?  
         $delivery->branch_id = $branches['branch_id'][0];  
         $delivery->branch_sale_id = $branches['branch_sale_id'][0];  
         //$delivery->change_date = $dt->? 
@@ -223,9 +216,6 @@ class DeliveryController extends Controller
         $pageCount = $request['page']??"10";
         $start_date = $request->start_date;
         $end_date = $request->end_date; 
-        echo $start_date;
-        echo "  ";
-        echo $end_date;
         $deliveries = DeliveryApp::with('pickup_time')->whereBetween('order_date', [$start_date,$end_date])
                                                       ->orwhereIn('status',$request->status??[])
                                                       ->orwhereIn('status_time',$request->status_time??[])
@@ -297,17 +287,14 @@ class DeliveryController extends Controller
         $config_time = ConfigTime::where('active','1')->first();
         $time = $config_time->time;
         $time1 = $time/3;
-        $time2 = $t1*2; 
+        $time2 = $time1*2; 
         
         foreach($deliveries as $delivery){
             $start_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $delivery->order_date);
             $current_date = Carbon::now()->toDateTimeString();  
             $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $current_date);
-            //echo "current";   echo $to; echo "current";
             $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $start_date);
-           // echo $from; echo "-----";
             $diff_in_hours = $to->diffInHours($from);
-            // echo " ------------------";
             if($time1>=$diff_in_hours){
                 $delivery->status_time = 1;
             }if($time2>=$diff_in_hours){
@@ -323,7 +310,7 @@ class DeliveryController extends Controller
             };
         }
         
-        //return $deliveries;
+        return true;
     }
 
     public function creteConfigTime(Request $request){
@@ -362,13 +349,10 @@ class DeliveryController extends Controller
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
            ]);
     
-           //$name = $request->file('image')->getClientOriginalName();
-    
            $path = $request->file('image')->store('public/images');
 
            $file = new Files;
            $file->app_uuid = $request->app_uuid;
-           //$file->name = $name;
            $file->order_url = $path;
            
            if($file->save()){
