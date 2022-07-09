@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\DeliveryApp;
 use App\Models\Agent;
-use App\Models\Branch;
 use App\Models\Files;
 use App\Models\Client;
 use App\Models\User;
@@ -25,7 +24,7 @@ class DeliveryController extends Controller
     public function CreateDelivery(Request $request){
         $uuid = Str::uuid()->toString();
 
-        $validator = Validator::make($request->all(),[
+           Validator::make($request->all(),[
             $request[0]['AGENTID'] => 'required',
             $request[0]['AGENT'] => 'required',
             $request[0]['DokumentId'] => 'required',
@@ -50,7 +49,6 @@ class DeliveryController extends Controller
         ]);
       
 
-        $dt = new DateTime();
         $user = Auth::user();
         $branches = [
             'branch_id'=>[],
@@ -199,12 +197,13 @@ class DeliveryController extends Controller
         return "Ok";
     }
 
-    public function gettAllDelivery(Request $request){  
+    public function gettAllDelivery(Request $request){    
         $search = $request['search']??"";
         $pageCount = $request['page']??"10";
         $start_date = $request->start_date;
         $end_date = $request->end_date; 
-        $deliveries = DeliveryApp::with('pickup_time')->whereBetween('order_date', [$start_date,$end_date])
+        $deliveries = DeliveryApp::with('pickup_time')->where('branch_id','LIKE',"%$search%")
+                                                      ->whereBetween('order_date', [$start_date,$end_date])
                                                       ->orwhereIn('status',$request->status??[])
                                                       ->orwhereIn('status_time',$request->status_time??[])
                                                       ->orwhereIn('driver_id',$request->driver_id??[])
@@ -332,7 +331,7 @@ class DeliveryController extends Controller
         return $config_times;
     }
     public function uploadFile(Request $request){
-        $validatedData = $request->validate([
+             $request->validate([
             'app_uuid'=>'required',
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
            ]);
