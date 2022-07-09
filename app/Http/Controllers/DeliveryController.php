@@ -136,18 +136,6 @@ class DeliveryController extends Controller
        if($agent->save()){
         echo " Agent saved  ";
        };
-       
-    //    $pickup_time = new PickupTime();
-    //    $pickup_time->app_uuid = $uuid;
-    //    $pickup_time->user_id = $user->id;
-    //    $pickup_time->step = 1; 
-    //    //$pickup_time->active=1;
-
-    //    if($pickup_time->save()){
-    //        echo "pickup_time saved  ";
-    //    };
-
-   
 
         foreach($request[0]['goods'] as $good){
         $delivery_products = new DeliveryProduct(); 
