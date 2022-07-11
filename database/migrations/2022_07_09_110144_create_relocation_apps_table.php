@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('relocation_apps', function (Blueprint $table) {
             $table->id();
-            
             $table->timestamps();
         });
     }
