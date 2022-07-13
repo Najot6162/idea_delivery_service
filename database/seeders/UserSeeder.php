@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
                 'is_admin'=>0,
                 'phone'=>'+998901234567',
                 'address'=>'Yunusobod',
-                'car_model'=>'LABO 01097FHA',
+                'car_model_id'=>1,
                 'active'=>1,
                 'branch_id'=>1,
                 'name'=>'driver',

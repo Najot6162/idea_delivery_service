@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('delivery_apps', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
+            $table->string('agent');
             $table->string('agent_id', 255);
             $table->integer('uniq_day')->nullable();
             $table->integer('user_id');
@@ -24,7 +25,7 @@ return new class extends Migration
             $table->string('order_date');
             $table->string('date_create');
             $table->string('document_id');
-            $table->string('provodka');
+            $table->enum('provodka',['Да','нет ']);
             $table->string('content');
             $table->string('orienter')->nullable();
             $table->string('client');

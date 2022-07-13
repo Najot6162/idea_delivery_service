@@ -10,7 +10,7 @@ class DeliveryApp extends Model
     use HasFactory;
 
     protected $fillable = [
-        'uuid','agent_id','uniq_day','user_id','order_id','online','order_date',
+        'uuid','agent','agent_id','uniq_day','user_id','order_id','online','order_date',
         'date_create','document_id','provodka','content','orienter','client','client_id',
         'group_price','vid_oplata','id_1c','oplachena','driver_id', 'status', 'step_four','dallon',
         'car_model_id','branch_id','change_date','change_status',
@@ -18,9 +18,9 @@ class DeliveryApp extends Model
         'delivery_type','delivered_branch','confirm_cancelled','driver_manager'
     ];
 
-    public function agent(){
-        return $this->hasOne(Agent::class, 'agent_id', 'agent_id');
-    }
+    // public function agent(){
+    //     return $this->hasOne(Agent::class, 'agent_id', 'agent_id');
+    // }
     public function branch(){
         return $this->hasOne(BranchList::class, 'id', 'branch_id');
     }
@@ -45,6 +45,10 @@ class DeliveryApp extends Model
     public function delivery_client(){
         return $this->hasOne(Client::class, 'client_id', 'client_id');
     }
-
-    
+    public function config_time(){
+        return $this->hasOne(ConfigTime::class, 'id', 'config_time_id');
+    }
+    public function car_model(){
+        return $this->hasOne(CarModel::class, 'id', 'car_model_id');
+    }
 }

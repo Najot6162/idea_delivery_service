@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('address')->nullable();
             $table->string('car_model')->nullable();
+            $table->string('car_model_id')->nullable();
             $table->enum('active',['0','1'])->nullable();
             $table->integer('branch_id')->nullable();
             $table->string('name');

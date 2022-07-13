@@ -89,9 +89,13 @@ class DeliveryController extends Controller
        array_push($branches['branch_sale_id'], $branch[0]['id']);
     }
         $order_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder']);
-            
+        
+        $config_time = ConfigTime::where('active','1')->get();
+        $config_time_id = $config_time[0]['id'] ?? "";
+
         $delivery = new DeliveryApp();
         $delivery->uuid = $uuid;
+        $delivery->agent = $request[0]['AGENT'];
         $delivery->agent_id = $request[0]['AGENTID'];
         $delivery->user_id = $user->id;
         $delivery->order_id = $request[0]['NamerOrder'];
@@ -113,9 +117,9 @@ class DeliveryController extends Controller
         $delivery->branch_sale_id = $branches['branch_sale_id'][0];  
         //$delivery->change_date = $dt->? 
         //$delivery->change_status = ?  
-        //$delivery->config_time_id = ? 
+        $delivery->config_time_id = $config_time_id; 
         //$delivery->end_time = $dt->? 
-        //$delivery->status_time = ?
+        $delivery->status_time = 1;
         //$delivery->different_status_time = ?
         //$delivery->add_hours = ?
         //$delivery->delivery_type = ?
@@ -126,14 +130,6 @@ class DeliveryController extends Controller
         if($delivery->save()){
             echo " Delivery_app  saved  ";
         }
-
-        $agent = new Agent();
-        $agent->agent=$request[0]['AGENT'];
-        $agent->agent_id=$request[0]['AGENTID'];
-        
-       if($agent->save()){
-        echo " Agent saved  ";
-       };
 
         foreach($request[0]['goods'] as $good){
         $delivery_products = new DeliveryProduct(); 
@@ -202,21 +198,36 @@ class DeliveryController extends Controller
         $pageCount = $request['page']??"10";
         $start_date = $request->start_date;
         $end_date = $request->end_date; 
-        $deliveries = DeliveryApp::with('pickup_time')->where('branch_id','LIKE',"%$search%")
-                                                      ->whereBetween('order_date', [$start_date,$end_date])
-                                                      ->orwhereIn('status',$request->status??[])
-                                                      ->orwhereIn('status_time',$request->status_time??[])
-                                                      ->orwhereIn('driver_id',$request->driver_id??[])
-                                                      ->orwhereIn('branch_id',$request->branch_id??[])
-                                                      ->orwhere('online',$request->online)
-                                                      ->paginate($pageCount);
+        $deliveries = DeliveryApp::with('pickup_time')->where('agent','LIKE',"%$search%")
+                                                      ->whereIn('status',$request->status??[1,2,3,4,5,6,7,8])
+                                                      ->whereIn('status_time',$request->status_time??[1,2,3,4]);
 
+        if($start_date){
+            $deliveries->where('order_date','>=',$start_date);
+        }
+        if($end_date){
+            $deliveries->where('order_date','<=',$end_date);
+        }
+        if($start_date&&$end_date){
+            $deliveries->whereBetween('order_date', [$start_date,$end_date]);
+        }
+        if($request->driver_id){
+            $deliveries->whereIn('driver_id',$request->driver_id);
+        }
+        if($request->branch_id){
+            $deliveries->whereIn('branch_id',$request->branch_id);
+        }
+        if($request->online){
+            $deliveries->orwhere('online',$request->online);
+        }
+   
         foreach($deliveries as $delivery){
-            $agent = $delivery->agent;
             $branch = $delivery->branch;
             $branch_sale = $delivery->branch_sale;
             $files = $delivery->files;
             $user = $delivery->user;
+            $car_model = $delivery->car_model;
+            $config_time = $delivery->config_time;
             foreach($delivery->pickup_time as $pickup){
                 if($pickup->user){
                       $pickup->user;
@@ -229,7 +240,7 @@ class DeliveryController extends Controller
             $delivery_product = $delivery->delivery_product;
             $client = $delivery->delivery_client;
         }
-        return BranchResource::collection($deliveries);
+        return BranchResource::collection($deliveries->paginate($pageCount));
     }
 
     public function createBranch(Request $request){

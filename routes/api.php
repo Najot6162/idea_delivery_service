@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AuthController;
 use \App\Http\Controllers\DeliveryController;
+use \App\Http\Controllers\RelocationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,7 +38,9 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::get('/get-all-branchs',[DeliveryController::class,'getAllBranch']);
     
     //Relocation Api
-    
+    Route::post('/create-relocation',[RelocationController::class,'CreateRelocation']);
+    Route::get('/get-all-relocation',[RelocationController::class,'getAllRelocation']);
+    Route::put('/update-relocation/{id}',[RelocationController::class,'updateRelocation']);
 });
 
 Route::post('/login',[AuthController:: class,'login']);

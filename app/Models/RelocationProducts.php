@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Agent extends Model
+class RelocationProducts extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'agent','agent_id'
-    ];
 
-    // public function deliveryApp(){
-    //     return $this->belongsTo(DeliveryApp::class);
-    // }
+    protected $fillable = [
+        'relocation_uuid','product_name','product_id','imel','imel_id','product_amount',
+        'product_code'
+    ];
 }

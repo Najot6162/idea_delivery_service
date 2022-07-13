@@ -13,8 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('relocation_apps', function (Blueprint $table) {
+        Schema::create('relocation_products', function (Blueprint $table) {
             $table->id();
+            $table->uuid('relocation_uuid');
+            $table->string('product_name');
+            $table->string('product_id');
+            $table->string('imel');
+            $table->string('imel_id');
+            $table->string('product_amount');
+            $table->integer('product_code');
             $table->timestamps();
         });
     }
@@ -26,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('relocation_apps');
+        Schema::dropIfExists('relocation_products');
     }
 };
