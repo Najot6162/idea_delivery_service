@@ -23,7 +23,10 @@ class User extends Authenticatable
     ];
 
     public function deliveryApp(){
-        return $this->belongsTo(DeliveryApp::class);
+        return $this->hasMany(DeliveryApp::class, 'driver_id', 'id');
+    }
+    public function carModel(){
+        return $this->hasOne(CarModel::class,'id','car_model_id');
     }
 
     /**

@@ -51,6 +51,20 @@ class UserSeeder extends Seeder
             'active'=>1,
             'is_del'=>0,
             'used'=>12
+         ],
+         [
+            'number'=>'01268YGA',
+            'model'=>'LABO',
+            'active'=>1,
+            'is_del'=>0,
+            'used'=>12
+         ],
+         [
+            'number'=>'01268YGA',
+            'model'=>'LABO',
+            'active'=>0,
+            'is_del'=>0,
+            'used'=>12
         ]
         ]; 
 

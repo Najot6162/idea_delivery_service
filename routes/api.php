@@ -7,6 +7,8 @@ use \App\Http\Controllers\DeliveryController;
 use \App\Http\Controllers\RelocationController;
 use \App\Http\Controllers\BranchController;
 use \App\Http\Controllers\ConfigTimeController;
+use \App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,8 +40,6 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::put('/update-config-time/{id}',[ConfigTimeController::class,'updateConfigTime']);
     Route::get('/get-all-config-time',[ConfigTimeController::class, 'getAllConfigTime']);
 
-
-
     //Branch Api
     Route::post('/create-branch',[BranchController::class,'createBranch']);
     Route::put('/update-branch/{id}',[BranchController::class,'updateBranch']);
@@ -49,6 +49,12 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::post('/create-relocation',[RelocationController::class,'CreateRelocation']);
     Route::get('/get-all-relocation',[RelocationController::class,'getAllRelocation']);
     Route::put('/update-relocation/{id}',[RelocationController::class,'updateRelocation']);
+
+    //User Api
+    Route::post('/create-driver',[UserController::class,'createDriver']);
+    Route::put('/update-driver/{id}',[UserController::class,'updateDriver']);
+    Route::get('/get-all-driver',[UserController::class,'getAllDrivers']);
+    Route::get('/get-delivery/{id}',[UserController::class,'getDelivery']);
 });
 
 Route::post('/login',[AuthController:: class,'login']);
