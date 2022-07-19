@@ -32,9 +32,9 @@ class UserController extends Controller
 
     public function updateDriver(Request $request, $id){
 
-        if($request->only_active){
+        if($request->active){
             $user = User::findOrFail($id);
-            $user->active = $request->only_active;
+            $user->active = $request->active;
         if($user->save()){
             echo "Driver updated";
         };

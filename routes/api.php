@@ -8,7 +8,8 @@ use \App\Http\Controllers\RelocationController;
 use \App\Http\Controllers\BranchController;
 use \App\Http\Controllers\ConfigTimeController;
 use \App\Http\Controllers\UserController;
-
+use \App\Http\Controllers\CarController;
+use \App\Http\Controllers\CallCenterController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -55,6 +56,18 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::put('/update-driver/{id}',[UserController::class,'updateDriver']);
     Route::get('/get-all-driver',[UserController::class,'getAllDrivers']);
     Route::get('/get-delivery/{id}',[UserController::class,'getDelivery']);
+
+    //Car Api
+    Route::post('/create-car',[CarController::class,'createCar']);
+    Route::put('/update-car/{id}',[CarController::class,'updateCar']);
+    Route::get('/get-all-car',[CarController::class,'getAllCars']);
+    Route::get('/get-car-term/{id}',[CarController::class,'getCarTerm']);
+    Route::put('/update-car-term/{id}',[CarController::class,'updateCarTerm']);
+    Route::delete('/car/{id}',[CarController::class,'deleteCar']);
+
+    //Call Center Api
+    Route::get('/get-all-call-delivery',[CallCenterController::class,'getAllCallDelivery']);
+
 });
 
 Route::post('/login',[AuthController:: class,'login']);
