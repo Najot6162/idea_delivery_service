@@ -65,13 +65,49 @@ class UserController extends Controller
 
        $users = User::withCount([
         'deliveryApp',
-        'deliveryApp as count_status_two' => function (Builder $query){
+        'deliveryApp as count_status_two' => function (Builder $query) use ($request){
+                if($request->start_date){
+                    $query->where('order_date','>=',$request->start_date);
+                }
+                if($request->end_date){
+                    $query->where('order_date','<=',$request->end_date);
+                }
+                if($request->start_date&&$request->end_date){
+                    $query->whereBetween('order_date', [$request->start_date,$request->end_date]);
+                }
+                if($request->branch_id){
+                    $query->whereIn('branch_id',$request->branch_id);
+                }
             $query->where('status',2);
         },
-        'deliveryApp as count_status_three' => function (Builder $query){
+        'deliveryApp as count_status_three' => function (Builder $query)use ($request){
+            if($request->start_date){
+                $query->where('order_date','>=',$request->start_date);
+            }
+            if($request->end_date){
+                $query->where('order_date','<=',$request->end_date);
+            }
+            if($request->start_date&&$request->end_date){
+                $query->whereBetween('order_date', [$request->start_date,$request->end_date]);
+            }
+            if($request->branch_id){
+                $query->whereIn('branch_id',$request->branch_id);
+            }
             $query->where('status',3);
         },
-        'deliveryApp as count_status_eight' => function (Builder $query){
+        'deliveryApp as count_status_eight' => function (Builder $query)use ($request){
+            if($request->start_date){
+                $query->where('order_date','>=',$request->start_date);
+            }
+            if($request->end_date){
+                $query->where('order_date','<=',$request->end_date);
+            }
+            if($request->start_date&&$request->end_date){
+                $query->whereBetween('order_date', [$request->start_date,$request->end_date]);
+            }
+            if($request->branch_id){
+                $query->whereIn('branch_id',$request->branch_id);
+            }
             $query->where('status',8);
         },
     ])->where('role','driver')

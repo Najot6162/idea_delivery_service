@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('number');
             $table->string('model');
             $table->integer('active');
-            $table->integer('is_del');
-            $table->integer('used');
+            $table->integer('is_del')->nullable();
+            $table->integer('used')->nullable();
             $table->timestamps();
         });
     }
