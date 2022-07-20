@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('id_1c');
             $table->string('log_id')->nullable();
             $table->string('status');
+            $table->string('status_app');
             $table->string('step');
             $table->enum('reception_type',['1','2','3'])->nullable();
             $table->enum('new_product',['0','1'])->nullable();

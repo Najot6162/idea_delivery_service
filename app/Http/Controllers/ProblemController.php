@@ -10,6 +10,7 @@ use App\Models\ProblemApp;
 use App\Models\ProblemProduct;
 use Illuminate\Support\Facades\Validator;
 use App\Models\BranchList;
+use App\Models\ProblemTimeStep;
 
 class ProblemController extends Controller
 {
@@ -85,7 +86,7 @@ class ProblemController extends Controller
         $problem->sales = $request[0]['sales'];
         $problem->sales_id = $request[0]['salesid'];
         $problem->id_1c = $request[0]['Id1C'];
-        $problem->status = $request[0]['status'];
+        $problem->status_app = $request[0]['status'];
         $problem->step = 1;
 
         if($problem->save()){
@@ -118,7 +119,7 @@ class ProblemController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date; 
         $problems = ProblemApp::with('problem_time_step')->where('agent','LIKE',"%$search%")
-                                                           ->whereIn('status',$request->status??['Новый']);
+                                                           ->whereIn('status',$request->status??[1,2,3,4,5,6,7,8,9,10]);
 
         if($start_date){
             $problems->where('data_order','>=',$start_date);
@@ -129,9 +130,11 @@ class ProblemController extends Controller
         if($start_date&&$end_date){
             $problems->whereBetween('data_order', [$start_date,$end_date]);
         }
+        echo "ok";
+        
         foreach($problems as $problem){
-            $branch = $problem->branch;
-            $files = $problem->files;
+           // $branch = $problem->branch;
+           // $files = $problem->files;
             $user = $problem->user;
             foreach($problem->problem_time_step as $time_step){
                 if($time_step->user){
@@ -144,6 +147,57 @@ class ProblemController extends Controller
         }
 
         return BranchResource::collection($problems->paginate($pageCount));
+    }
+
+    public function updateProblem(Request $request, $id){
+        $user = Auth::user();
+
+        $problem = ProblemApp::findOrFail($id);
+        if($request->user_id){
+            $problem->user_id = $request->user_id;
+        };
+        if($request->is_problem){
+            $problem->is_problem = $request->is_problem;
+        };
+        $problem->status = $request->status;
+        $problem->step = $request->step;
+
+        $time_step = new ProblemTimeStep();
+        $time_step -> problem_uuid = $problem->uuid;
+        $time_step -> step = $request->step;
+        $time_step -> user_id =  $user->id;
+        $time_step -> active = $request->active;
+        if($request->branch_id){
+            $time_step->branch_id = $request->branch_id;
+        }
+
+        if($request->new_product){
+            $problem = ProblemProduct::findOrFail($id);
+            $problem->active = 0;
+            if($problem->save()){
+                echo "problem saved  ";
+            };
+            $problem_product = new ProblemProduct();
+            $problem_product->problem_uuid = $problem->uuid;
+            $problem_product->product_name = $request->product_name;
+            $problem_product->product_id =$request->product_id;
+            $problem_product->imel = $request->imel;
+            $problem_product->imel_id = $request->imel_id;
+            $problem_product->product_amount = $request->product_amount;
+            $problem_product->product_code = $request->product_code;
+            $problem_product->code = 1;
+             if($problem_product->save()){
+                echo " problem_product saved  ";
+            };
+
+        }
+        if($time_step->save()){
+            echo "time_step saved  ";
+        };
+        if($problem->save()){
+            return "updated ptoblem";
+        }
+
     }
 
 }

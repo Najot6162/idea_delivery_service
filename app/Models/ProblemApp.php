@@ -13,7 +13,7 @@ class ProblemApp extends Model
         'uuid','user_id','service_id','document_id','agent_id','agent','provodka',
         'data_order','content','document_foundations','document_foundations_id','nak_number',
         'nak_data','defect','branch_id','namer_order','guid','guid_id','branch_sale_id',
-        'id_1c','log_id','status','step','reception_type','new_product','is_problem'
+        'id_1c','log_id','status','status_app','step','reception_type','new_product','is_problem'
     ];
 
     public function problem_time_step(){

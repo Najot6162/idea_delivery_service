@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     //Service Api
     Route::post('/create-problem',[ProblemController::class,'createProblem']);
     Route::get('/get-all-problems',[ProblemController::class,'getAllProblems']);
+    Route::put('/update-problem/{id}',[ProblemController::class,'updateProblem']);
 });
 
 
