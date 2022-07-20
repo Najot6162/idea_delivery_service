@@ -10,6 +10,7 @@ use \App\Http\Controllers\ConfigTimeController;
 use \App\Http\Controllers\UserController;
 use \App\Http\Controllers\CarController;
 use \App\Http\Controllers\CallCenterController;
+use \App\Http\Controllers\ProblemController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -68,6 +69,10 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     //Call Center Api
     Route::get('/get-all-call-delivery',[CallCenterController::class,'getAllCallDelivery']);
 
+    //Service Api
+    Route::post('/create-problem',[ProblemController::class,'createProblem']);
+    Route::get('/get-all-problems',[ProblemController::class,'getAllProblems']);
 });
+
 
 Route::post('/login',[AuthController:: class,'login']);
