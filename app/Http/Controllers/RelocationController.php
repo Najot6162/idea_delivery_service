@@ -116,7 +116,9 @@ class RelocationController extends Controller
         foreach ($branchs as $branch){
             array_push($recieve_branches,$branch->token);
         } 
-              $relocations = RelocationApp::with('relocation_product')->withCount('relocation_product')
+              $relocations = RelocationApp::with(['relocation_product','config_time','relocation_time_step',
+                                            'relocation_time_step.user','branch','car_model'])
+                                            ->withCount('relocation_product')
                                             ->orwhere('agent','LIKE',"%$search%")
                                             ->whereBetween('date_order', [$start_date,$end_date])
                                             ->whereIn('status',$request->status??[1,2,3,4])
@@ -124,16 +126,6 @@ class RelocationController extends Controller
                                             ->whereIn('branch_recieve_id',$request->branch_recieve_id??$recieve_branches)
                                             ->paginate($pageCount);
 
-        foreach($relocations as $relocation){
-            $config_time = $relocation->config_time;
-            $time_step = $relocation->relocation_time_step;
-            
-            foreach($relocation->relocation_time_step as $time_step){
-                      $time_step->user;
-            }
-            $branch = $relocation->branch;
-            $car_model = $relocation->car_model;
-        }
         return BranchResource::collection($relocations);
     }
 

@@ -118,8 +118,10 @@ class ProblemController extends Controller
         $pageCount = $request['page']??"10";
         $start_date = $request->start_date;
         $end_date = $request->end_date; 
-        $problems = ProblemApp::with('problem_time_step')->where('agent','LIKE',"%$search%")
-                                                           ->whereIn('status',$request->status??[1,2,3,4,5,6,7,8,9,10]);
+        $problems = ProblemApp::with(['problem_time_step','user',
+                                'problem_time_step.user','problem_time_step.branch'])
+                                 ->where('agent','LIKE',"%$search%")
+                                 ->whereIn('status',$request->status??[1,2,3,4,5,6,7,8,9,10]);
 
         if($start_date){
             $problems->where('data_order','>=',$start_date);
@@ -129,21 +131,6 @@ class ProblemController extends Controller
         }
         if($start_date&&$end_date){
             $problems->whereBetween('data_order', [$start_date,$end_date]);
-        }
-        echo "ok";
-        
-        foreach($problems as $problem){
-           // $branch = $problem->branch;
-           // $files = $problem->files;
-            $user = $problem->user;
-            foreach($problem->problem_time_step as $time_step){
-                if($time_step->user){
-                      $time_step->user;
-                }else{
-                    $time_step->branch;
-                }
-            }
-            $problem_time_step = $problem->problem_time_step;
         }
 
         return BranchResource::collection($problems->paginate($pageCount));
