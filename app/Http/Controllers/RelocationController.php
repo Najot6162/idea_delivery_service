@@ -13,7 +13,7 @@ use App\Models\RelocationProducts;
 use App\Models\ConfigTime;
 use App\Models\RelocationTimeStep;
 use App\Models\User;
-
+use App\Models\Agent;
 class RelocationController extends Controller
 {
     public function CreateRelocation(Request $request){
@@ -84,6 +84,17 @@ class RelocationController extends Controller
         echo " Relocation_app  saved  ";
     }
 
+    $agent = Agent::where('agent_id', $request[0]['AGENTID'])->get();
+    if($agent->isEmpty()){
+        $agent = new Agent();
+        $agent->agent_id =$request[0]['AGENTID'];
+        $agent->agent = $request[0]['AGENT'];
+
+        if($agent->save()){
+            echo "agent app saved";
+        }
+    }
+
    foreach($request[0]['goods'] as $good){
     $relocation_products = new RelocationProducts(); 
     $relocation_products->relocation_uuid = $uuid;
@@ -117,9 +128,11 @@ class RelocationController extends Controller
             array_push($recieve_branches,$branch->token);
         } 
               $relocations = RelocationApp::with(['relocation_product','config_time','relocation_time_step',
-                                            'relocation_time_step.user','branch','car_model'])
+                                            'relocation_time_step.user','branch','car_model','agents'])
                                             ->withCount('relocation_product')
-                                            ->orwhere('agent','LIKE',"%$search%")
+                                            ->whereHas('agents', function($q) use ($search){
+                                            $q->where('agent','LIKE',"%$search%");
+                                            })
                                             ->whereBetween('date_order', [$start_date,$end_date])
                                             ->whereIn('status',$request->status??[1,2,3,4])
                                             ->whereIn('branch_send_id',$request->branch_send_id??$send_branches)

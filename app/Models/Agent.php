@@ -12,7 +12,10 @@ class Agent extends Model
         'agent','agent_id'
     ];
 
-    // public function deliveryApp(){
-    //     return $this->belongsTo(DeliveryApp::class);
-    // }
+    public function deliveryApp(){
+        return $this->belongsTo(DeliveryApp::class);
+    }
+    public function problemApp(){
+        return $this->belongsTo(ProblemApp::class);
+    }
 }

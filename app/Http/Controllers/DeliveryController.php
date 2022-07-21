@@ -14,6 +14,7 @@ use App\Models\BranchList;
 use App\Models\ConfigTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\Agent;
 
 class DeliveryController extends Controller
 {
@@ -67,8 +68,6 @@ class DeliveryController extends Controller
            array_push($branches['branch_id'], $branch[0]['id']);
         }
 
-        
-
         $branch = BranchList::where('token', $request[0]['SkladSaleID'])->get();  
     if($branch->isEmpty()){
         $branchList = new BranchList();
@@ -91,7 +90,6 @@ class DeliveryController extends Controller
 
         $delivery = new DeliveryApp();
         $delivery->uuid = $uuid;
-        $delivery->agent = $request[0]['AGENT'];
         $delivery->agent_id = $request[0]['AGENTID'];
         $delivery->user_id = $user->id;
         $delivery->order_id = $request[0]['NamerOrder'];
@@ -125,6 +123,17 @@ class DeliveryController extends Controller
 
         if($delivery->save()){
             echo " Delivery_app  saved  ";
+        }
+
+        $agent = Agent::where('agent_id', $request[0]['AGENTID'])->get();
+        if($agent->isEmpty()){
+            $agent = new Agent();
+            $agent->agent_id =$request[0]['AGENTID'];
+            $agent->agent = $request[0]['AGENT'];
+
+            if($agent->save()){
+                echo "agent app saved";
+            }
         }
 
         foreach($request[0]['goods'] as $good){
@@ -195,8 +204,10 @@ class DeliveryController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date; 
         $deliveries = DeliveryApp::with(['pickup_time','pickup_time.user','pickup_time.branch','branch','branch_sale',
-                                 'files','user','car_model','config_time','delivery_product','delivery_client'])
-                                 ->where('agent','LIKE',"%$search%")
+                                 'files','user','car_model','config_time','delivery_product','delivery_client','agents'])
+                                 ->whereHas('agents', function($q) use ($search){
+                                    $q->where('agent','LIKE',"%$search%");
+                                })
                                  ->whereIn('status',$request->status??[1,2,3,4,5,6,7,8])
                                  ->whereIn('status_time',$request->status_time??[1,2,3,4]);
 

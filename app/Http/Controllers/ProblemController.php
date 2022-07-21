@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Resources\BranchResource;
+use App\Models\Agent;
 use App\Models\ProblemApp;
 use App\Models\ProblemProduct;
 use Illuminate\Support\Facades\Validator;
@@ -69,7 +70,6 @@ class ProblemController extends Controller
         $problem->user_id = $user->id;
         $problem->document_id = $request[0]['DokumentId'];
         $problem->agent_id = $request[0]['AGENTID'];  
-        $problem->agent = $request[0]['AGENT'];
         $problem->provodka = $request[0]['PRAVODKA'];  
         $problem->data_order = $data_order;
         $problem->complect = $request[0]['complekt'];
@@ -88,12 +88,23 @@ class ProblemController extends Controller
         $problem->id_1c = $request[0]['Id1C'];
         $problem->status_app = $request[0]['status'];
         $problem->step = 1;
-
+        $problem->status = 1;
         if($problem->save()){
-            echo "problem app saved";
+            echo "problem app saved ";
         }
 
+        $agent = Agent::where('agent_id', $request[0]['AGENTID'])->get();
 
+        if($agent->isEmpty()){
+            $agent = new Agent();
+            $agent->agent_id =$request[0]['AGENTID'];
+            $agent->agent = $request[0]['AGENT'];
+
+            if($agent->save()){
+                echo "agent app saved";
+            }
+        }
+        
         foreach($request[0]['goods'] as $good){
             $problem_product = new ProblemProduct();
             $problem_product->problem_uuid = $uuid;
@@ -103,14 +114,10 @@ class ProblemController extends Controller
             $problem_product->imel_id = $good['IMEIId'];
             $problem_product->product_amount = $good['amount'];
             $problem_product->product_code = $good['code'];
-
-    
              if($problem_product->save()){
                 echo " problem_product saved  ";
             };
             };
-
-        return $request;
     }
 
     public function getAllProblems(Request $request){
@@ -119,8 +126,10 @@ class ProblemController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date; 
         $problems = ProblemApp::with(['problem_time_step','user',
-                                'problem_time_step.user','problem_time_step.branch'])
-                                 ->where('agent','LIKE',"%$search%")
+                                'problem_time_step.user','problem_time_step.branch','agents'])
+                                ->whereHas('agents', function($q) use ($search){
+                                    $q->where('agent','LIKE',"%$search%");
+                                })
                                  ->whereIn('status',$request->status??[1,2,3,4,5,6,7,8,9,10]);
 
         if($start_date){

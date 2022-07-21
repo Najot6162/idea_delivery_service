@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('service_id')->nullable();
             $table->string('document_id');
             $table->string('agent_id');
-            $table->string('agent');
             $table->enum('provodka',['Да','нет']);
             $table->string('data_order');
             $table->string('content');
