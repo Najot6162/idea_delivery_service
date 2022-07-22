@@ -75,7 +75,7 @@ class DashboardController extends Controller
             'count_status_eight' => $status_eight
         ];
 
-                                    //Delivery Count by status
+                                    // Calculate Delivery Counts
                 //All count                 
         $all_count_driver = User::withCount(['deliveryApp',
         'deliveryApp as deliveryApp_count_status_time_one' => function (Builder $query) use ($request){
@@ -160,7 +160,7 @@ class DashboardController extends Controller
             'relocation_count'=>$relocation_count_driver
          ];  
          
-         //Statistika filial
+         //Calculate Branch Count
          $count_branches = BranchList::withCount([
             'delivery_app',
 

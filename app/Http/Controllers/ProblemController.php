@@ -126,7 +126,7 @@ class ProblemController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date; 
         $problems = ProblemApp::with(['problem_time_step','user',
-                                'problem_time_step.user','problem_time_step.branch','agents','branch'])
+                                'problem_time_step.user','problem_time_step.branch','agents','branch','files'])
                                 ->whereHas('agents', function($q) use ($search){
                                     $q->where('agent','LIKE',"%$search%");
                                 })
