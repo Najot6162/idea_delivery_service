@@ -28,6 +28,9 @@ class User extends Authenticatable
     public function carModel(){
         return $this->hasOne(CarModel::class,'id','car_model_id');
     }
+    public function relocationApp(){
+        return $this->hasMany(RelocationApp::class, 'driver_id', 'id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

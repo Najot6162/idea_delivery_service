@@ -10,6 +10,7 @@ use \App\Http\Controllers\ConfigTimeController;
 use \App\Http\Controllers\UserController;
 use \App\Http\Controllers\CarController;
 use \App\Http\Controllers\CallCenterController;
+use App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\ProblemController;
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,9 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::post('/create-problem',[ProblemController::class,'createProblem']);
     Route::get('/get-all-problems',[ProblemController::class,'getAllProblems']);
     Route::put('/update-problem/{id}',[ProblemController::class,'updateProblem']);
+
+    //Dashboard Api
+    Route::get('/get-counts',[DashboardController::class,'getCounts']);
 });
 
 
