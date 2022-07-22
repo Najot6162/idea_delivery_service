@@ -63,7 +63,8 @@ class DashboardController extends Controller
                                     ->where('status',7)->count();
         $status_eight = DeliveryApp::whereBetween('order_date', [$start_date,$end_date])
                                     ->where('status',8)->count();
-
+        $all_orders = DeliveryApp::whereBetween('order_date', [$start_date,$end_date])->count();
+        
         $status_count_arr = [
             'count_status_one' => $status_one,
             'count_status_two' => $status_two,
@@ -72,7 +73,8 @@ class DashboardController extends Controller
             'count_status_five' => $status_five,
             'count_status_six' => $status_six,
             'count_status_seven' => $status_seven,
-            'count_status_eight' => $status_eight
+            'count_status_eight' => $status_eight,
+            'all_orders'=>$all_orders
         ];
 
                                     // Calculate Delivery Counts
