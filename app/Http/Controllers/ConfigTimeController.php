@@ -15,12 +15,13 @@ class ConfigTimeController extends Controller
         $time = $config_time->time;
         $time1 = $time/3;
         $time2 = $time1*2; 
-        
+      
         foreach($deliveries as $delivery){
-            $start_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $delivery->order_date);
+           // $start_date = Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $delivery->order_date);
+            $start_date = $delivery->order_date;
             $current_date = Carbon::now()->toDateTimeString();  
-            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $current_date);
-            $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $start_date);
+            $to = Carbon::createFromFormat('Y-m-d H:s:i', $current_date);
+            $from = Carbon::createFromFormat('Y-m-d H:s:i', $start_date);
             $diff_in_hours = $to->diffInHours($from);
             if($time1>=$diff_in_hours){
                 $delivery->status_time = 1;
