@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -34,11 +35,10 @@ class AuthController extends Controller
         }
  
         $user = User::where('login',$request->login)->first();
-
         $tokenResult = $user->createToken('authToken')->plainTextToken;
-
         return response()->json([
-            'message'=>$tokenResult
+            'token'=>$tokenResult,
+            'user' => $user
         ]);
     }
     public function logout(Request $request)
