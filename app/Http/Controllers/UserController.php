@@ -105,12 +105,12 @@ class UserController extends Controller
             }
             $query->where('status',8);
         },
-    ])->where('role','driver')
+    ])->where('role_id',3)
     ->where('name','LIKE',"%$search%")  
-    ->orWhere('phone','LIKE',"%$search%")  
+    ->Where('phone','LIKE',"%$search%")  
     ->join('car_models','car_models.id', '=','users.car_model_id')
-    ->orWhere('car_models.number','LIKE',"%$search%")
-    ->orWhere('car_models.model','LIKE',"%$search%")
+    ->Where('car_models.number','LIKE',"%$search%")
+    ->Where('car_models.model','LIKE',"%$search%")
     ->paginate($pageCount);
 
     foreach($users as $user){
@@ -205,7 +205,6 @@ class UserController extends Controller
             'phone'=>'required',
             'name'=>'required',
         ]);
-
         $user = new User();
         $user->name = $request->name;
         $user->phone = $request->phone;
@@ -221,9 +220,7 @@ class UserController extends Controller
     public function getAllUsers(Request $request){
         $search = $request['search']??"";
         $pageCount = $request['page']??"10";
-
-        $users = User::where('name','LIKE',"%$search%")->paginate($pageCount);
-
+        $users = User::with(['carModel','userPermission'])->where('name','LIKE',"%$search%")->paginate($pageCount);
         return $users;
     }
 

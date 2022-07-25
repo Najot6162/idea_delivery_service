@@ -33,9 +33,9 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
 
     //Delivery Api 
     Route::post('/create-delivery',[DeliveryController::class,'CreateDelivery']);
-    Route::get('/get-all-delivery',[DeliveryController::class,'gettAllDelivery']);
-    Route::put('/update-delivery/{id}',[DeliveryController::class,'updateDelivery']);
-    Route::post('/upload_file',[DeliveryController::class, 'uploadFile']);
+    Route::get('/get-all-delivery',[DeliveryController::class,'gettAllDelivery'])->middleware(['admin']);
+    Route::put('/update-delivery/{id}',[DeliveryController::class,'updateDelivery'])->middleware(['admin']);
+    Route::post('/upload_file',[DeliveryController::class, 'uploadFile'])->middleware(['admin']);
     
     //ConfigTime Api
     Route::get('/check-time',[ConfigTimeController::class, 'checkTime']);
@@ -56,7 +56,7 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     //Driver Api
     Route::post('/create-driver',[UserController::class,'createDriver']);
     Route::put('/update-driver/{id}',[UserController::class,'updateDriver']);
-    Route::get('/get-all-driver',[UserController::class,'getAllDrivers']);
+    Route::get('/get-all-driver',[UserController::class,'getAllDrivers'])->middleware(['driver']);
     Route::get('/get-delivery/{id}',[UserController::class,'getDelivery']);
 
     //Car Api
