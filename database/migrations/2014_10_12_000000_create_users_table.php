@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('login')->unique()->nullable();
             $table->timestamp('login_verified_at')->nullable();
             $table->string('password');
-            $table->string('role');
+            $table->integer('role_id');
             $table->rememberToken();
             $table->timestamps();
         });

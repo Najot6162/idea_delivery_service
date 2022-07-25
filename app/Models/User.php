@@ -19,7 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'email', 'is_admin','phone','address','car_model','car_model_id','active',
-        'branch_id','name','login','password','role'
+        'branch_id','name','login','password','role_id'
     ];
 
     public function deliveryApp(){
@@ -30,6 +30,10 @@ class User extends Authenticatable
     }
     public function relocationApp(){
         return $this->hasMany(RelocationApp::class, 'driver_id', 'id');
+    }
+
+    public function userPermission(){
+        return $this->hasMany(UserPermission::class, 'role_id', 'role_id');
     }
 
     /**

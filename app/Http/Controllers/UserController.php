@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Resources\BranchResource;
 use App\Models\DeliveryApp;
+use App\Models\Menus;
+use App\Models\RoleList;
+use App\Models\UserPermission;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class UserController extends Controller
@@ -32,9 +35,9 @@ class UserController extends Controller
 
     public function updateDriver(Request $request, $id){
 
-        if($request->active){
+        if($request->only_active){
             $user = User::findOrFail($id);
-            $user->active = $request->active;
+            $user->active = $request->only_active;
         if($user->save()){
             echo "Driver updated";
         };
@@ -44,7 +47,7 @@ class UserController extends Controller
             'phone'=>'required',
             'name'=>'required',
             'password'=>'required',
-            'role'=>'required'
+            'car_model_id'=>'required',
         ]);
 
         $user = User::findOrFail($id);
@@ -151,5 +154,70 @@ class UserController extends Controller
         }
 
         return BranchResource::collection($delviery->paginate($pageCount));
+    }
+
+    public function roleGroup(){
+        $roles = RoleList::withCount('users')->get();
+        return $roles;
+    }
+    public function getPermission(Request $request){
+        $menus = UserPermission::with('menus')->where('role_id',$request->role_id)->get();
+        return $menus;
+    }
+    public function updatePermission(Request $request,$id){
+        $user_permission = UserPermission::findOrFail($id);
+        $user_permission->value = $request->value;
+       if($user_permission->save()){
+        echo "updated permisson";
+       }
+    }
+
+    public function getUsers(Request $request){
+        $users = User::where('role_id',$request->role_id)->get();
+
+        return $users;
+    }
+
+    public function updateUser(Request $request,$id){
+        $users = User::findOrFail($id);
+        if($request->only_active){
+            $users->active = $request->only_active;
+            if($users->save){
+                echo "update active in users";
+            }
+        }
+        $request->validate([
+            'phone'=>'required',
+            'name'=>'required',
+            'password'=>'required',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
+        $user->active = $request->active;
+        if($user->save()){
+            echo "user updated";
+        };
+        return true;
+    }
+
+    public function createUser(Request $request){
+        $request->validate([
+            'phone'=>'required',
+            'name'=>'required',
+            'password'=>'required',
+        ]);
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
+        $user->active = $request->active;
+        $user->role_id = $request->role_id;
+        if($user->save()){
+            echo "user created";
+        };
     }
 }

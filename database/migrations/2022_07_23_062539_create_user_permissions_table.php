@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('worker_lists', function (Blueprint $table) {
+        Schema::create('user_permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('sales_id');
-            $table->string('sales_name');
-            $table->integer('branch_id');
-            $table->enum('type',['1','2']);
-            $table->integer('new');
+            $table->integer('role_id');
+            $table->integer('menu_id');
+            $table->integer('value');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('worker_lists');
+        Schema::dropIfExists('user_permissions');
     }
 };

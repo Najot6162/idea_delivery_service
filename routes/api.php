@@ -77,6 +77,12 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
 
     //Dashboard Api
     Route::get('/get-counts',[DashboardController::class,'getCounts']);
+
+    //Permission Api
+    Route::get('/get-roles_group',[UserController::class,'roleGroup']);
+    Route::get('/get-permission',[UserController::class,'getPermission']);
+    Route::put('/update-permisson/{id}',[UserController::class,'updatePermission']);
+    Route::get('/get-users',[UserController::class,'getUsers']);
 });
 
 
