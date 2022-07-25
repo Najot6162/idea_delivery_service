@@ -35,14 +35,6 @@ class UserController extends Controller
 
     public function updateDriver(Request $request, $id){
 
-        if($request->only_active){
-            $user = User::findOrFail($id);
-            $user->active = $request->only_active;
-        if($user->save()){
-            echo "Driver updated";
-        };
-        return true;
-        }
         $request->validate([
             'phone'=>'required',
             'name'=>'required',
@@ -128,7 +120,6 @@ class UserController extends Controller
    
          return BranchResource::collection($users);
     }
-
     public function getDelivery(Request $request,$id){
         $search = $request['search']??"";
         $pageCount = $request['page']??"10";
@@ -171,21 +162,28 @@ class UserController extends Controller
         echo "updated permisson";
        }
     }
-
     public function getUsers(Request $request){
         $users = User::where('role_id',$request->role_id)->get();
 
         return $users;
     }
-
-    public function updateUser(Request $request,$id){
+    public function updateUserActive(Request $request,$id){
         $users = User::findOrFail($id);
-        if($request->only_active){
-            $users->active = $request->only_active;
-            if($users->save){
-                echo "update active in users";
-            }
+        $users->active = $request->active;
+        if($users->save()){
+            return "update active in users";
         }
+       
+    }
+    public function updateUserBranch(Request $request,$id){
+            $users = User::findOrFail($id);
+            $users->branch_id = $request->branch_id;
+            if($users->save()){
+                return "update branch_id in users";
+            }
+    }
+    public function updateUser(Request $request,$id){
+        
         $request->validate([
             'phone'=>'required',
             'name'=>'required',
@@ -202,12 +200,10 @@ class UserController extends Controller
         };
         return true;
     }
-
     public function createUser(Request $request){
         $request->validate([
             'phone'=>'required',
             'name'=>'required',
-            'password'=>'required',
         ]);
 
         $user = new User();
@@ -216,8 +212,19 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->active = $request->active;
         $user->role_id = $request->role_id;
+        $user->branch_id = $request->branch_id;
         if($user->save()){
             echo "user created";
         };
     }
+
+    public function getAllUsers(Request $request){
+        $search = $request['search']??"";
+        $pageCount = $request['page']??"10";
+
+        $users = User::where('name','LIKE',"%$search%")->paginate($pageCount);
+
+        return $users;
+    }
+
 }
