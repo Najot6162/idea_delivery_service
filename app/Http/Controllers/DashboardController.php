@@ -113,7 +113,7 @@ class DashboardController extends Controller
                 $query->whereBetween('date_order', [$request->start_date,$request->end_date]);
                 $query->where('status_time',4);
             },
-        ])->orderBy('deliveryApp_count_status_time_one', 'desc')  ->where('role','driver')->get();
+        ])->orderBy('deliveryApp_count_status_time_one', 'desc')  ->where('role_id','driver')->get();
        
                 //Delivery Count
         $delivery_count_driver = User::withCount(['deliveryApp',
@@ -133,7 +133,7 @@ class DashboardController extends Controller
                 $query->whereBetween('order_date', [$request->start_date,$request->end_date]);
                 $query->where('status_time',4);
             }
-        ])->orderBy('deliveryApp_count_status_time_one', 'desc')  ->where('role','driver')->get();
+        ])->orderBy('deliveryApp_count_status_time_one', 'desc')  ->where('role_id','driver')->get();
 
          //Relocation Count
         $relocation_count_driver = User::withCount([
@@ -154,7 +154,7 @@ class DashboardController extends Controller
                 $query->whereBetween('date_order', [$request->start_date,$request->end_date]);
                 $query->where('status_time',4);
             },
-        ])->orderBy('relocationApp_count_status_time_one', 'desc')->where('role','driver')->get();
+        ])->orderBy('relocationApp_count_status_time_one', 'desc')->where('role_id','driver')->get();
        
          $CountDelviery = [
             'all_counts'=>$all_count_driver,
