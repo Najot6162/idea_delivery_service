@@ -21,7 +21,7 @@ class DeliveryController extends Controller
     public function CreateDelivery(Request $request){
         $uuid = Str::uuid()->toString();
 
-           Validator::make($request->all(),[
+        $validator = Validator::make($request->all(),[
             $request[0]['AGENTID'] => 'required',
             $request[0]['AGENT'] => 'required',
             $request[0]['DokumentId'] => 'required',
@@ -44,7 +44,6 @@ class DeliveryController extends Controller
             $request[0]['Oplachena'] => 'required',
             $request[0]['Id1C'] => 'required',
         ]);
-      
 
         $user = Auth::user();
         $branches = [
@@ -195,7 +194,6 @@ class DeliveryController extends Controller
         if($delivery->save()){
             echo "delivery updated  ";
         };
-        return "Ok";
     }
 
     public function gettAllDelivery(Request $request){    
@@ -234,11 +232,14 @@ class DeliveryController extends Controller
     }
 
     public function uploadFile(Request $request){
-             $request->validate([
+        $validator = Validator::make($request->all(),[
             'app_uuid'=>'required',
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
            ]);
-    
+
+           if($validator->fails()){
+            return response()->json(['error' => $validator->errors()], 201);
+            }
            $path = $request->file('image')->store('public/images');
 
            $file = new Files;

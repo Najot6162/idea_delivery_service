@@ -6,17 +6,26 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Resources\BranchResource;
 use App\Models\DeliveryApp;
+use App\Models\Menus;
+use App\Models\RoleList;
+use App\Models\UserPermission;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     public function createDriver(Request $request){
         
-        $request->validate([
+        $validator =  Validator::make($request->all(),[
             'phone'=>'required',
             'name'=>'required',
             'password'=>'required'
         ]);
+
+        if($validator->fails()){
+            return response()->json(['error' => $validator->errors()], 500);
+        }
+
         echo $request;
         $user = new User();
         $user->login = $request->name;
@@ -32,19 +41,11 @@ class UserController extends Controller
 
     public function updateDriver(Request $request, $id){
 
-        if($request->active){
-            $user = User::findOrFail($id);
-            $user->active = $request->active;
-        if($user->save()){
-            echo "Driver updated";
-        };
-        return true;
-        }
         $request->validate([
             'phone'=>'required',
             'name'=>'required',
             'password'=>'required',
-            'role'=>'required'
+            'car_model_id'=>'required',
         ]);
 
         $user = User::findOrFail($id);
@@ -110,12 +111,12 @@ class UserController extends Controller
             }
             $query->where('status',8);
         },
-    ])->where('role','driver')
+    ])->where('role_id',3)
     ->where('name','LIKE',"%$search%")  
-    ->orWhere('phone','LIKE',"%$search%")  
+    ->Where('phone','LIKE',"%$search%")  
     ->join('car_models','car_models.id', '=','users.car_model_id')
-    ->orWhere('car_models.number','LIKE',"%$search%")
-    ->orWhere('car_models.model','LIKE',"%$search%")
+    ->Where('car_models.number','LIKE',"%$search%")
+    ->Where('car_models.model','LIKE',"%$search%")
     ->paginate($pageCount);
 
     foreach($users as $user){
@@ -125,7 +126,6 @@ class UserController extends Controller
    
          return BranchResource::collection($users);
     }
-
     public function getDelivery(Request $request,$id){
         $search = $request['search']??"";
         $pageCount = $request['page']??"10";
@@ -152,4 +152,83 @@ class UserController extends Controller
 
         return BranchResource::collection($delviery->paginate($pageCount));
     }
+
+    public function roleGroup(){
+        $roles = RoleList::withCount('users')->get();
+        return $roles;
+    }
+    public function getPermission(Request $request){
+        $menus = UserPermission::with('menus')->where('role_id',$request->role_id)->get();
+        return $menus;
+    }
+    public function updatePermission(Request $request,$id){
+        $user_permission = UserPermission::findOrFail($id);
+        $user_permission->value = $request->value;
+       if($user_permission->save()){
+        echo "updated permisson";
+       }
+    }
+    public function getUsers(Request $request){
+        $users = User::where('role_id',$request->role_id)->get();
+
+        return $users;
+    }
+    public function updateUserActive(Request $request,$id){
+        $users = User::findOrFail($id);
+        $users->active = $request->active;
+        if($users->save()){
+            return "update active in users";
+        }
+       
+    }
+    public function updateUserBranch(Request $request,$id){
+            $users = User::findOrFail($id);
+            $users->branch_id = $request->branch_id;
+            if($users->save()){
+                return "update branch_id in users";
+            }
+    }
+    public function updateUser(Request $request,$id){
+        
+        $request->validate([
+            'phone'=>'required',
+            'name'=>'required',
+            'password'=>'required',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
+        $user->active = $request->active;
+        if($user->save()){
+            echo "user updated";
+        };
+        return true;
+    }
+    public function createUser(Request $request){
+        
+        $validator =  Validator::make($request->all(),[
+            'phone'=>'required',
+            'name'=>'required',
+        ]);
+        $user = new User();
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
+        $user->active = $request->active;
+        $user->role_id = $request->role_id;
+        $user->branch_id = $request->branch_id;
+        if($user->save()){
+            echo "user created";
+        };
+    }
+
+    public function getAllUsers(Request $request){
+        $search = $request['search']??"";
+        $pageCount = $request['page']??"10";
+        $users = User::with(['carModel','userPermission'])->where('name','LIKE',"%$search%")->paginate($pageCount);
+        return $users;
+    }
+
 }

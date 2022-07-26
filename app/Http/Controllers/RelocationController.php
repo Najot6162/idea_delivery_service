@@ -19,7 +19,7 @@ class RelocationController extends Controller
     public function CreateRelocation(Request $request){
         $uuid = Str::uuid()->toString();
 
-        Validator::make($request->all(),[
+     $validator =  Validator::make($request->all(),[
          $request[0]['AGENTID'] => 'required',
          $request[0]['AGENT'] => 'required',
          $request[0]['DokumentId'] => 'required',
@@ -36,6 +36,7 @@ class RelocationController extends Controller
          $request[0]['NamerOrder'] => 'required',
          $request[0]['Id1C'] => 'required',
      ]);
+
 
      $branches = [
         'branch_id'=>[],
@@ -79,7 +80,7 @@ class RelocationController extends Controller
      $relocation->id_1c = $request[0]['Id1C'];
      $relocation->config_time_id = $config_time_id; 
      $relocation->status = 1;
-
+     $relocation->status_time = 1;
      if($relocation->save()){
         echo " Relocation_app  saved  ";
     }
@@ -117,7 +118,6 @@ class RelocationController extends Controller
          $pageCount = $request['page']??"10";
          $start_date = $request->start_date;
          $end_date = $request->end_date; 
-         
          $branchs = BranchList::get();
             $send_branches = array();
             $recieve_branches = array();
@@ -135,8 +135,8 @@ class RelocationController extends Controller
                                             })
                                             ->whereBetween('date_order', [$start_date,$end_date])
                                             ->whereIn('status',$request->status??[1,2,3,4])
-                                            ->whereIn('branch_send_id',$request->branch_send_id??$send_branches)
-                                            ->whereIn('branch_recieve_id',$request->branch_recieve_id??$recieve_branches)
+                                             ->whereIn('branch_send_id',$request->branch_send_id??$send_branches)
+                                             ->whereIn('branch_recieve_id',$request->branch_recieve_id??$recieve_branches)
                                             ->paginate($pageCount);
 
         return BranchResource::collection($relocations);
@@ -166,5 +166,40 @@ class RelocationController extends Controller
         };
 
         return true;
+    }
+
+    public function getRelocation(Request $request,$id){
+        $search = $request['search']??"";
+        $pageCount = $request['page']??"10";
+        $start_date = $request->start_date;
+        $end_date = $request->end_date; 
+
+        $branchs = BranchList::get();
+        $send_branches = array();
+        $recieve_branches = array();
+    foreach ($branchs as $branch){
+        array_push($send_branches,$branch->id);
+    }
+    foreach ($branchs as $branch){
+        array_push($recieve_branches,$branch->token);
+    } 
+        $relocation = RelocationApp::where('driver_id', $id)
+        ->where('status_time','LIKE',"%$search%") 
+        ->whereIn('status',$request->status??[1,2,3,4,5,6,7,8])
+        ->whereIn('status_time',$request->status_time??[1,2,3,4])
+        ->whereIn('branch_send_id',$request->branch_send_id??$send_branches)
+        ->whereIn('branch_recieve_id',$request->branch_recieve_id??$recieve_branches);
+
+        if($start_date){
+            $relocation->where('date_order','>=',$start_date);
+        }
+        if($end_date){
+            $relocation->where('date_order','<=',$end_date);
+        }
+        if($start_date&&$end_date){
+            $relocation->whereBetween('date_order', [$start_date,$end_date]);
+        }
+
+        return BranchResource::collection($relocation->paginate($pageCount));
     }
 }

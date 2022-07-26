@@ -5,18 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BranchList;
 use App\Http\Resources\BranchResource;
+use Illuminate\Support\Facades\Validator;
 
 class BranchController extends Controller
 {
     
     public function createBranch(Request $request){
 
-        $request->validate([
+        $validator = Validator::make($request->all(),[
              'title'=>'required',
              'token'=>'required',
              'region_id'=>'required'
-         ]);
- 
+            ]);
+            
          $branchList = new BranchList();
  
          $branchList->title = $request->title;

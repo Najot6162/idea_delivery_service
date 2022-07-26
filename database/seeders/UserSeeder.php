@@ -8,6 +8,10 @@ use App\Models\User;
 use App\Models\CarModel;
 use App\Models\BranchRegion;
 use App\Models\ConfigTime;
+use App\Models\Menus;
+use App\Models\RoleList;
+use App\Models\UserPermission;
+
 class UserSeeder extends Seeder
 {
     /**
@@ -26,12 +30,12 @@ class UserSeeder extends Seeder
                 'active'=>1,
                 'branch_id'=>1,
                 'name'=>'admin',
-                'login'=>'dell',
+                'login'=>'dell1',
                 'password'=>bcrypt('dell123'),
-                'role'=>'admin'
+                'role_id'=>1
             ],
             [
-                'email'=>'driver@gmail.com',
+                'email'=>'xxx@gmail.com',
                 'is_admin'=>0,
                 'phone'=>'+998901234567',
                 'address'=>'Yunusobod',
@@ -39,10 +43,48 @@ class UserSeeder extends Seeder
                 'active'=>1,
                 'branch_id'=>1,
                 'name'=>'driver',
-                'login'=>'driver',
+                'login'=>'driver2',
                 'password'=>bcrypt('driver'),
-                'role'=>'driver'
-            ]
+                'role_id'=>2
+            ],
+            [
+                'email'=>'zzz@gmail.com',
+                'is_admin'=>0,
+                'phone'=>'+998901234567',
+                'address'=>'Yunusobod',
+                'car_model_id'=>1,
+                'active'=>1,
+                'branch_id'=>1,
+                'name'=>'driver',
+                'login'=>'driver3',
+                'password'=>bcrypt('driver'),
+                'role_id'=>3
+            ],
+            [
+                'email'=>'driver@gmail.com',
+                'is_admin'=>1,
+                'phone'=>'+998901234567',
+                'address'=>'Yunusobod',
+                'active'=>1,
+                'branch_id'=>1,
+                'name'=>'admin',
+                'login'=>'dell121',
+                'password'=>bcrypt('dell123'),
+                'role_id'=>4
+            ],
+            [
+                'email'=>'driver5@gmail.com',
+                'is_admin'=>0,
+                'phone'=>'+998901234567',
+                'address'=>'Yunusobod',
+                'car_model_id'=>1,
+                'active'=>1,
+                'branch_id'=>1,
+                'name'=>'driver',
+                'login'=>'1245',
+                'password'=>bcrypt('driver'),
+                'role_id'=>5
+            ]   
             ];
         $car_models = [
          [
@@ -110,7 +152,348 @@ class UserSeeder extends Seeder
                 ]
             ];
 
+            $role_lists = [
+                [
+                    'name'=>'Administrators',
+                ],
+                [
+                    'name'=>'Office',
+                ],
+                [
+                    'name'=>'Service Center',
+                ],
+                [
+                    'name'=>'Водители и доставщики',
+                ],
+                [
+                    'name'=>'филиал',
+                ]
+                ];
 
+            $menus = [
+                [
+                    'name'=>'Заявки'
+                ],
+                [
+                    'name'=>'Водители'
+                ],
+                [
+                    'name'=>'Сотрудники'
+                ],
+                [
+                    'name'=>'Машины'
+                ],
+                [
+                    'name'=>'Меню пользователя'
+                ],
+                [
+                    'name'=>'Список заявок'
+                ],
+                [
+                    'name'=>'Поля заявки'
+                ],
+                [
+                    'name'=>'Срок доставки'
+                ],
+                [
+                    'name'=>'Заявки'
+                ],
+                [
+                    'name'=>'Отклоненные заказы'
+                ],
+                [
+                    'name'=>'Перемещения'
+                ],
+                [
+                    'name'=>'Колл-центр'
+                ],
+                [
+                    'name'=>'CRM'
+                ],
+                [
+                    'name'=>'Филиалы'
+                ],
+                [
+                    'name'=>'Список сервис'
+                ],
+                [
+                    'name'=>'Список ползаватели'
+                ],
+                [
+                    'name'=>'Сервисный центр'
+                ]
+                ]; 
+                
+                $user_permissions = [
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>1,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>2,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>3,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>4,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>5,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>6,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>7,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>8,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>9,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>10,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>11,
+                        'value'=>1,
+                    ]
+                    ,
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>12,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>13,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>14,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>15,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>16,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>1,
+                        'menu_id'=>17,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>1,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>2,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>3,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>4,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>5,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>6,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>7,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>8,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>9,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>10,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>11,
+                        'value'=>1,
+                    ]
+                    ,
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>12,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>13,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>14,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>15,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>16,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>2,
+                        'menu_id'=>17,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>1,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>2,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>3,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>4,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>5,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>6,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>7,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>8,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>9,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>10,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>11,
+                        'value'=>1,
+                    ]
+                    ,
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>12,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>13,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>14,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>15,
+                        'value'=>1,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>16,
+                        'value'=>0,
+                    ],
+                    [
+                        'role_id'=>3,
+                        'menu_id'=>17,
+                        'value'=>0,
+                    ]
+                    ];
+
+            foreach($menus as $key => $value){
+                Menus::create($value);
+            }        
+            foreach($role_lists as $key => $value){
+                RoleList::create($value);
+            }
+            foreach($user_permissions as $key => $value){
+                UserPermission::create($value);
+            }
             foreach ($users as $key => $value){
                 User::create($value);
             }

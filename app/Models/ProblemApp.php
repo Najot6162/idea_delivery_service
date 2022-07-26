@@ -34,4 +34,7 @@ class ProblemApp extends Model
     public function user(){
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+    public function files(){
+        return $this->hasMany(Files::class, 'app_uuid', 'uuid');
+    }
 }

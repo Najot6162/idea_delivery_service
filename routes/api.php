@@ -10,6 +10,7 @@ use \App\Http\Controllers\ConfigTimeController;
 use \App\Http\Controllers\UserController;
 use \App\Http\Controllers\CarController;
 use \App\Http\Controllers\CallCenterController;
+use App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\ProblemController;
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +33,9 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
 
     //Delivery Api 
     Route::post('/create-delivery',[DeliveryController::class,'CreateDelivery']);
-    Route::get('/get-all-delivery',[DeliveryController::class,'gettAllDelivery']);
-    Route::put('/update-delivery/{id}',[DeliveryController::class,'updateDelivery']);
-    Route::post('/upload_file',[DeliveryController::class, 'uploadFile']);
+    Route::get('/get-all-delivery',[DeliveryController::class,'gettAllDelivery'])->middleware(['admin']);
+    Route::put('/update-delivery/{id}',[DeliveryController::class,'updateDelivery'])->middleware(['admin']);
+    Route::post('/upload_file',[DeliveryController::class, 'uploadFile'])->middleware(['admin']);
     
     //ConfigTime Api
     Route::get('/check-time',[ConfigTimeController::class, 'checkTime']);
@@ -51,11 +52,12 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::post('/create-relocation',[RelocationController::class,'CreateRelocation']);
     Route::get('/get-all-relocation',[RelocationController::class,'getAllRelocation']);
     Route::put('/update-relocation/{id}',[RelocationController::class,'updateRelocation']);
+    Route::get('/get-relocation/{id}',[RelocationController::class,'getRelocation']);
 
-    //User Api
+    //Driver Api
     Route::post('/create-driver',[UserController::class,'createDriver']);
     Route::put('/update-driver/{id}',[UserController::class,'updateDriver']);
-    Route::get('/get-all-driver',[UserController::class,'getAllDrivers']);
+    Route::get('/get-all-driver',[UserController::class,'getAllDrivers'])->middleware(['driver']);
     Route::get('/get-delivery/{id}',[UserController::class,'getDelivery']);
 
     //Car Api
@@ -73,6 +75,34 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::post('/create-problem',[ProblemController::class,'createProblem']);
     Route::get('/get-all-problems',[ProblemController::class,'getAllProblems']);
     Route::put('/update-problem/{id}',[ProblemController::class,'updateProblem']);
+    Route::get('/get-problem/{id}',[ProblemController::class,'getProblem']);
+
+    //Service Center
+    Route::post('/create-problem-service',[ProblemController::class,'createProblemService']);
+    Route::put('/update-problem-service/{id}',[ProblemController::class,'updateProblemService']);
+    Route::get('/get-all-problem-service',[ProblemController::class,'getAllProblemServices']);
+    Route::get('/get-problem-service/{id}',[ProblemController::class,'getProblemService']);
+    Route::delete('/problem-service/{id}',[ProblemController::class,'deleteProblemService']);
+
+    //Dashboard Api
+    Route::get('/get-counts',[DashboardController::class,'getCounts']);
+
+    //Permission Api
+    Route::get('/get-roles_group',[UserController::class,'roleGroup']);
+    Route::get('/get-permission',[UserController::class,'getPermission']);
+    Route::put('/update-permisson/{id}',[UserController::class,'updatePermission']);
+
+    //Users Api
+    Route::get('/get-users',[UserController::class,'getUsers']);
+    Route::put('/update-user/{id}',[UserController::class,'updateUser']);
+    Route::put('/update-user-active/{id}',[UserController::class,'updateUserActive']);
+    Route::put('update-user-branch/{id}',[UserController::class,'updateUserBranch']);
+    Route::get('get-all-users',[UserController::class,'getAllUsers']);
+    Route::post('create-user',[UserController::class,'createUser']);
+
+    //Mobile Api
+
+
 });
 
 

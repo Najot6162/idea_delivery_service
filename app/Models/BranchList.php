@@ -21,4 +21,11 @@ class BranchList extends Model
     public function deliveryApp(){
         return $this->belongsTo(DeliveryApp::class);
     }
+
+    public function delivery_app(){
+        return $this->hasMany(DeliveryApp::class, 'branch_id', 'id');
+    }
+    public function relocation_app(){
+        return $this->hasMany(RelocationApp::class, 'branch_send_id', 'id');
+    }
 }

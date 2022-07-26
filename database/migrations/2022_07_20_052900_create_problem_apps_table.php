@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('document_id');
             $table->string('agent_id');
             $table->enum('provodka',['Да','нет']);
-            $table->string('data_order');
+            $table->string('date_order');
             $table->string('content');
             $table->string('document_foundations');
             $table->string('document_foundations_id');

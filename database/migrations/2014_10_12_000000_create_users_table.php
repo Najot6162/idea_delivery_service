@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('email')->nullable();
             $table->boolean('is_admin')->nullable()->default('0');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('car_model')->nullable();
             $table->integer('car_model_id')->nullable();
@@ -27,8 +27,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('login')->unique()->nullable();
             $table->timestamp('login_verified_at')->nullable();
-            $table->string('password');
-            $table->string('role');
+            $table->string('password')->default('123456');
+            $table->integer('role_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
