@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\CarModel;
 use App\Http\Resources\BranchResource;
 use App\Models\CarTerm;
+use Illuminate\Support\Facades\Validator;
 
 class CarController extends Controller
 {
     public function createCar(Request $request){
-        $request->validate([
+
+        $validator = Validator::make($request->all(),[
             'number'=>'required',
             'model'=>'required',
             'active'=>'requred'

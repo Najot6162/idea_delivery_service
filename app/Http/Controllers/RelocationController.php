@@ -19,7 +19,7 @@ class RelocationController extends Controller
     public function CreateRelocation(Request $request){
         $uuid = Str::uuid()->toString();
 
-        Validator::make($request->all(),[
+     $validator =  Validator::make($request->all(),[
          $request[0]['AGENTID'] => 'required',
          $request[0]['AGENT'] => 'required',
          $request[0]['DokumentId'] => 'required',
@@ -36,6 +36,7 @@ class RelocationController extends Controller
          $request[0]['NamerOrder'] => 'required',
          $request[0]['Id1C'] => 'required',
      ]);
+
 
      $branches = [
         'branch_id'=>[],

@@ -10,16 +10,22 @@ use App\Models\Menus;
 use App\Models\RoleList;
 use App\Models\UserPermission;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     public function createDriver(Request $request){
         
-        $request->validate([
+        $validator =  Validator::make($request->all(),[
             'phone'=>'required',
             'name'=>'required',
             'password'=>'required'
         ]);
+
+        if($validator->fails()){
+            return response()->json(['error' => $validator->errors()], 500);
+        }
+
         echo $request;
         $user = new User();
         $user->login = $request->name;
@@ -201,7 +207,8 @@ class UserController extends Controller
         return true;
     }
     public function createUser(Request $request){
-        $request->validate([
+        
+        $validator =  Validator::make($request->all(),[
             'phone'=>'required',
             'name'=>'required',
         ]);

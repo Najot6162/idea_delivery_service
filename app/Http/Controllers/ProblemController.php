@@ -20,7 +20,7 @@ class ProblemController extends Controller
         $user = Auth::user();
         $data_order = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder']);
 
-        Validator::make($request->all(),[
+      $validator = Validator::make($request->all(),[
             $request[0]['AGENTID'] => 'required',
             $request[0]['AGENT'] => 'required',
             $request[0]['DokumentId'] => 'required',
@@ -43,7 +43,6 @@ class ProblemController extends Controller
             $request[0]['salesid'] => 'required',
             $request[0]['Id1C'] => 'required',
         ]);
-
         $branches = [
             'branch_id'=>[]
         ];

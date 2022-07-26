@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ConfigTime;
 use Illuminate\Support\Carbon;
 use App\Models\DeliveryApp;
+use Illuminate\Support\Facades\Validator;
 
 class ConfigTimeController extends Controller
 {
@@ -42,7 +43,7 @@ class ConfigTimeController extends Controller
     }
 
     public function creteConfigTime(Request $request){
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'user_id'=>'required',
             'time'=>'required',
         ]);

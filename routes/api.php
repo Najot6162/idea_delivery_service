@@ -90,6 +90,10 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::put('update-user-branch/{id}',[UserController::class,'updateUserBranch']);
     Route::get('get-all-users',[UserController::class,'getAllUsers']);
     Route::post('create-user',[UserController::class,'createUser']);
+
+    //Mobile Api
+    
+
 });
 
 
