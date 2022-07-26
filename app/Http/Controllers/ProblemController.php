@@ -11,6 +11,7 @@ use App\Models\ProblemApp;
 use App\Models\ProblemProduct;
 use Illuminate\Support\Facades\Validator;
 use App\Models\BranchList;
+use App\Models\ProblemService;
 use App\Models\ProblemTimeStep;
 
 class ProblemController extends Controller
@@ -70,7 +71,7 @@ class ProblemController extends Controller
         $problem->document_id = $request[0]['DokumentId'];
         $problem->agent_id = $request[0]['AGENTID'];  
         $problem->provodka = $request[0]['PRAVODKA'];  
-        $problem->data_order = $data_order;
+        $problem->date_order = $data_order;
         $problem->complect = $request[0]['complekt'];
         $problem->content = $request[0]['Content']; 
         $problem->document_foundations = $request[0]['Dokumentfoundations'];
@@ -195,4 +196,95 @@ class ProblemController extends Controller
 
     }
 
+    public function getProblem(Request $request, $id){
+        $search = $request['search']??"";
+        $pageCount = $request['page']??"10";
+        $start_date = $request->start_date;
+        $end_date = $request->end_date; 
+
+        $branchs = BranchList::get();
+        $send_branches = array();
+        $recieve_branches = array();
+    foreach ($branchs as $branch){
+        array_push($send_branches,$branch->id);
+    }
+    foreach ($branchs as $branch){
+        array_push($recieve_branches,$branch->token);
+    } 
+        $problem = ProblemApp::where('user_id', $id)
+        ->where('step','LIKE',"%$search%") 
+        ->whereIn('status',$request->status??[1,2,3,4,5,6,7,8])
+        ->whereIn('step',$request->status_time??[1,2,3,4,5,6,7,8,9,10]);
+
+        if($start_date){
+            $problem->where('date_order','>=',$start_date);
+        }
+        if($end_date){
+            $problem->where('date_order','<=',$end_date);
+        }
+        if($start_date&&$end_date){
+            $problem->whereBetween('date_order', [$start_date,$end_date]);
+        }
+        if($request->branch_id){
+            $problem->whereIn('branch_id',$request->branch_id);
+        }
+        return BranchResource::collection($problem->paginate($pageCount));
+    }
+
+    public function createProblemService(Request $request){
+        $validator = Validator::make($request->all(),[
+            'title'=>'required',
+            'address'=>'required',
+            'phone'=>'required'
+        ]);
+
+        $problem_service = new ProblemService();
+        $problem_service->title = $request->title;
+        $problem_service->address = $request->address;
+        $problem_service->phone = $request->phone;
+        if($request->status){
+            $problem_service->status = $request->status ;
+        }
+        
+        if($problem_service->save()){
+            echo " problem service created";
+        }
+    }
+
+    public function getProblemService(Request $request,$id){
+        $problem_service = ProblemService::findOrFail($id);
+        return $problem_service;
+    }
+    public function getAllProblemServices(Request $request){
+        $search = $request['search']??"";
+        $pageCount = $request['page']??"10";
+
+        $problem_services = ProblemService::where('title','LIKE',"%$search%")->paginate($pageCount);
+        return $problem_services;
+    }
+    public function updateProblemService(Request $request,$id){
+        $validator = Validator::make($request->all(),[
+            'title'=>'required',
+            'address'=>'required',
+            'phone'=>'required'
+        ]);
+        $problem_service = ProblemService::findOrFail($id);
+        $problem_service->title = $request->title;
+        $problem_service->address = $request->address;
+        $problem_service->phone = $request->phone;
+        if($request->status){
+            $problem_service->status = $request->status;
+        }
+
+        if($problem_service->save()){
+            echo " problem service updated";
+        }
+    }
+
+    public function deleteProblemService(Request $request, $id){
+        $problem_service = ProblemService::findOrFail($id);
+        if($problem_service->delete()){
+            return "deleted problem service";
+        }
+    }
 }

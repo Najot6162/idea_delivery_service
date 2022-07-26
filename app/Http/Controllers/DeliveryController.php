@@ -194,7 +194,6 @@ class DeliveryController extends Controller
         if($delivery->save()){
             echo "delivery updated  ";
         };
-        return "Ok";
     }
 
     public function gettAllDelivery(Request $request){    

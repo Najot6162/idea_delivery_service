@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::post('/create-relocation',[RelocationController::class,'CreateRelocation']);
     Route::get('/get-all-relocation',[RelocationController::class,'getAllRelocation']);
     Route::put('/update-relocation/{id}',[RelocationController::class,'updateRelocation']);
+    Route::get('/get-relocation/{id}',[RelocationController::class,'getRelocation']);
 
     //Driver Api
     Route::post('/create-driver',[UserController::class,'createDriver']);
@@ -74,6 +75,14 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::post('/create-problem',[ProblemController::class,'createProblem']);
     Route::get('/get-all-problems',[ProblemController::class,'getAllProblems']);
     Route::put('/update-problem/{id}',[ProblemController::class,'updateProblem']);
+    Route::get('/get-problem/{id}',[ProblemController::class,'getProblem']);
+
+    //Service Center
+    Route::post('/create-problem-service',[ProblemController::class,'createProblemService']);
+    Route::put('/update-problem-service/{id}',[ProblemController::class,'updateProblemService']);
+    Route::get('/get-all-problem-service',[ProblemController::class,'getAllProblemServices']);
+    Route::get('/get-problem-service/{id}',[ProblemController::class,'getProblemService']);
+    Route::delete('/problem-service/{id}',[ProblemController::class,'deleteProblemService']);
 
     //Dashboard Api
     Route::get('/get-counts',[DashboardController::class,'getCounts']);
@@ -92,7 +101,7 @@ Route::group(['middleware' => ['auth:sanctum']],function (){
     Route::post('create-user',[UserController::class,'createUser']);
 
     //Mobile Api
-    
+
 
 });
 
