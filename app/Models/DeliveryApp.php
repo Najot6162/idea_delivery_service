@@ -40,7 +40,7 @@ class DeliveryApp extends Model
         return $this->hasMany(PickupTime::class, 'app_uuid', 'uuid');
     }
     public function delivery_product(){
-        return $this->hasOne(DeliveryProduct::class, 'delivery_uuid', 'uuid');
+        return $this->hasMany(DeliveryProduct::class, 'delivery_uuid', 'uuid');
     }
     public function delivery_client(){
         return $this->hasOne(Client::class, 'client_id', 'client_id');
