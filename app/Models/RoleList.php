@@ -13,10 +13,13 @@ class RoleList extends Model
         'name'
     ];
 
-    public function menus(){
+    public function menus()
+    {
         return $this->hasOne(Menus::class, 'id', 'menu_id');
     }
-    public function users(){
+
+    public function users()
+    {
         return $this->hasOne(User::class, 'role_id', 'id');
     }
 }

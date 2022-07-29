@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -20,7 +19,7 @@ return new class extends Migration
             $table->string('service_id')->nullable();
             $table->string('document_id');
             $table->string('agent_id');
-            $table->enum('provodka',['Да','нет']);
+            $table->enum('provodka', ['Да', 'нет']);
             $table->string('date_order');
             $table->string('content');
             $table->string('document_foundations');
@@ -40,9 +39,9 @@ return new class extends Migration
             $table->string('status');
             $table->string('status_app');
             $table->string('step');
-            $table->enum('reception_type',['1','2','3'])->nullable();
-            $table->enum('new_product',['0','1'])->nullable();
-            $table->enum('is_problem',['0','1'])->nullable();
+            $table->enum('reception_type', ['1', '2', '3'])->nullable();
+            $table->enum('new_product', ['0', '1'])->nullable();
+            $table->enum('is_problem', ['0', '1'])->nullable();
             $table->timestamps();
         });
     }

@@ -10,14 +10,16 @@ class CarModel extends Model
     use HasFactory;
 
     protected $fillable = [
-        'number','model','active','is_del','used'
+        'number', 'model', 'active', 'is_del', 'used'
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function car_term(){
+    public function car_term()
+    {
         return $this->hasOne(CarTerm::class, 'car_model_id', 'id');
     }
 }

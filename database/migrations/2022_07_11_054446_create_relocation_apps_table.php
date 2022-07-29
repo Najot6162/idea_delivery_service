@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -21,7 +20,7 @@ return new class extends Migration
             $table->string('agent_recieve_id');
             $table->string('agent_recieve');
             $table->string('document_id');
-            $table->enum('provodka',['Да','нет ']);
+            $table->enum('provodka', ['Да', 'нет ']);
             $table->string('date_order');
             $table->string('date_recieve');
             $table->text('content')->nullable();

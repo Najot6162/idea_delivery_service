@@ -10,18 +10,21 @@ class ProblemTimeStep extends Model
     use HasFactory;
 
     protected $fillable = [
-        'problem_uuid','step','user_id','branch_id','month_uniq','comment','active'
+        'problem_uuid', 'step', 'user_id', 'branch_id', 'month_uniq', 'comment', 'active'
     ];
 
-    public function problemApp(){
+    public function problemApp()
+    {
         return $this->belongsTo(ProblemApp::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function branch(){
+    public function branch()
+    {
         return $this->hasOne(BranchList::class, 'id', 'branch_id');
     }
 }
