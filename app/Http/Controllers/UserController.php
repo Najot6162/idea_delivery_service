@@ -251,5 +251,8 @@ class UserController extends Controller
         $users = User::with(['carModel', 'userPermission'])->where('name', 'LIKE', "%$search%")->paginate($pageCount);
         return $users;
     }
-
+    public  function  getMenus(){
+        $menus = Menus::get();
+        return $menus;
+    }
 }

@@ -92,14 +92,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-roles_group', [UserController::class, 'roleGroup']);
     Route::get('/get-permission', [UserController::class, 'getPermission']);
     Route::put('/update-permisson/{id}', [UserController::class, 'updatePermission']);
-
+    Route::get('/get-menus',[UserController::class,'getMenus']);
     //Users Api
     Route::get('/get-users', [UserController::class, 'getUsers']);
     Route::put('/update-user/{id}', [UserController::class, 'updateUser']);
     Route::put('/update-user-active/{id}', [UserController::class, 'updateUserActive']);
-    Route::put('update-user-branch/{id}', [UserController::class, 'updateUserBranch']);
-    Route::get('get-all-users', [UserController::class, 'getAllUsers']);
-    Route::post('create-user', [UserController::class, 'createUser']);
+    Route::put('/update-user-branch/{id}', [UserController::class, 'updateUserBranch']);
+    Route::get('/get-all-users', [UserController::class, 'getAllUsers']);
+    Route::post('/create-user', [UserController::class, 'createUser']);
 
     //Mobile Api
 
