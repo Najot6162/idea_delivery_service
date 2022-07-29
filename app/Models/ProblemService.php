@@ -10,6 +10,6 @@ class ProblemService extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title','address','phone','status'
+        'title', 'address', 'phone', 'status'
     ];
 }

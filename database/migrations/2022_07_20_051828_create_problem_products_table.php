@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -22,7 +21,7 @@ return new class extends Migration
             $table->string('imel_id');
             $table->string('product_amount');
             $table->integer('product_code');
-            $table->enum('active',['0','1'])->nullable();
+            $table->enum('active', ['0', '1'])->nullable();
             $table->timestamps();
         });
     }

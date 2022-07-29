@@ -10,9 +10,11 @@ class ConfigTime extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id','time','count_app','active'
+        'user_id', 'time', 'count_app', 'active'
     ];
-    public function user(){
+
+    public function user()
+    {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

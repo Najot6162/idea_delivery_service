@@ -10,13 +10,16 @@ class UserPermission extends Model
     use HasFactory;
 
     protected $fillable = [
-        'role_id','menu_id','value'
+        'role_id', 'menu_id', 'value'
     ];
 
-    public function roles(){
+    public function roles()
+    {
         return $this->hasOne(RoleList::class, 'id', 'role_id');
     }
-    public function menus(){
+
+    public function menus()
+    {
         return $this->hasOne(Menus::class, 'id', 'menu_id');
     }
 }

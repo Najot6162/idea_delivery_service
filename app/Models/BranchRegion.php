@@ -13,7 +13,8 @@ class BranchRegion extends Model
         'name'
     ];
 
-    public function branch(){
+    public function branch()
+    {
         return $this->hasOne(BranchList::class, 'region_id', 'id');
     }
 }

@@ -10,10 +10,11 @@ class RelocationTimeStep extends Model
     use HasFactory;
 
     protected $fillable = [
-        'relocation_uuid','step','user_id','branch_id','month_uniq','comment','active'
+        'relocation_uuid', 'step', 'user_id', 'branch_id', 'month_uniq', 'comment', 'active'
     ];
-    
-    public function user(){
+
+    public function user()
+    {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

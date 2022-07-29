@@ -18,21 +18,27 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'email', 'is_admin','phone','address','car_model','car_model_id','active',
-        'branch_id','name','password','role_id'
+        'email', 'is_admin', 'phone', 'address', 'car_model', 'car_model_id', 'active',
+        'branch_id', 'name', 'password', 'role_id','device_token'
     ];
 
-    public function deliveryApp(){
+    public function deliveryApp()
+    {
         return $this->hasMany(DeliveryApp::class, 'driver_id', 'id');
     }
-    public function carModel(){
-        return $this->hasOne(CarModel::class,'id','car_model_id');
+
+    public function carModel()
+    {
+        return $this->hasOne(CarModel::class, 'id', 'car_model_id');
     }
-    public function relocationApp(){
+
+    public function relocationApp()
+    {
         return $this->hasMany(RelocationApp::class, 'driver_id', 'id');
     }
 
-    public function userPermission(){
+    public function userPermission()
+    {
         return $this->hasMany(UserPermission::class, 'role_id', 'role_id');
     }
 

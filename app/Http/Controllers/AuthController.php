@@ -21,15 +21,15 @@ class AuthController extends Controller
             return response()->json([
                 'status_code' => 400,
                 'message' => 'Bad Request'
-            ]);
+            ],400);
         }
         $credentials = request(['phone', 'password']);
 
         if (!Auth::attempt($credentials)) {
             return response()->json([
-                'status_code' => 500,
+                'status_code' => 404,
                 'message' => 'Unauthorized'
-            ]);
+            ],404);
         }
 
         $user = User::where('phone', $request->phone)->first();
