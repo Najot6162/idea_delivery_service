@@ -25,66 +25,61 @@ class UserSeeder extends Seeder
             [
                 'email'=>'admin@gmail.com',
                 'is_admin'=>1,
-                'phone'=>'+998901234567',
+                'phone'=>'998901234561',
                 'address'=>'Yunusobod',
                 'active'=>1,
                 'branch_id'=>1,
                 'name'=>'admin',
-                'login'=>'dell1',
                 'password'=>bcrypt('dell123'),
                 'role_id'=>1
             ],
             [
                 'email'=>'xxx@gmail.com',
                 'is_admin'=>0,
-                'phone'=>'+998901234567',
+                'phone'=>'998901234562',
                 'address'=>'Yunusobod',
                 'car_model_id'=>1,
                 'active'=>1,
                 'branch_id'=>1,
                 'name'=>'driver',
-                'login'=>'driver2',
                 'password'=>bcrypt('driver'),
                 'role_id'=>2
             ],
             [
                 'email'=>'zzz@gmail.com',
                 'is_admin'=>0,
-                'phone'=>'+998901234567',
+                'phone'=>'998901234563',
                 'address'=>'Yunusobod',
                 'car_model_id'=>1,
                 'active'=>1,
                 'branch_id'=>1,
                 'name'=>'driver',
-                'login'=>'driver3',
                 'password'=>bcrypt('driver'),
                 'role_id'=>3
             ],
             [
                 'email'=>'driver@gmail.com',
                 'is_admin'=>1,
-                'phone'=>'+998901234567',
+                'phone'=>'998901234564',
                 'address'=>'Yunusobod',
                 'active'=>1,
                 'branch_id'=>1,
                 'name'=>'admin',
-                'login'=>'dell121',
                 'password'=>bcrypt('dell123'),
                 'role_id'=>4
             ],
             [
                 'email'=>'driver5@gmail.com',
                 'is_admin'=>0,
-                'phone'=>'+998901234567',
+                'phone'=>'998901234565',
                 'address'=>'Yunusobod',
                 'car_model_id'=>1,
                 'active'=>1,
                 'branch_id'=>1,
                 'name'=>'driver',
-                'login'=>'1245',
                 'password'=>bcrypt('driver'),
                 'role_id'=>5
-            ]   
+            ]
             ];
         $car_models = [
          [
@@ -108,7 +103,7 @@ class UserSeeder extends Seeder
             'is_del'=>0,
             'used'=>12
         ]
-        ]; 
+        ];
 
         $regions = [
             [
@@ -222,8 +217,8 @@ class UserSeeder extends Seeder
                 [
                     'name'=>'Сервисный центр'
                 ]
-                ]; 
-                
+                ];
+
                 $user_permissions = [
                     [
                         'role_id'=>1,
@@ -487,7 +482,7 @@ class UserSeeder extends Seeder
 
             foreach($menus as $key => $value){
                 Menus::create($value);
-            }        
+            }
             foreach($role_lists as $key => $value){
                 RoleList::create($value);
             }
