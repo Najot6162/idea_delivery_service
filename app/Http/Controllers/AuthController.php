@@ -21,7 +21,7 @@ class AuthController extends Controller
             return response()->json([
                 'status_code' => 400,
                 'message' => 'Bad Request'
-            ],400);
+            ], 400);
         }
         $credentials = request(['phone', 'password']);
 
@@ -29,7 +29,7 @@ class AuthController extends Controller
             return response()->json([
                 'status_code' => 404,
                 'message' => 'Unauthorized'
-            ],404);
+            ], 404);
         }
 
         $user = User::where('phone', $request->phone)->first();
@@ -44,11 +44,14 @@ class AuthController extends Controller
     {
         if ($request->user()) {
             $request->user()->tokens()->delete();
+            if ($request->user()->fcm_token) {
+                $user = User::findOrFail($request->user()->id);
+                $user->fcm_token = null;
+                $user->save();
+            }
         }
-        // Auth::logout();
-        // // $request->user()->currentAccessToken()->delete();
         return response()->json([
-            'message' => 'Token deleted successfully'
+            'message' => 'Token and FCM Token deleted successfully'
         ]);
     }
 }

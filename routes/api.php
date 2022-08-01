@@ -12,7 +12,7 @@ use \App\Http\Controllers\CarController;
 use \App\Http\Controllers\CallCenterController;
 use App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\ProblemController;
-
+use \App\Http\Controllers\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -100,8 +100,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/update-user-branch/{id}', [UserController::class, 'updateUserBranch']);
     Route::get('/get-all-users', [UserController::class, 'getAllUsers']);
     Route::post('/create-user', [UserController::class, 'createUser']);
+    Route::post('/create-fcm-token/{id}',[NotificationController::class,'createFcmToken']);
 
-    //Mobile Api
 
 
 });
