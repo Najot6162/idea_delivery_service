@@ -15,6 +15,7 @@ use App\Models\ConfigTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\Agent;
+use App\Http\Controllers\NotificationController;
 
 class DeliveryController extends Controller
 {
@@ -175,6 +176,11 @@ class DeliveryController extends Controller
         $delivery = DeliveryApp::findOrFail($id);
         if ($request->step !== 1) {
             $delivery->driver_id = $request->user_id;
+        }
+        if ($request->step==2){
+            //send notification
+            $notife = new NotificationController();
+            $notife->sendNotification($request->user_id);
         }
         if ($request->branch_step) {
             $delivery->branch_step = $request->branch_step;

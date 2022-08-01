@@ -14,6 +14,7 @@ use App\Models\ConfigTime;
 use App\Models\RelocationTimeStep;
 use App\Models\User;
 use App\Models\Agent;
+use App\Http\Controllers\NotificationController;
 
 class RelocationController extends Controller
 {
@@ -153,6 +154,11 @@ class RelocationController extends Controller
             $relocation->driver_id = $request->driver_id;
             $user = User::findOrFail($request->driver_id);
             $relocation->car_model_id = $user->car_model_id;
+
+            //send notification
+            $notife = new NotificationController();
+            $notife->sendNotification($request->driver_id);
+
         }
         $relocation->status = $request->step;
 
