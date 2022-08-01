@@ -51,7 +51,7 @@ class NotificationController extends Controller
                 'fcm_token' => 'required|unique:users',
             ]
         );
-
+        //Validate
         if ($validator->fails()) {
             return response()->json([
                 'status_code' => 208,
