@@ -31,8 +31,7 @@ class AuthController extends Controller
                 'message' => 'Unauthorized'
             ], 404);
         }
-
-        $user = User::where('phone', $request->phone)->first();
+        $user = User::with(['userPermission','carModel'])->where('phone', $request->phone)->first();
         $tokenResult = $user->createToken('authToken')->plainTextToken;
         return response()->json([
             'token' => $tokenResult,
