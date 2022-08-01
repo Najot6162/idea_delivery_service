@@ -19,7 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'email', 'is_admin', 'phone', 'address', 'car_model', 'car_model_id', 'active',
-        'branch_id', 'name', 'password', 'role_id','device_token'
+        'branch_id', 'name', 'password', 'role_id','fcm_token'
     ];
 
     public function deliveryApp()

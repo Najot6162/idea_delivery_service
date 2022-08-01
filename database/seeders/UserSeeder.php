@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
                 'active' => 1,
                 'branch_id' => 1,
                 'name' => 'admin',
-                'password' => bcrypt('dell123'),
+                'password' => bcrypt('123456'),
                 'role_id' => 1
             ],
             [
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
                 'active' => 1,
                 'branch_id' => 1,
                 'name' => 'driver',
-                'password' => bcrypt('driver'),
+                'password' => bcrypt('123456'),
                 'role_id' => 2
             ],
             [
@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
                 'active' => 1,
                 'branch_id' => 1,
                 'name' => 'driver',
-                'password' => bcrypt('driver'),
+                'password' => bcrypt('123456'),
                 'role_id' => 3
             ],
             [
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
                 'active' => 1,
                 'branch_id' => 1,
                 'name' => 'admin',
-                'password' => bcrypt('dell123'),
+                'password' => bcrypt('123456'),
                 'role_id' => 4
             ],
             [
@@ -77,7 +77,7 @@ class UserSeeder extends Seeder
                 'active' => 1,
                 'branch_id' => 1,
                 'name' => 'driver',
-                'password' => bcrypt('driver'),
+                'password' => bcrypt('123456'),
                 'role_id' => 5
             ]
         ];
@@ -167,58 +167,194 @@ class UserSeeder extends Seeder
 
         $menus = [
             [
-                'name' => 'Заявки'
+                'name' => 'Заявки',
+                'type'=>0
             ],
             [
-                'name' => 'Водители'
+                'name' => 'Водители',
+                'type'=>0
             ],
             [
-                'name' => 'Сотрудники'
+                'name' => 'Сотрудники',
+                'type'=>0
             ],
             [
-                'name' => 'Машины'
+                'name' => 'Машины',
+                'type'=>0
             ],
             [
-                'name' => 'Меню пользователя'
+                'name' => 'Меню пользователя',
+                'type'=>0
             ],
             [
-                'name' => 'Список заявок'
+                'name' => 'Список заявок',
+                'type'=>0
             ],
             [
-                'name' => 'Поля заявки'
+                'name' => 'Поля заявки',
+                'type'=>0
             ],
             [
-                'name' => 'Срок доставки'
+                'name' => 'Срок доставки',
+                'type'=>0
             ],
             [
-                'name' => 'Заявки'
+                'name' => 'Заявки',
+                'type'=>0
             ],
             [
-                'name' => 'Отклоненные заказы'
+                'name' => 'Отклоненные заказы',
+                'type'=>0
             ],
             [
-                'name' => 'Перемещения'
+                'name' => 'Перемещения',
+                'type'=>0
             ],
             [
-                'name' => 'Колл-центр'
+                'name' => 'Колл-центр',
+                'type'=>0
             ],
             [
-                'name' => 'CRM'
+                'name' => 'CRM',
+                'type'=>0
             ],
             [
-                'name' => 'Филиалы'
+                'name' => 'Филиалы',
+                'type'=>0
             ],
             [
-                'name' => 'Список сервис'
+                'name' => 'Список сервис',
+                'type'=>0
             ],
             [
-                'name' => 'Список ползаватели'
+                'name' => 'Список ползаватели',
+                'type'=>0
             ],
             [
-                'name' => 'Сервисный центр'
+                'name' => 'Сервисный центр',
+                'type'=>0
+            ],
+
+            //menus for mobile
+            [
+                'name'=>'Склад',
+                'type'=> 1,
+                'step'=>0
+            ],
+            [
+                'name'=>'Доставка',
+                'type'=> 1,
+                'step'=>0
+            ],
+            [
+                'name'=>'Доставлено',
+                'type'=> 1,
+                'step'=>0
+            ],
+            [
+                'name'=>'Склад',
+                'type'=> 1,
+                'step'=>1
+            ],
+            [
+                'name'=>'Доставка',
+                'type'=> 1,
+                'step'=>1
+            ],
+            [
+                'name'=>'Доставлено',
+                'type'=> 1,
+                'step'=>1
+            ],
+            [
+                'name'=>'Входящие заявки от другого',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Входящие заявки',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Доставлено',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Принято',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Забрали из сервис центра',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Отправлен в магазин',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Заполненные заявки',
+                'type'=> 1
             ]
         ];
-
+        $menus_for_mobile=[
+            [
+                'name'=>'Склад',
+                'type'=> 1,
+                'step'=>0
+            ],
+            [
+                'name'=>'Доставка',
+                'type'=> 1,
+                'step'=>0
+            ],
+            [
+                'name'=>'Доставлено',
+                'type'=> 1,
+                'step'=>0
+            ],
+            [
+                'name'=>'Склад',
+                'type'=> 1,
+                'step'=>1
+            ],
+            [
+                'name'=>'Доставка',
+                'type'=> 1,
+                'step'=>1
+            ],
+            [
+                'name'=>'Доставлено',
+                'type'=> 1,
+                'step'=>1
+            ],
+            [
+                'name'=>'Входящие заявки от другого',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Входящие заявки',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Доставлено',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Принято',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Забрали из сервис центра',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Отправлен в магазин',
+                'type'=> 1
+            ],
+            [
+                'name'=>'Заполненные заявки',
+                'type'=> 1
+            ]
+        ];
         $user_permissions = [
             [
                 'role_id' => 1,
