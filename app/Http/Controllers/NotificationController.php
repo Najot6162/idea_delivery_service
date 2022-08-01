@@ -48,12 +48,15 @@ class NotificationController extends Controller
         $validator = Validator::make(
             request()->all(),
             [
-                'fcm_token' => 'required',
+                'fcm_token' => 'required|unique:users',
             ]
         );
 
         if ($validator->fails()) {
-            return $validator->errors();
+            return response()->json([
+                'status_code' => 208,
+                'message' => $validator->errors()
+            ], 208);
         }
         $user = User::findOrFail($id);
 

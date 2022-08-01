@@ -210,8 +210,8 @@ class DeliveryController extends Controller
         $pageCount = $request['page'] ?? "10";
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-        $deliveries = DeliveryApp::with(['pickup_time', 'pickup_time.user', 'pickup_time.branch', 'branch', 'branch_sale',
-            'files', 'user', 'car_model', 'config_time', 'delivery_product', 'delivery_client', 'agents'])
+        $deliveries = DeliveryApp::with(['pickup_time', 'pickup_time.user','pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
+            'files', 'user', 'config_time', 'delivery_product', 'delivery_client', 'agents'])
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
             })
