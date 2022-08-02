@@ -140,10 +140,13 @@ class RelocationController extends Controller
             ->whereBetween('date_order', [$start_date, $end_date])
             ->whereIn('status', $request->status ?? [1, 2, 3, 4])
             ->whereIn('branch_send_id', $request->branch_send_id ?? $send_branches)
-            ->whereIn('branch_recieve_id', $request->branch_recieve_id ?? $recieve_branches)
-            ->paginate($pageCount);
+            ->whereIn('branch_recieve_id', $request->branch_recieve_id ?? $recieve_branches);
 
-        return BranchResource::collection($relocations);
+        if ($request->driver_id) {
+            $relocations->whereIn('driver_id', $request->driver_id);
+        }
+
+        return BranchResource::collection($relocations->paginate($pageCount));
     }
 
     public function updateRelocation(Request $request, $id)

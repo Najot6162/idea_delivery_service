@@ -143,6 +143,9 @@ class ProblemController extends Controller
         if ($start_date && $end_date) {
             $problems->whereBetween('data_order', [$start_date, $end_date]);
         }
+        if ($request->user_id) {
+            $problems->whereIn('user_id', $request->user_id);
+        }
 
         return BranchResource::collection($problems->paginate($pageCount));
     }
