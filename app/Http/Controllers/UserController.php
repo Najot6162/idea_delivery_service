@@ -254,7 +254,7 @@ class UserController extends Controller
 
     public function getMenus(Request $request)
     {
-        $menus = Menus::where('type',$request->type)->orderBy('id','asc')->get();
+        $menus = Menus::with('userPermission')->where('type',$request->type)->orderBy('id','asc')->get();
         return $menus;
     }
 }

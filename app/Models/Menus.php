@@ -12,4 +12,10 @@ class Menus extends Model
     protected $fillable = [
         'name','type','step'
     ];
+
+
+    public function userPermission()
+    {
+        return $this->hasMany(UserPermission::class, 'menu_id', 'id');
+    }
 }
