@@ -122,6 +122,7 @@ class DeliveryController extends Controller
         //$delivery->confirm_cancelled = ?
         //$delivery->driver_manager = ?
 
+
         if ($delivery->save()) {
             echo " Delivery_app  saved  ";
         }
@@ -177,7 +178,7 @@ class DeliveryController extends Controller
         if ($request->step !== 1) {
             $delivery->driver_id = $request->user_id;
         }
-        if ($request->step==2){
+        if ($request->step==5){
             //send notification
             $notife = new NotificationController();
             $notife->sendNotification($request->user_id);
@@ -212,10 +213,10 @@ class DeliveryController extends Controller
         $end_date = $request->end_date;
         $deliveries = DeliveryApp::with(['pickup_time', 'pickup_time.user','pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
             'files', 'user', 'config_time', 'delivery_product', 'delivery_client', 'agents'])
-            ->whereHas('agents', function ($q) use ($search) {
-                $q->where('agent', 'LIKE', "%$search%");
-            })
-            ->whereIn('status', $request->status ?? [1, 2, 3, 4, 5, 6, 7, 8])
+                ->whereHas('agents', function ($q) use ($search) {
+                    $q->where('agent', 'LIKE', "%$search%");
+                })
+            ->whereIn('status', $request->status ?? [1, 5,10,15,20,25,30,35,40])
             ->whereIn('status_time', $request->status_time ?? [1, 2, 3, 4]);
 
         if ($start_date) {

@@ -295,66 +295,6 @@ class UserSeeder extends Seeder
                 'type'=> 1
             ]
         ];
-        $menus_for_mobile=[
-            [
-                'name'=>'Склад',
-                'type'=> 1,
-                'step'=>0
-            ],
-            [
-                'name'=>'Доставка',
-                'type'=> 1,
-                'step'=>0
-            ],
-            [
-                'name'=>'Доставлено',
-                'type'=> 1,
-                'step'=>0
-            ],
-            [
-                'name'=>'Склад',
-                'type'=> 1,
-                'step'=>1
-            ],
-            [
-                'name'=>'Доставка',
-                'type'=> 1,
-                'step'=>1
-            ],
-            [
-                'name'=>'Доставлено',
-                'type'=> 1,
-                'step'=>1
-            ],
-            [
-                'name'=>'Входящие заявки от другого',
-                'type'=> 1
-            ],
-            [
-                'name'=>'Входящие заявки',
-                'type'=> 1
-            ],
-            [
-                'name'=>'Доставлено',
-                'type'=> 1
-            ],
-            [
-                'name'=>'Принято',
-                'type'=> 1
-            ],
-            [
-                'name'=>'Забрали из сервис центра',
-                'type'=> 1
-            ],
-            [
-                'name'=>'Отправлен в магазин',
-                'type'=> 1
-            ],
-            [
-                'name'=>'Заполненные заявки',
-                'type'=> 1
-            ]
-        ];
         $user_permissions = [
             [
                 'role_id' => 1,
@@ -443,178 +383,73 @@ class UserSeeder extends Seeder
                 'value' => 0,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 1,
+                'role_id' => 1,
+                'menu_id' => 18,
                 'value' => 1,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 2,
+                'role_id' => 1,
+                'menu_id' => 19,
                 'value' => 1,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 3,
+                'role_id' => 1,
+                'menu_id' => 20,
                 'value' => 0,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 4,
+                'role_id' => 1,
+                'menu_id' => 21,
                 'value' => 1,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 5,
+                'role_id' => 1,
+                'menu_id' => 22,
                 'value' => 1,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 6,
+                'role_id' => 1,
+                'menu_id' => 23,
                 'value' => 0,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 7,
+                'role_id' => 1,
+                'menu_id' => 24,
                 'value' => 1,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 8,
+                'role_id' => 1,
+                'menu_id' => 25,
                 'value' => 1,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 9,
+                'role_id' => 1,
+                'menu_id' => 26,
                 'value' => 0,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 10,
+                'role_id' => 1,
+                'menu_id' => 27,
                 'value' => 0,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 11,
+                'role_id' => 1,
+                'menu_id' => 28,
                 'value' => 1,
             ]
             ,
             [
-                'role_id' => 2,
-                'menu_id' => 12,
+                'role_id' => 1,
+                'menu_id' => 29,
                 'value' => 1,
             ],
             [
-                'role_id' => 2,
-                'menu_id' => 13,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 14,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 15,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 16,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 17,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 1,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 2,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 3,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 4,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 5,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 6,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 7,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 8,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 9,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 10,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 11,
-                'value' => 1,
-            ]
-            ,
-            [
-                'role_id' => 3,
-                'menu_id' => 12,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 13,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 14,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 15,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 16,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 3,
-                'menu_id' => 17,
+                'role_id' => 1,
+                'menu_id' => 30,
                 'value' => 0,
             ]
         ];
+
 
         foreach ($menus as $key => $value) {
             Menus::create($value);

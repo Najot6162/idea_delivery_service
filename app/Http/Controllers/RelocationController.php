@@ -137,10 +137,11 @@ class RelocationController extends Controller
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
             })
-            ->whereBetween('date_order', [$start_date, $end_date])
-            ->whereIn('status', $request->status ?? [1, 2, 3, 4])
-            ->whereIn('branch_send_id', $request->branch_send_id ?? $send_branches)
-            ->whereIn('branch_recieve_id', $request->branch_recieve_id ?? $recieve_branches);
+           // ->whereBetween('date_order', [$start_date, $end_date])
+            ->whereIn('status', $request->status ?? [1,5,10,15,20]);
+            //->whereIn('branch_send_id', $request->branch_send_id ?? $send_branches)
+           // ->whereIn('branch_recieve_id', $request->branch_recieve_id ?? $recieve_branches);
+
 
         if ($request->driver_id) {
             $relocations->whereIn('driver_id', $request->driver_id);
@@ -153,7 +154,7 @@ class RelocationController extends Controller
     {
         $user = Auth::user();
         $relocation = RelocationApp::findOrFail($id);
-        if ($request->step == 2) {
+        if ($request->step == 5) {
             $relocation->driver_id = $request->driver_id;
             $user = User::findOrFail($request->driver_id);
             $relocation->car_model_id = $user->car_model_id;
@@ -199,7 +200,7 @@ class RelocationController extends Controller
         }
         $relocation = RelocationApp::where('driver_id', $id)
             ->where('status_time', 'LIKE', "%$search%")
-            ->whereIn('status', $request->status ?? [1, 2, 3, 4, 5, 6, 7, 8])
+            ->whereIn('status', $request->status ?? [1,5,10,15,20])
             ->whereIn('status_time', $request->status_time ?? [1, 2, 3, 4])
             ->whereIn('branch_send_id', $request->branch_send_id ?? $send_branches)
             ->whereIn('branch_recieve_id', $request->branch_recieve_id ?? $recieve_branches);

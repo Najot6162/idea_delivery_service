@@ -50,6 +50,7 @@ return new class extends Migration {
             $table->integer('delivered_branch')->nullable();
             $table->enum('confirm_cancelled', ['0' . '1'])->nullable();
             $table->integer('driver_manager')->nullable();
+            $table->integer('step')->nullable();
             $table->timestamps();
         });
     }

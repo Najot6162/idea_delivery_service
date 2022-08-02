@@ -166,7 +166,12 @@ class UserController extends Controller
 
     public function getPermission(Request $request)
     {
-        $menus = UserPermission::with('menus')->where('role_id', $request->role_id)->get();
+        $menus = UserPermission::with('menus')
+            ->where('role_id', $request->role_id)
+            ->whereHas('menus', function ($q) use ($request) {
+                $q->where('type', 'LIKE', $request->type);
+            })->orderBy('menu_id','asc')
+            ->get();
         return $menus;
     }
 
@@ -254,7 +259,7 @@ class UserController extends Controller
 
     public function getMenus(Request $request)
     {
-        $menus = Menus::with('userPermission')->where('type',$request->type)->orderBy('id','asc')->get();
+        $menus = Menus::where('type',$request->type)->orderBy('id','asc')->get();
         return $menus;
     }
 }

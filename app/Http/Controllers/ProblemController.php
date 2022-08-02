@@ -88,7 +88,6 @@ class ProblemController extends Controller
         $problem->sales_id = $request[0]['salesid'];
         $problem->id_1c = $request[0]['Id1C'];
         $problem->status_app = $request[0]['status'];
-        $problem->step = 1;
         $problem->status = 1;
         if ($problem->save()) {
             echo "problem app saved ";
@@ -132,7 +131,7 @@ class ProblemController extends Controller
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
             })
-            ->whereIn('status', $request->status ?? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+            ->whereIn('status', $request->status ?? [1,5,10,15,20,25,30,35,40,45,50,99]);
 
         if ($start_date) {
             $problems->where('data_order', '>=', $start_date);
@@ -161,6 +160,9 @@ class ProblemController extends Controller
         if ($request->is_problem) {
             $problem->is_problem = $request->is_problem;
         };
+        if($request->service_id){
+            $problem->service_id = $request->service_id;
+        }
         $problem->status = $request->status;
         $problem->step = $request->step;
 
@@ -220,8 +222,7 @@ class ProblemController extends Controller
         }
         $problem = ProblemApp::where('user_id', $id)
             ->where('step', 'LIKE', "%$search%")
-            ->whereIn('status', $request->status ?? [1, 2, 3, 4, 5, 6, 7, 8])
-            ->whereIn('step', $request->status_time ?? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+            ->whereIn('status', $request->status ?? [1,5,10,15,20,25,30,35,40,45,50,99]);
 
         if ($start_date) {
             $problem->where('date_order', '>=', $start_date);

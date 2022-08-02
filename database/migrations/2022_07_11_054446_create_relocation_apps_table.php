@@ -34,6 +34,7 @@ return new class extends Migration {
             $table->string('car_model_id')->nullable();
             $table->string('config_time_id')->nullable();
             $table->string('status_time')->nullable();
+            $table->integer('step')->nullable();
             $table->timestamps();
         });
     }
