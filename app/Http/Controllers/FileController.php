@@ -36,8 +36,8 @@ class FileController extends Controller
 
     public function getDownload()
     {
-        //PDF file is stored under project/public/download/info.pdf
-        $file= storage_path(). "/app/public/app/BkGkMXt83gfCIwcQUMhv1Nev0x3sNQgLbPoTnviY.zip";
+        $app_json = json_decode(file_get_contents(storage_path() . "/app/public/app.json"), true);
+        $file= storage_path(). "/app/".$app_json['file_path'];
 
         $headers = array(
             'Content-Type: application/pdf',
@@ -48,9 +48,9 @@ class FileController extends Controller
 
     public function readAppJsonFile()
     {
-        $students = json_decode(file_get_contents(storage_path() . "/app/public/app.json"), true);
+        $app_json = json_decode(file_get_contents(storage_path() . "/app/public/app.json"), true);
 
         echo "<pre>";
-        print_r($students);
+        print_r($app_json);
     }
 }
