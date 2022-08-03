@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\ProblemController;
 use \App\Http\Controllers\NotificationController;
 use \App\Http\Controllers\FileController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -93,7 +94,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-roles_group', [UserController::class, 'roleGroup']);
     Route::get('/get-permission', [UserController::class, 'getPermission']);
     Route::put('/update-permisson/{id}', [UserController::class, 'updatePermission']);
-    Route::get('/get-menus',[UserController::class,'getMenus']);
+    Route::get('/get-menus', [UserController::class, 'getMenus']);
     //Users Api
     Route::get('/get-users', [UserController::class, 'getUsers']);
     Route::put('/update-user/{id}', [UserController::class, 'updateUser']);
@@ -101,15 +102,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/update-user-branch/{id}', [UserController::class, 'updateUserBranch']);
     Route::get('/get-all-users', [UserController::class, 'getAllUsers']);
     Route::post('/create-user', [UserController::class, 'createUser']);
-    Route::post('/create-fcm-token/{id}',[NotificationController::class,'createFcmToken']);
+    Route::post('/create-fcm-token/{id}', [NotificationController::class, 'createFcmToken']);
 
-    Route::post('/upload-app',[FileController::class,'uploadAppFile']);
+    Route::post('/upload-app', [FileController::class, 'uploadAppFile']);
 
     //Api for Mobile app
 
 
 });
-    //Api for Mobile app
-    Route::get('/get-mobile-menus/{id}',[UserController::class,'getPermissionForMobile']);
+        //Api for Mobile app
+    Route::get('/download-app', [FileController::class, 'getDownload']);
+    Route::get('/read-json-app-file',[FileController::class,'readAppJsonFile']);
+
+    Route::get('/get-mobile-menus/{id}', [UserController::class, 'getPermissionForMobile']);
 
     Route::post('/login', [AuthController:: class, 'login']);
