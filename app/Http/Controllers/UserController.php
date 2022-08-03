@@ -174,6 +174,16 @@ class UserController extends Controller
             ->get();
         return $menus;
     }
+    public function getPermissionForMobile(Request $request,$id)
+    {
+        $menus = UserPermission::with('menus')
+            ->where('role_id', $id)
+            ->whereHas('menus', function ($q) use ($request) {
+                $q->where('type', 1);
+            })->orderBy('menu_id','asc')
+            ->get();
+        return $menus;
+    }
 
     public function updatePermission(Request $request, $id)
     {

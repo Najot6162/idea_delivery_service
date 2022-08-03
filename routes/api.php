@@ -13,6 +13,7 @@ use \App\Http\Controllers\CallCenterController;
 use App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\ProblemController;
 use \App\Http\Controllers\NotificationController;
+use \App\Http\Controllers\FileController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -102,9 +103,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/create-user', [UserController::class, 'createUser']);
     Route::post('/create-fcm-token/{id}',[NotificationController::class,'createFcmToken']);
 
+    Route::post('/upload-app',[FileController::class,'uploadAppFile']);
+
+    //Api for Mobile app
 
 
 });
+    //Api for Mobile app
+    Route::get('/get-mobile-menus/{id}',[UserController::class,'getPermissionForMobile']);
 
-
-Route::post('/login', [AuthController:: class, 'login']);
+    Route::post('/login', [AuthController:: class, 'login']);
