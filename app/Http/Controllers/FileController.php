@@ -16,6 +16,8 @@ class FileController extends Controller
             'code_version' => 'required',
             'app' => 'required',
         ]);
+
+        Storage::deleteDirectory('public/app');
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
