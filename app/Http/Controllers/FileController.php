@@ -42,7 +42,10 @@ class FileController extends Controller
             'Content-Type: application/pdf',
         );
 
-        return Response::download($file, 'idea-delivery.apk', $headers);
+        return response()->file($file ,[
+            'Content-Type'=>'application/vnd.android.package-archive',
+            'Content-Disposition'=> 'attachment; filename="idea-delivery.apk"',
+        ]) ;
     }
 
     public function readAppJsonFile()
