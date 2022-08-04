@@ -275,11 +275,11 @@ class UserSeeder extends Seeder
                 'type'=> 1
             ],
             [
-                'name'=>'Доставлено',
+                'name'=>'Принято',
                 'type'=> 1
             ],
             [
-                'name'=>'Принято',
+                'name'=>'Оставлен в сервис центре',
                 'type'=> 1
             ],
             [
@@ -293,7 +293,7 @@ class UserSeeder extends Seeder
             [
                 'name'=>'Заполненные заявки',
                 'type'=> 1
-            ]
+            ],
         ];
         $user_permissions = [
             [

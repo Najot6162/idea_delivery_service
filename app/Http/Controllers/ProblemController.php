@@ -164,7 +164,6 @@ class ProblemController extends Controller
             $problem->service_id = $request->service_id;
         }
         $problem->status = $request->status;
-        $problem->step = $request->step;
 
         $time_step = new ProblemTimeStep();
         $time_step->problem_uuid = $problem->uuid;
