@@ -89,7 +89,6 @@ class ProblemController extends Controller
         $problem->id_1c = $request[0]['Id1C'];
         $problem->status_app = $request[0]['status'];
         $problem->status = 1;
-        $problem->step=1;
         if ($problem->save()) {
             echo "problem app saved ";
         }
