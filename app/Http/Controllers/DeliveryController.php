@@ -169,7 +169,10 @@ class DeliveryController extends Controller
             echo " Delivery_client saved  ";
         };
 
-        return " All data saved.";
+        return response()->json([
+            'status_code' => 201,
+            'message' => 'all data saved'
+        ], 201);
     }
 
     public function updateDelivery(Request $request, $id)

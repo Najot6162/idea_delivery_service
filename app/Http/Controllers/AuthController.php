@@ -50,7 +50,8 @@ class AuthController extends Controller
             }
         }
         return response()->json([
-            'message' => 'Token and FCM Token deleted successfully'
-        ]);
+            'status_code' => 200,
+            'message' => 'logout'
+        ], 200);
     }
 }

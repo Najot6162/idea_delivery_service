@@ -16,7 +16,6 @@ class UserController extends Controller
 {
     public function createDriver(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'phone' => 'required',
             'name' => 'required',
@@ -29,14 +28,17 @@ class UserController extends Controller
 
         echo $request;
         $user = new User();
-        $user->login = $request->name;
+        $user->name = $request->name;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
         $user->car_model_id = $request->car_model_id;
         $user->active = $request->active;
-        $user->role = 'driver';
+        $user->role_id = 5;
         if ($user->save()) {
-            echo "Driver created";
+            return response()->json([
+                'status_code' => 201,
+                'message' => 'saved'
+            ], 201);
         };
     }
 
@@ -121,11 +123,6 @@ class UserController extends Controller
             ->Where('car_models.number', 'LIKE', "%$search%")
             ->Where('car_models.model', 'LIKE', "%$search%")
             ->paginate($pageCount);
-
-        foreach ($users as $user) {
-            $user->carModel;
-            // $user->deliveryApp;
-        }
 
         return BranchResource::collection($users);
     }
@@ -255,7 +252,10 @@ class UserController extends Controller
         $user->role_id = $request->role_id;
         $user->branch_id = $request->branch_id;
         if ($user->save()) {
-            echo "user created";
+            return response()->json([
+                'status_code' => 201,
+                'message' => 'user saved'
+            ], 201);
         };
     }
 

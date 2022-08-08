@@ -118,6 +118,11 @@ class ProblemController extends Controller
                 echo " problem_product saved  ";
             };
         };
+
+        return response()->json([
+            'status_code' => 201,
+            'message' => 'all data saved'
+        ], 201);
     }
 
     public function getAllProblems(Request $request)

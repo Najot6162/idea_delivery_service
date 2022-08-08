@@ -113,7 +113,10 @@ class RelocationController extends Controller
 
         echo " Relocation Products saved  ";
 
-        return true;
+        return response()->json([
+            'status_code' => 201,
+            'message' => 'all data saved'
+        ], 201);
     }
 
     public function getAllRelocation(Request $request)
@@ -137,10 +140,10 @@ class RelocationController extends Controller
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
             })
-           // ->whereBetween('date_order', [$start_date, $end_date])
-            ->whereIn('status', $request->status ?? [1,5,10,15,20]);
-            //->whereIn('branch_send_id', $request->branch_send_id ?? $send_branches)
-           // ->whereIn('branch_recieve_id', $request->branch_recieve_id ?? $recieve_branches);
+            // ->whereBetween('date_order', [$start_date, $end_date])
+            ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20]);
+        //->whereIn('branch_send_id', $request->branch_send_id ?? $send_branches)
+        // ->whereIn('branch_recieve_id', $request->branch_recieve_id ?? $recieve_branches);
 
 
         if ($request->driver_id) {
@@ -164,7 +167,7 @@ class RelocationController extends Controller
             $notife->sendNotification($request->driver_id);
 
         }
-        $relocation->status = $request->step;
+        $relocation->status = $request->status;
 
         $time_step = new RelocationTimeStep();
         $time_step->relocation_uuid = $relocation->uuid;
@@ -200,7 +203,7 @@ class RelocationController extends Controller
         }
         $relocation = RelocationApp::where('driver_id', $id)
             ->where('status_time', 'LIKE', "%$search%")
-            ->whereIn('status', $request->status ?? [1,5,10,15,20])
+            ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20])
             ->whereIn('status_time', $request->status_time ?? [1, 2, 3, 4])
             ->whereIn('branch_send_id', $request->branch_send_id ?? $send_branches)
             ->whereIn('branch_recieve_id', $request->branch_recieve_id ?? $recieve_branches);

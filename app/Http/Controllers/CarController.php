@@ -25,9 +25,11 @@ class CarController extends Controller
         $car->active = $request->active;
 
         if ($car->save()) {
-            echo "car saved  ";
+            return response()->json([
+                'status_code' => 201,
+                'message' => 'saved'
+            ], 201);
         };
-        return true;
     }
 
     public function getAllCars(Request $request)
