@@ -85,7 +85,7 @@ class DeliveryController extends Controller
             array_push($branches['branch_sale_id'], $branch[0]['id']);
         }
         $order_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder']);
-
+        $date_order = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder'])->format('Y-m-d');
         $config_time = ConfigTime::where('active', '1')->get();
         $config_time_id = $config_time[0]['id'] ?? "";
 
@@ -96,6 +96,7 @@ class DeliveryController extends Controller
         $delivery->order_id = $request[0]['NamerOrder'];
         $delivery->online = $request[0]['Online'];
         $delivery->order_date = $order_date;
+        $delivery->date_order=$date_order;
         $delivery->date_create = $request[0]['DataCreate'];
         $delivery->document_id = $request[0]['DokumentId'];
         $delivery->provodka = $request[0]['PRAVODKA'];

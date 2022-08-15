@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->string('order_id');
             $table->boolean('online');
             $table->string('order_date');
+            $table->string('date_order');
             $table->string('date_create');
             $table->string('document_id');
             $table->enum('provodka', ['Да', 'нет ']);

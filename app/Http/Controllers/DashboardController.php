@@ -41,9 +41,8 @@ class DashboardController extends Controller
 
         $all_orders_count = array();
         for ($i = $start_time; $i <= $finish_time; $i->modify('+1 day')) {
-
-            $start_day = date("Y-m-d H:i:s", strtotime($start_time));
-            $count_all_orders = DeliveryApp::whereBetween('order_date', [$start_day, $i->format("Y-m-d H:i:s")])->count();
+            $start_day = date("Y-m-d", strtotime($start_time));
+            $count_all_orders = DeliveryApp::whereBetween('date_order', [$start_day, $i->format("Y-m-d")])->count();
             $all_orders_count[$start_day] = $count_all_orders;
         }
 
