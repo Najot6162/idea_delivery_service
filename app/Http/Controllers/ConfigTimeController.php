@@ -12,7 +12,7 @@ class ConfigTimeController extends Controller
 {
     public function checkTime(Request $request)
     {
-        $deliveries = DeliveryApp::whereNotIn('status', ['4', '5', '6', '7', '8'])->get();
+        $deliveries = DeliveryApp::whereNotIn('status', ['15','20', '25', '30', '40'])->get();
         $config_time = ConfigTime::where('active', '1')->first();
         $time = $config_time->time;
         $time1 = $time / 3;

@@ -49,31 +49,28 @@ class DashboardController extends Controller
         //Calculate count by status
         $status_one = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
             ->where('status', 1)->count();
-        $status_two = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
-            ->where('status', 2)->count();
-        $status_three = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
-            ->where('status', 3)->count();
-        // $status_four = DeliveryApp::whereBetween('order_date', [$start_date,$end_date])
-        //                             ->where('status',4)->count();
         $status_five = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
             ->where('status', 5)->count();
-        $status_six = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
-            ->where('status', 6)->count();
-        $status_seven = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
-            ->where('status', 7)->count();
-        $status_eight = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
-            ->where('status', 8)->count();
+        $status_ten = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
+            ->where('status', 10)->count();
+        $status_forty = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
+            ->where('status', 40)->count();
+        $status_thirty = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
+            ->where('status', 30)->count();
+        $status_twenty = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
+            ->where('status', 20)->count();
+        $twenty_five = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
+            ->where('status', 25)->count();
         $all_orders = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])->count();
 
         $status_count_arr = [
             'count_status_one' => $status_one,
-            'count_status_two' => $status_two,
-            'count_status_three' => $status_three,
-            // 'count_status_four' => $status_four,
             'count_status_five' => $status_five,
-            'count_status_six' => $status_six,
-            'count_status_seven' => $status_seven,
-            'count_status_eight' => $status_eight,
+            'count_status_ten' => $status_ten,
+            'count_status_forty' => $status_forty,
+            'count_status_thirty' => $status_thirty,
+            'count_status_twenty' => $status_twenty,
+            'count_status_twenty_five' => $twenty_five,
             'all_orders' => $all_orders
         ];
 
