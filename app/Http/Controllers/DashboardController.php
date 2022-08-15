@@ -22,7 +22,6 @@ class DashboardController extends Controller
         $week = Carbon::now()->subDays(7);
         $month = Carbon::now()->subDays(30);
         $year = Carbon::now()->subYear();
-
         $count_day = DeliveryApp::whereBetween('order_date', [$OneDay, $currentDateTime])->count();
         $count_week = DeliveryApp::whereBetween('order_date', [$week, $currentDateTime])->count();
         $count_month = DeliveryApp::whereBetween('order_date', [$month, $currentDateTime])->count();
