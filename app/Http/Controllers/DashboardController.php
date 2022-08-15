@@ -18,14 +18,15 @@ class DashboardController extends Controller
 
         //Calculate Count by Date
         $currentDateTime = Carbon::now();
-        $OneDay = Carbon::now()->subDay();
-        $week = Carbon::now()->subDays(7);
-        $month = Carbon::now()->subDays(30);
-        $year = Carbon::now()->subYear();
-        $count_day = DeliveryApp::whereBetween('order_date', [$OneDay, $currentDateTime])->count();
-        $count_week = DeliveryApp::whereBetween('order_date', [$week, $currentDateTime])->count();
-        $count_month = DeliveryApp::whereBetween('order_date', [$month, $currentDateTime])->count();
-        $count_year = DeliveryApp::whereBetween('order_date', [$year, $currentDateTime])->count();
+        $OneDay = Carbon::now()->subDay()->format('Y-m-d');
+        $week = Carbon::now()->subDays(7)->format('Y-m-d');
+        $month = Carbon::now()->subDays(30)->format('Y-m-d');
+        $year = Carbon::now()->subYear()->format('Y-m-d');
+        echo $OneDay;
+        $count_day = DeliveryApp::whereBetween('date_order', [$OneDay, $currentDateTime])->count();
+        $count_week = DeliveryApp::whereBetween('date_order', [$week, $currentDateTime])->count();
+        $count_month = DeliveryApp::whereBetween('date_order', [$month, $currentDateTime])->count();
+        $count_year = DeliveryApp::whereBetween('date_order', [$year, $currentDateTime])->count();
 
         $date_count_arr = [
             "count_day" => $count_day,
