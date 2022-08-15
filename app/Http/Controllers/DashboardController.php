@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\DeliveryApp;
 use Illuminate\Support\Carbon;
-use App\Http\Resources\BranchResource;
 use App\Models\BranchList;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -12,7 +11,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class DashboardController extends Controller
 {
-    public function getCounts(Request $request)
+    public function getCounts(Request $request): array
     {
         $start_date = $request->start_date;
         $end_date = $request->end_date;
@@ -43,7 +42,7 @@ class DashboardController extends Controller
         $all_orders_count = array();
         for ($i = $start_time; $i <= $finish_time; $i->modify('+1 day')) {
 
-            $start_day = date("Y-m-d H:i:s", strtotime("-1 day", strtotime($i)));
+            $start_day = date("Y-m-d H:i:s", strtotime($start_time));
             $count_all_orders = DeliveryApp::whereBetween('order_date', [$start_day, $i->format("Y-m-d H:i:s")])->count();
             $all_orders_count[$start_day] = $count_all_orders;
         }
