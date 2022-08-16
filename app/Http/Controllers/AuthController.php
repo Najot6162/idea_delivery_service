@@ -31,7 +31,7 @@ class AuthController extends Controller
                 'message' => 'Unauthorized'
             ], 404);
         }
-        $user = User::with(['userPermission','userPermission.menus','carModel'])->where('phone', $request->phone)->first();
+        $user = User::with(['userPermission', 'userPermission.menus', 'carModel'])->where('phone', $request->phone)->first();
         $tokenResult = $user->createToken('authToken')->plainTextToken;
         return response()->json([
             'token' => $tokenResult,
@@ -53,5 +53,14 @@ class AuthController extends Controller
             'status_code' => 200,
             'message' => 'logout'
         ], 200);
+    }
+
+    public function getAuthUser()
+    {
+        $user = Auth::user();
+        $user = User::with(['userPermission', 'userPermission.menus', 'carModel'])->where('id', $user->id)->first();
+        return response()->json([
+            'user' => $user
+        ]);
     }
 }

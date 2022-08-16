@@ -95,6 +95,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-permission', [UserController::class, 'getPermission']);
     Route::put('/update-permisson/{id}', [UserController::class, 'updatePermission']);
     Route::get('/get-menus', [UserController::class, 'getMenus']);
+
     //Users Api
     Route::get('/get-users', [UserController::class, 'getUsers']);
     Route::put('/update-user/{id}', [UserController::class, 'updateUser']);
@@ -103,15 +104,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-all-users', [UserController::class, 'getAllUsers']);
     Route::post('/create-user', [UserController::class, 'createUser']);
     Route::post('/create-fcm-token/{id}', [NotificationController::class, 'createFcmToken']);
+    Route::get('/get-auth-user', [AuthController::class, 'getAuthUser']);
 
     //Api for Mobile app
     Route::post('/upload-app', [FileController::class, 'uploadAppFile']);
 
 });
-        //Api for Mobile app
-    Route::get('/download-app', [FileController::class, 'getDownload']);
-    Route::get('/read-json-app-file',[FileController::class,'readAppJsonFile']);
+//Api for Mobile app
+Route::get('/download-app', [FileController::class, 'getDownload']);
+Route::get('/read-json-app-file', [FileController::class, 'readAppJsonFile']);
 
-    Route::get('/get-mobile-menus/{id}', [UserController::class, 'getPermissionForMobile']);
+Route::get('/get-mobile-menus/{id}', [UserController::class, 'getPermissionForMobile']);
 
-    Route::post('/login', [AuthController:: class, 'login']);
+Route::post('/login', [AuthController:: class, 'login']);
