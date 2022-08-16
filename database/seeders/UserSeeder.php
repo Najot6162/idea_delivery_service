@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
                 'branch_id' => 1,
                 'name' => 'driver',
                 'password' => bcrypt('123456'),
-                'role_id' => 2
+                'role_id' => 4
             ],
             [
                 'email' => 'zzz@gmail.com',
@@ -167,15 +167,19 @@ class UserSeeder extends Seeder
 
         $menus = [
             [
+                'name' => 'Перемещения',
+                'type'=>0
+            ],
+            [
                 'name' => 'Заявки',
                 'type'=>0
             ],
             [
-                'name' => 'Водители',
+                'name' => 'Колл-центр',
                 'type'=>0
             ],
             [
-                'name' => 'Сотрудники',
+                'name' => 'Водители',
                 'type'=>0
             ],
             [
@@ -187,35 +191,11 @@ class UserSeeder extends Seeder
                 'type'=>0
             ],
             [
-                'name' => 'Список заявок',
-                'type'=>0
-            ],
-            [
                 'name' => 'Поля заявки',
                 'type'=>0
             ],
             [
                 'name' => 'Срок доставки',
-                'type'=>0
-            ],
-            [
-                'name' => 'Заявки',
-                'type'=>0
-            ],
-            [
-                'name' => 'Отклоненные заказы',
-                'type'=>0
-            ],
-            [
-                'name' => 'Перемещения',
-                'type'=>0
-            ],
-            [
-                'name' => 'Колл-центр',
-                'type'=>0
-            ],
-            [
-                'name' => 'CRM',
                 'type'=>0
             ],
             [
@@ -226,10 +206,12 @@ class UserSeeder extends Seeder
                 'name' => 'Список сервис',
                 'type'=>0
             ],
+
             [
                 'name' => 'Список ползаватели',
                 'type'=>0
             ],
+
             [
                 'name' => 'Сервисный центр',
                 'type'=>0
@@ -358,94 +340,132 @@ class UserSeeder extends Seeder
                 'value' => 1,
             ],
             [
-                'role_id' => 1,
+                'role_id' => 2,
+                'menu_id' => 1,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 2,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 3,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 4,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 5,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 6,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 7,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 8,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 9,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 10,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 11,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 12,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 4,
                 'menu_id' => 13,
-                'value' => 0,
+                'value' => 1,
             ],
             [
-                'role_id' => 1,
+                'role_id' => 4,
                 'menu_id' => 14,
-                'value' => 1,
+                'value' => 0,
             ],
             [
-                'role_id' => 1,
+                'role_id' => 4,
                 'menu_id' => 15,
-                'value' => 1,
+                'value' => 0,
             ],
             [
-                'role_id' => 1,
+                'role_id' => 4,
                 'menu_id' => 16,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 17,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 18,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 19,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 20,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 21,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 22,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 23,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 24,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 25,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 26,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 27,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 28,
                 'value' => 1,
             ]
             ,
             [
-                'role_id' => 1,
-                'menu_id' => 29,
+                'role_id' => 4,
+                'menu_id' => 17,
                 'value' => 1,
             ],
             [
-                'role_id' => 1,
-                'menu_id' => 30,
+                'role_id' => 4,
+                'menu_id' => 18,
+                'value' => 0,
+            ]
+            ,
+            [
+                'role_id' => 4,
+                'menu_id' => 19,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 20,
+                'value' => 0,
+            ]
+            ,
+            [
+                'role_id' => 4,
+                'menu_id' => 21,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 22,
+                'value' => 0,
+            ]
+            ,
+            [
+                'role_id' => 4,
+                'menu_id' => 23,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 24,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 25,
                 'value' => 0,
             ]
         ];
