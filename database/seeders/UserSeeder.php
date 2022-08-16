@@ -168,53 +168,66 @@ class UserSeeder extends Seeder
         $menus = [
             [
                 'name' => 'Перемещения',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'relocation'
             ],
             [
                 'name' => 'Заявки',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'pick-list'
             ],
             [
                 'name' => 'Колл-центр',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'call_center'
             ],
             [
                 'name' => 'Водители',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'pickup-driver'
+
             ],
             [
                 'name' => 'Машины',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'pickup-car'
             ],
             [
                 'name' => 'Меню пользователя',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'setting-menu_group'
             ],
             [
                 'name' => 'Поля заявки',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'setting-menu_app_field'
             ],
             [
                 'name' => 'Срок доставки',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'setting-config_time_list'
             ],
             [
                 'name' => 'Филиалы',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'branch'
             ],
             [
                 'name' => 'Список сервис',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'service-list'
             ],
 
             [
                 'name' => 'Список ползаватели',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'service-user_add'
             ],
 
             [
                 'name' => 'Сервисный центр',
-                'type'=>0
+                'type'=>0,
+                'name_path'=>'service'
             ],
 
             //menus for mobile

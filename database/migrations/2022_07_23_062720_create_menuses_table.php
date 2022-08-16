@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('name');
             $table->integer('type');
             $table->integer('step')->nullable();
+            $table->string('name_path')->nullable();
             $table->timestamps();
         });
     }
