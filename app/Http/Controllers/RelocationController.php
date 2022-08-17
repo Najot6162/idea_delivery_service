@@ -169,6 +169,9 @@ class RelocationController extends Controller
 
         }
         $relocation->status = $request->step;
+        if($request->status_time){
+            $relocation->status_time = $request->status_time;
+        }
 
         $time_step = new RelocationTimeStep();
         $time_step->relocation_uuid = $relocation->uuid;
