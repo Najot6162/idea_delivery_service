@@ -72,7 +72,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/car/{id}', [CarController::class, 'deleteCar']);
 
     //Call Center Api
-    Route::get('/get-all-call-delivery', [CallCenterController::class, 'getAllCallDelivery']);
+        Route::get('/get-all-call-delivery', [CallCenterController::class, 'getAllCallDelivery']);
 
     //Service Api
     Route::post('/create-problem', [ProblemController::class, 'createProblem']);

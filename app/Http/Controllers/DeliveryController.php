@@ -190,7 +190,7 @@ class DeliveryController extends Controller
         if ($request->branch_step) {
             $delivery->branch_step = $request->branch_step;
         }
-        $delivery->status = $request->status;
+        $delivery->status = $request->step;
         $pickup_time = new PickupTime();
         $pickup_time->app_uuid = $delivery->uuid;
         $pickup_time->step = $request->step;
@@ -239,7 +239,7 @@ class DeliveryController extends Controller
             $deliveries->whereIn('branch_id', $request->branch_id);
         }
         if ($request->online) {
-            $deliveries->orwhere('online', $request->online);
+            $deliveries->where('online', $request->online);
         }
 
         return BranchResource::collection($deliveries->paginate($pageCount));
