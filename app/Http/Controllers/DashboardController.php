@@ -52,6 +52,8 @@ class DashboardController extends Controller
             ->where('status', 5)->count();
         $status_ten = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
             ->where('status', 10)->count();
+        $status_fifteen = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
+            ->where('status', 15)->count();
         $status_forty = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
             ->where('status', 40)->count();
         $status_thirty = DeliveryApp::whereBetween('order_date', [$start_date, $end_date])
@@ -66,6 +68,7 @@ class DashboardController extends Controller
             'count_status_one' => $status_one,
             'count_status_five' => $status_five,
             'count_status_ten' => $status_ten,
+            'count_status_fifteen'=>$status_fifteen,
             'count_status_forty' => $status_forty,
             'count_status_thirty' => $status_thirty,
             'count_status_twenty' => $status_twenty,
@@ -109,7 +112,7 @@ class DashboardController extends Controller
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 4);
             },
-        ])->orderBy('deliveryApp_count_status_time_one', 'desc')->where('role_id', 'driver')->get();
+        ])->orderBy('deliveryApp_count_status_time_one', 'desc')->where('role_id', 4)->get();
 
         //Delivery Count
         $delivery_count_driver = User::withCount(['deliveryApp',
@@ -129,7 +132,7 @@ class DashboardController extends Controller
                 $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 4);
             }
-        ])->orderBy('deliveryApp_count_status_time_one', 'desc')->where('role_id', 'driver')->get();
+        ])->orderBy('deliveryApp_count_status_time_one', 'desc')->where('role_id', 4)->get();
 
         //Relocation Count
         $relocation_count_driver = User::withCount([
@@ -138,20 +141,19 @@ class DashboardController extends Controller
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 1);
             },
-            'relocationApp as relocationApp_count_status_time_five' => function (Builder $query) use ($request) {
+            'relocationApp as relocationApp_count_status_time_two' => function (Builder $query) use ($request) {
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
-                $query->where('status_time', 5);
+                $query->where('status_time', 2);
             },
-            'relocationApp as relocationApp_count_status_time_ten' => function (Builder $query) use ($request) {
+            'relocationApp as relocationApp_count_status_time_three' => function (Builder $query) use ($request) {
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
-                $query->where('status_time', 10);
+                $query->where('status_time', 3);
             },
-            'relocationApp as relocationApp_count_status_time_forty' => function (Builder $query) use ($request) {
+            'relocationApp as relocationApp_count_status_time_four' => function (Builder $query) use ($request) {
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
-                $query->where('status_time', 40);
+                $query->where('status_time', 4);
             },
-        ])->orderBy('relocationApp_count_status_time_one', 'desc')->where('role_id', 'driver')->get();
-
+        ])->orderBy('relocationApp_count_status_time_one', 'desc')->where('role_id', 4)->get();
         $CountDelviery = [
             'all_counts' => $all_count_driver,
             'delviery_count' => $delivery_count_driver,
