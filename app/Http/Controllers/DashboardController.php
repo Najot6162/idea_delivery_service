@@ -68,7 +68,7 @@ class DashboardController extends Controller
             'count_status_one' => $status_one,
             'count_status_five' => $status_five,
             'count_status_ten' => $status_ten,
-            'count_status_fifteen'=>$status_fifteen,
+            'count_status_fifteen' => $status_fifteen,
             'count_status_forty' => $status_forty,
             'count_status_thirty' => $status_thirty,
             'count_status_twenty' => $status_twenty,
@@ -95,6 +95,9 @@ class DashboardController extends Controller
                 $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 4);
             },
+            'deliveryApp as deliveryApp_all_count' => function (Builder $query) use ($request) {
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
+            },
             'relocationApp',
             'relocationApp as relocationApp_count_status_time_one' => function (Builder $query) use ($request) {
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
@@ -111,6 +114,9 @@ class DashboardController extends Controller
             'relocationApp as relocationApp_count_status_time_four' => function (Builder $query) use ($request) {
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 4);
+            },
+            'relocationApp as relocationApp_all_count' => function (Builder $query) use ($request) {
+                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
             },
         ])->orderBy('deliveryApp_count_status_time_one', 'desc')->where('role_id', 4)->get();
 
@@ -131,7 +137,10 @@ class DashboardController extends Controller
             'deliveryApp as deliveryApp_count_status_time_four' => function (Builder $query) use ($request) {
                 $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 4);
-            }
+            },
+            'deliveryApp as deliveryApp_all_count' => function (Builder $query) use ($request) {
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
+            },
         ])->orderBy('deliveryApp_count_status_time_one', 'desc')->where('role_id', 4)->get();
 
         //Relocation Count
@@ -153,6 +162,9 @@ class DashboardController extends Controller
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 4);
             },
+            'relocationApp as relocationApp_all_count' => function (Builder $query) use ($request) {
+                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
+            },
         ])->orderBy('relocationApp_count_status_time_one', 'desc')->where('role_id', 4)->get();
         $CountDelviery = [
             'all_counts' => $all_count_driver,
@@ -163,14 +175,24 @@ class DashboardController extends Controller
         //Calculate Branch Count
         $count_branches = BranchList::withCount([
             'delivery_app',
-
             'delivery_app as deliveryApp_count_by_date' => function (Builder $query) use ($request) {
                 $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
+            },
+            'delivery_app as delivery_app_count_not_ready' => function (Builder $query) {
+                $query->where('status', 1);
+            },
+            'delivery_app as delivery_app_count_ready' => function (Builder $query) {
+                $query->whereIn('status', [5, 10, 15, 20, 30, 40]);
             },
             'relocation_app',
             'relocation_app as relocationApp_count_by_date' => function (Builder $query) use ($request) {
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
-                $query->where('status_time', 1);
+            },
+            'relocation_app as relocation_app_count_not_ready' => function (Builder $query) {
+                $query->where('status', 1);
+            },
+            'relocation_app as relocation_app_count_ready' => function (Builder $query) {
+                $query->whereIn('status', [5, 10, 20]);
             },
         ])->get();
 
