@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-all-car', [CarController::class, 'getAllCars']);
     Route::get('/get-car-term/{id}', [CarController::class, 'getCarTerm']);
     Route::put('/update-car-term/{id}', [CarController::class, 'updateCarTerm']);
-    Route::delete('/car/{id}', [CarController::class, 'deleteCar']);
+    Route::delete('/delete-car/{id}', [CarController::class, 'deleteCar']);
 
     //Call Center Api
         Route::get('/get-all-call-delivery', [CallCenterController::class, 'getAllCallDelivery']);

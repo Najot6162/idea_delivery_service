@@ -26,14 +26,17 @@ class UserController extends Controller
             return response()->json(['error' => $validator->errors()], 500);
         }
 
-        echo $request;
         $user = new User();
         $user->name = $request->name;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
-        $user->car_model_id = $request->car_model_id;
+        if ($request->car_model_id){
+            $user->car_model_id = $request->car_model_id;
+        }
+        if($request->role_id){
+            $user->role_id = $request->role_id;
+        }
         $user->active = $request->active;
-        $user->role_id = 5;
         if ($user->save()) {
             return response()->json([
                 'status_code' => 201,
@@ -48,15 +51,16 @@ class UserController extends Controller
         $request->validate([
             'phone' => 'required',
             'name' => 'required',
-            'password' => 'required',
-            'car_model_id' => 'required',
+            'password' => 'required'
         ]);
 
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
-        $user->car_model_id = $request->car_model_id;
+        if ($request->car_model_id){
+            $user->car_model_id = $request->car_model_id;
+        }
         $user->active = $request->active;
         if ($user->save()) {
             echo "Driver updated";

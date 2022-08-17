@@ -23,7 +23,6 @@ class CarController extends Controller
         $car->number = $request->number;
         $car->model = $request->model;
         $car->active = $request->active;
-
         if ($car->save()) {
             return response()->json([
                 'status_code' => 201,
@@ -45,15 +44,14 @@ class CarController extends Controller
             $car = CarModel::findOrFail($id);
             $car->active = $request->active;
             if ($car->save()) {
-                echo "car saved  ";
-            };
-            return true;
+                echo "car update";
+            }
         }
 
         $request->validate([
             'number' => 'required',
             'model' => 'required',
-            'active' => 'requred'
+            'active' => 'required'
         ]);
         $car = CarModel::findOrFail($id);
         $car->number = $request->number;
@@ -70,7 +68,7 @@ class CarController extends Controller
     {
         $car = CarModel::findOrFail($id);
         if ($car->delete()) {
-            return new BranchResource($car);
+            return "Deleted";
         }
     }
 
@@ -80,30 +78,49 @@ class CarController extends Controller
         return BranchResource::collection($car_term);
     }
 
-    public function updateCarTerm(Request $request, $id)
+    public function updateCarTerm(Request $request)
     {
 
-        $request->validate([
-            'car_model_id' => 'required',
+        $validator = Validator::make($request->all(), [
             'insure_date' => 'required',
-            'attorney_date' => 'requred',
+            'attorney_date' => 'required',
             'attorney' => 'required',
             'adver_date' => 'required',
-            'technical_date' => 'requred'
+            'technical_date' => 'required'
         ]);
 
-        $car_term = CarTerm::findOrFail($id);
-        $car_term->car_model_id = $request->car_model_id;
-        $car_term->insure_date = $request->insure_date;
-        $car_term->attorney_date = $request->attorney_date;
-        $car_term->adver_date = $request->adver_date;
-        $car_term->technical_date = $request->technical_date;
-        $car_term->attorney = $request->attorney;
+        if ($validator->fails()) {
+            return response()->json([
+                'status_code' => 400,
+                'message' => 'Bad Request'
+            ], 400);
+        }
 
-        if ($car_term->save()) {
+        $car_term = CarTerm::where('car_model_id',$request->car_model_id)->first();
+
+        if ($car_term){
+            $car_term = CarTerm::findOrFail($car_term->id);
+            $car_term->car_model_id = $request->car_model_id;
+            $car_term->insure_date = $request->insure_date;
+            $car_term->attorney_date = $request->attorney_date;
+            $car_term->adver_date = $request->adver_date;
+            $car_term->technical_date = $request->technical_date;
+            $car_term->attorney = $request->attorney;
+            if ($car_term->save()) {
             echo "car_term updated  ";
-        };
+            }
+        }else{
+            $car_term = new CarTerm();
+            $car_term->car_model_id = $request->car_model_id;
+            $car_term->insure_date = $request->insure_date;
+            $car_term->attorney_date = $request->attorney_date;
+            $car_term->adver_date = $request->adver_date;
+            $car_term->technical_date = $request->technical_date;
+            $car_term->attorney = $request->attorney;
 
-        return true;
+            if ($car_term->save()) {
+                echo "car_term created  ";
+            }
+        }
     }
 }
