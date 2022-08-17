@@ -138,17 +138,17 @@ class DashboardController extends Controller
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 1);
             },
-            'relocationApp as relocationApp_count_status_time_two' => function (Builder $query) use ($request) {
+            'relocationApp as relocationApp_count_status_time_five' => function (Builder $query) use ($request) {
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
-                $query->where('status_time', 2);
+                $query->where('status_time', 5);
             },
-            'relocationApp as relocationApp_count_status_time_three' => function (Builder $query) use ($request) {
+            'relocationApp as relocationApp_count_status_time_ten' => function (Builder $query) use ($request) {
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
-                $query->where('status_time', 3);
+                $query->where('status_time', 10);
             },
-            'relocationApp as relocationApp_count_status_time_four' => function (Builder $query) use ($request) {
+            'relocationApp as relocationApp_count_status_time_forty' => function (Builder $query) use ($request) {
                 $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
-                $query->where('status_time', 4);
+                $query->where('status_time', 40);
             },
         ])->orderBy('relocationApp_count_status_time_one', 'desc')->where('role_id', 'driver')->get();
 

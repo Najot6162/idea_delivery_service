@@ -69,9 +69,9 @@ class UserController extends Controller
         $search = $request['search'] ?? "";
         $pageCount = $request['page'] ?? "10";
 
-        $users = User::withCount([
+        $users = User::with('carModel')->withCount([
             'deliveryApp',
-            'deliveryApp as count_status_two' => function (Builder $query) use ($request) {
+            'deliveryApp as count_status_five' => function (Builder $query) use ($request) {
                 if ($request->start_date) {
                     $query->where('order_date', '>=', $request->start_date);
                 }
@@ -84,9 +84,9 @@ class UserController extends Controller
                 if ($request->branch_id) {
                     $query->whereIn('branch_id', $request->branch_id);
                 }
-                $query->where('status', 2);
+                $query->where('status', 5);
             },
-            'deliveryApp as count_status_three' => function (Builder $query) use ($request) {
+            'deliveryApp as count_status_ten' => function (Builder $query) use ($request) {
                 if ($request->start_date) {
                     $query->where('order_date', '>=', $request->start_date);
                 }
@@ -99,9 +99,9 @@ class UserController extends Controller
                 if ($request->branch_id) {
                     $query->whereIn('branch_id', $request->branch_id);
                 }
-                $query->where('status', 3);
+                $query->where('status', 10);
             },
-            'deliveryApp as count_status_eight' => function (Builder $query) use ($request) {
+            'deliveryApp as count_status_forty' => function (Builder $query) use ($request) {
                 if ($request->start_date) {
                     $query->where('order_date', '>=', $request->start_date);
                 }
@@ -114,14 +114,16 @@ class UserController extends Controller
                 if ($request->branch_id) {
                     $query->whereIn('branch_id', $request->branch_id);
                 }
-                $query->where('status', 8);
+                $query->where('status', 40);
             },
-        ])->where('role_id', 3)
-            ->where('name', 'LIKE', "%$search%")
-            ->Where('phone', 'LIKE', "%$search%")
-            ->join('car_models', 'car_models.id', '=', 'users.car_model_id')
-            ->Where('car_models.number', 'LIKE', "%$search%")
-            ->Where('car_models.model', 'LIKE', "%$search%")
+        ])->where('role_id', 4)
+            ->whereHas('carModel', function ($q) use ($search) {
+                $q->where('number', 'LIKE', "%$search%");
+                $q->orWhere('model', 'LIKE', "%$search%");
+            })
+            ->orWhere('name', 'LIKE', "%$search%")
+            ->orWhere('phone', 'LIKE', "%$search%")
+            ->orWhere('address', 'LIKE', "%$search%")
             ->paginate($pageCount);
 
         return BranchResource::collection($users);
@@ -134,11 +136,11 @@ class UserController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
-        $delviery = DeliveryApp::where('driver_id', $id)
+        $delviery = DeliveryApp::with(['pickup_time', 'pickup_time.user','pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
+            'files', 'user', 'config_time', 'delivery_product', 'delivery_client', 'agents'])->where('driver_id', $id)
             ->where('status_time', 'LIKE', "%$search%")
-            ->whereIn('status', $request->status ?? [1, 5,10,15,20,25,30,35,40])
+            ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20, 25, 30, 35, 40])
             ->whereIn('status_time', $request->status_time ?? [1, 2, 3, 4]);
-
         if ($start_date) {
             $delviery->where('order_date', '>=', $start_date);
         }
@@ -167,17 +169,18 @@ class UserController extends Controller
             ->where('role_id', $request->role_id)
             ->whereHas('menus', function ($q) use ($request) {
                 $q->where('type', 'LIKE', $request->type);
-            })->orderBy('menu_id','asc')
+            })->orderBy('menu_id', 'asc')
             ->get();
         return $menus;
     }
-    public function getPermissionForMobile(Request $request,$id)
+
+    public function getPermissionForMobile(Request $request, $id)
     {
         $menus = UserPermission::with('menus')
             ->where('role_id', $id)
             ->whereHas('menus', function ($q) use ($request) {
                 $q->where('type', 1);
-            })->orderBy('menu_id','asc')
+            })->orderBy('menu_id', 'asc')
             ->get();
         return $menus;
     }
@@ -269,7 +272,7 @@ class UserController extends Controller
 
     public function getMenus(Request $request)
     {
-        $menus = Menus::where('type',$request->type)->orderBy('id','asc')->get();
+        $menus = Menus::where('type', $request->type)->orderBy('id', 'asc')->get();
         return $menus;
     }
 }
