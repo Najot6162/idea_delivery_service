@@ -191,6 +191,10 @@ class DeliveryController extends Controller
             $delivery->branch_step = $request->branch_step;
         }
         $delivery->status = $request->step;
+        if ($request->status_time){
+            $delivery->status_time = $request->status_time;
+        }
+
         $pickup_time = new PickupTime();
         $pickup_time->app_uuid = $delivery->uuid;
         $pickup_time->step = $request->step;
