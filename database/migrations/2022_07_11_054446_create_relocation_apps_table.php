@@ -32,7 +32,6 @@ return new class extends Migration {
             $table->string('id_1c');
             $table->integer('status');
             $table->integer('driver_id')->nullable();
-            $table->integer('car_model_id')->nullable();
             $table->integer('config_time_id')->nullable();
             $table->integer('status_time')->nullable();
             $table->integer('step')->nullable();

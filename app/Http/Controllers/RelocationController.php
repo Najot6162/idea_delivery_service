@@ -137,7 +137,7 @@ class RelocationController extends Controller
             array_push($recieve_branches, $branch->token);
         }
         $relocations = RelocationApp::with(['relocation_product', 'config_time', 'relocation_time_step',
-            'relocation_time_step.user', 'branch', 'car_model', 'agents'])
+            'relocation_time_step.user','relocation_time_step.user.carModel', 'branch', 'agents'])
             ->withCount('relocation_product')
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
@@ -170,8 +170,6 @@ class RelocationController extends Controller
         $relocation = RelocationApp::findOrFail($id);
         if ($request->step == 5) {
             $relocation->driver_id = $request->driver_id;
-            $user = User::findOrFail($request->driver_id);
-            $relocation->car_model_id = $user->car_model_id;
 
             //send notification
             $notife = new NotificationController();
