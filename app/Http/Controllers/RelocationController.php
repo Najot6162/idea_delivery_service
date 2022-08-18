@@ -141,12 +141,20 @@ class RelocationController extends Controller
                 $q->where('agent', 'LIKE', "%$search%");
             })
             //->where('order_id', 'LIKE', "%$search%")
-            ->whereBetween('date_order', [$start_date, $end_date])
+//            ->whereBetween('date_order', [$start_date, $end_date])
             ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20])
             ->whereIn('branch_send_id', $request->branch_send_id ?? $send_branches)
             ->whereIn('branch_recieve_id', $request->branch_recieve_id ?? $recieve_branches);
 
-
+        if ($start_date) {
+            $relocations->where('date_order', '>=', $start_date);
+        }
+        if ($end_date) {
+            $relocations->where('date_order', '<=', $end_date);
+        }
+        if ($start_date && $end_date) {
+            $relocations->whereBetween('date_order', [$start_date, $end_date]);
+        }
         if ($request->driver_id) {
             $relocations->whereIn('driver_id', $request->driver_id);
         }
