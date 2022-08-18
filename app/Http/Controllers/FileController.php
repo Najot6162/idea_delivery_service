@@ -81,11 +81,10 @@ class FileController extends Controller
     }
 
     public function downlodImageFile(){
-        $file= storage_path()."/images/cudy5q83irUEIuoDuclMru7qZ6LskhoeJ061MaVoA.jpg";
-        echo $file;
-        return response()->file($file ,[
-            'Content-Type'=>'image/jpeg',
-            'Content-Disposition'=> 'attachment; filename="idea-delivery.png"',
-        ]) ;
+
+         $filePath = public_path("storage/images/pJ1g5AC2WmhXMafAmrAoRRHr10ReG3OAkBL1v3H6.jpg",true);
+//        $headers = ['Content-Type: application/jpg'];
+//        $fileName = time().'.png';
+        return response()->file($filePath);
     }
 }
