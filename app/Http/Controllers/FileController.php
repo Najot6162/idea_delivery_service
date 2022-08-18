@@ -63,7 +63,7 @@ class FileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'app_uuid' => 'required',
-            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
         ]);
 
         if ($validator->fails()) {
