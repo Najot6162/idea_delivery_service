@@ -127,12 +127,16 @@ class UserController extends Controller
             })
             ->orWhere('name', 'LIKE', "%$search%")
             ->orWhere('phone', 'LIKE', "%$search%")
-            ->orWhere('address', 'LIKE', "%$search%")
-            ->paginate($pageCount);
+            ->orWhere('address', 'LIKE', "%$search%");
 
-        return BranchResource::collection($users);
+        return BranchResource::collection($users->paginate($pageCount));
     }
 
+    public function getAllDriversOnlyActive(Request $request)
+    {
+        $users = User::with('carModel')->where('role_id', 4)->where("active",0)->get();
+        return BranchResource::collection($users);
+    }
     public function getDelivery(Request $request, $id)
     {
         $search = $request['search'] ?? "";

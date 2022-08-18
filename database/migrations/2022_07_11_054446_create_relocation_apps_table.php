@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->string('document_id');
             $table->enum('provodka', ['Да', 'нет ']);
             $table->string('date_order');
+            $table->string('order_date');
             $table->string('date_recieve');
             $table->text('content')->nullable();
             $table->string('branch_send_id');
@@ -29,11 +30,11 @@ return new class extends Migration {
             $table->string('branch_recieve');
             $table->string('namer_order');
             $table->string('id_1c');
-            $table->string('status');
-            $table->string('driver_id')->nullable();
-            $table->string('car_model_id')->nullable();
-            $table->string('config_time_id')->nullable();
-            $table->string('status_time')->nullable();
+            $table->integer('status');
+            $table->integer('driver_id')->nullable();
+            $table->integer('car_model_id')->nullable();
+            $table->integer('config_time_id')->nullable();
+            $table->integer('status_time')->nullable();
             $table->integer('step')->nullable();
             $table->timestamps();
         });

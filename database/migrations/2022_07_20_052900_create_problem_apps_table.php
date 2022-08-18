@@ -15,8 +15,8 @@ return new class extends Migration {
         Schema::create('problem_apps', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->string('user_id')->nullable();
-            $table->string('service_id')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('service_id')->nullable();
             $table->string('document_id');
             $table->string('agent_id');
             $table->enum('provodka', ['Да', 'нет']);

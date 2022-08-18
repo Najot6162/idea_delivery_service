@@ -62,6 +62,7 @@ class RelocationController extends Controller
         }
 
         $order_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder']);
+        $date_order = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder'])->format('Y-m-d');
         $config_time = ConfigTime::where('active', '1')->get();
         $config_time_id = $config_time[0]['id'] ?? "";
 
@@ -74,6 +75,7 @@ class RelocationController extends Controller
         $relocation->document_id = $request[0]['DokumentId'];
         $relocation->provodka = $request[0]['PRAVODKA'];
         $relocation->date_order = $order_date;
+        $relocation->order_date=$date_order;
         $relocation->date_recieve = $request[0]['DataRecieve'];
         $relocation->content = $request[0]['Content'];
         $relocation->branch_send_id = $branches['branch_id'][0];
@@ -147,13 +149,13 @@ class RelocationController extends Controller
             ->whereIn('branch_recieve_id', $request->branch_recieve_id ?? $recieve_branches);
 
         if ($start_date) {
-            $relocations->where('date_order', '>=', $start_date);
+            $relocations->where('order_date', '>=', $start_date);
         }
         if ($end_date) {
-            $relocations->where('date_order', '<=', $end_date);
+            $relocations->where('order_date', '<=', $end_date);
         }
         if ($start_date && $end_date) {
-            $relocations->whereBetween('date_order', [$start_date, $end_date]);
+            $relocations->whereBetween('order_date', [$start_date, $end_date]);
         }
         if ($request->driver_id) {
             $relocations->whereIn('driver_id', $request->driver_id);
