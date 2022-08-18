@@ -248,25 +248,4 @@ class DeliveryController extends Controller
 
         return BranchResource::collection($deliveries->paginate($pageCount));
     }
-
-    public function uploadFile(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'app_uuid' => 'required',
-            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 201);
-        }
-        $path = $request->file('image')->store('public/images');
-
-        $file = new Files;
-        $file->app_uuid = $request->app_uuid;
-        $file->order_url = $path;
-
-        if ($file->save()) {
-            echo " file saved  ";
-        };
-    }
 }

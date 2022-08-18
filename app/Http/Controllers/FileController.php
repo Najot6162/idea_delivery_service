@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Files;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
@@ -56,5 +57,35 @@ class FileController extends Controller
 
         echo "<pre>";
         print_r($app_json);
+    }
+
+    public function uploadFile(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'app_uuid' => 'required',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 201);
+        }
+        $path = $request->file('image')->store('public/images');
+
+        $file = new Files;
+        $file->app_uuid = $request->app_uuid;
+        $file->order_url = $path;
+
+        if ($file->save()) {
+            echo " file saved  ";
+        };
+    }
+
+    public function downlodImageFile(){
+        $file= storage_path()."/images/cudy5q83irUEIuoDuclMru7qZ6LskhoeJ061MaVoA.jpg";
+        echo $file;
+        return response()->file($file ,[
+            'Content-Type'=>'image/jpeg',
+            'Content-Disposition'=> 'attachment; filename="idea-delivery.png"',
+        ]) ;
     }
 }

@@ -38,7 +38,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/create-delivery', [DeliveryController::class, 'CreateDelivery']);
     Route::get('/get-all-delivery', [DeliveryController::class, 'gettAllDelivery']);//->middleware(['admin']);
     Route::put('/update-delivery/{id}', [DeliveryController::class, 'updateDelivery']); //->middleware(['admin']);
-    Route::post('/upload_file', [DeliveryController::class, 'uploadFile'])->middleware(['admin']);
+
+    //File Upload
+    Route::post('/upload_file', [FileController::class, 'uploadFile']);//->middleware(['admin']);
 
     //ConfigTime Api
     Route::get('/check-time', [ConfigTimeController::class, 'checkTime']);
@@ -62,7 +64,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/update-driver/{id}', [UserController::class, 'updateDriver']);
     Route::get('/get-all-driver', [UserController::class, 'getAllDrivers']);//->middleware(['driver']);
     Route::get('/get-delivery/{id}', [UserController::class, 'getDelivery']);
-    Route::get('/get-driver-only-active',[UserController::class,'getAllDriversOnlyActive']);
+    Route::get('/get-driver-only-active', [UserController::class, 'getAllDriversOnlyActive']);
     //Car Api
     Route::post('/create-car', [CarController::class, 'createCar']);
     Route::put('/update-car/{id}', [CarController::class, 'updateCar']);
@@ -72,7 +74,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/delete-car/{id}', [CarController::class, 'deleteCar']);
 
     //Call Center Api
-        Route::get('/get-all-call-delivery', [CallCenterController::class, 'getAllCallDelivery']);
+    Route::get('/get-all-call-delivery', [CallCenterController::class, 'getAllCallDelivery']);
 
     //Service Api
     Route::post('/create-problem', [ProblemController::class, 'createProblem']);
@@ -110,6 +112,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/upload-app', [FileController::class, 'uploadAppFile']);
 
 });
+Route::get('/downlod-image',[FileController::class,'downlodImageFile']);
 //Api for Mobile app
 Route::get('/download-app', [FileController::class, 'getDownload']);
 Route::get('/read-json-app-file', [FileController::class, 'readAppJsonFile']);
