@@ -14,10 +14,10 @@ return new class extends Migration {
     {
         Schema::create('car_terms', function (Blueprint $table) {
             $table->id();
-            $table->string('car_model_id')->nullable();
+            $table->integer('car_model_id')->nullable();
             $table->string('insure_date')->nullable();
             $table->string('attorney_date')->nullable();
-            $table->string('attorney')->nullable();
+            $table->integer('attorney')->nullable();
             $table->string('adver_date')->nullable();
             $table->string('technical_date')->nullable();
             $table->timestamps();

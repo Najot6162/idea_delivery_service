@@ -38,8 +38,8 @@ return new class extends Migration {
             $table->integer('branch_step')->nullable();
             $table->enum('dallon', ['0', '1'])->nullable();
             $table->integer('car_model_id')->nullable();
-            $table->string('branch_id');
-            $table->string('branch_sale_id');
+            $table->integer('branch_id');
+            $table->integer('branch_sale_id');
             $table->datetime('change_date')->nullable();
             $table->enum('change_status', ['0', '1', '2'])->nullable();
             $table->integer('config_time_id')->nullable();
