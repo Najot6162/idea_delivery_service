@@ -126,7 +126,6 @@ class RelocationController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $branchs = BranchList::get();
-        echo $branchs;
         $send_branches = array();
         $recieve_branches = array();
         foreach ($branchs as $branch) {
