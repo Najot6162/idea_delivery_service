@@ -126,6 +126,7 @@ class RelocationController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $branchs = BranchList::get();
+        echo $branchs;
         $send_branches = array();
         $recieve_branches = array();
         foreach ($branchs as $branch) {
@@ -135,12 +136,12 @@ class RelocationController extends Controller
             array_push($recieve_branches, $branch->token);
         }
         $relocations = RelocationApp::with(['relocation_product', 'config_time', 'relocation_time_step',
-            'relocation_time_step.user', 'relocation_time_step.user.carModel    ', 'branch', 'car_model', 'agents'])
+            'relocation_time_step.user', 'branch', 'car_model', 'agents'])
             ->withCount('relocation_product')
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
             })
-            ->where('order_id', 'LIKE', "%$search%")
+            //->where('order_id', 'LIKE', "%$search%")
             ->whereBetween('date_order', [$start_date, $end_date])
             ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20])
             ->whereIn('branch_send_id', $request->branch_send_id ?? $send_branches)
