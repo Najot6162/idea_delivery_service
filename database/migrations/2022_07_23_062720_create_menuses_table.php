@@ -15,8 +15,9 @@ return new class extends Migration {
         Schema::create('menuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('type');
-            $table->integer('step')->nullable();
+            $table->integer('type')->nullable();
+            $table->float('app_type')->nullable();
+            $table->float('web_type')->nullable();
             $table->string('name_path')->nullable();
             $table->timestamps();
         });

@@ -168,126 +168,145 @@ class UserSeeder extends Seeder
         $menus = [
             [
                 'name' => 'Перемещения',
-                'type'=>0,
-                'name_path'=>'relocation'
+                'web_type'=>1.1,
+                'name_path'=>'relocation',
+                'type'=>1
             ],
             [
                 'name' => 'Заявки',
-                'type'=>0,
-                'name_path'=>'pick-list'
+                'web_type'=>1.2,
+                'name_path'=>'pick-list',
+                'type'=>1
             ],
             [
                 'name' => 'Колл-центр',
-                'type'=>0,
-                'name_path'=>'call_center'
+                'web_type'=>1.3,
+                'name_path'=>'call_center',
+                'type'=>1
             ],
             [
                 'name' => 'Водители',
-                'type'=>0,
-                'name_path'=>'pickup-driver'
+                'web_type'=>2.1,
+                'name_path'=>'pickup-driver',
+                'type'=>1
 
             ],
             [
                 'name' => 'Машины',
-                'type'=>0,
-                'name_path'=>'pickup-car'
+                'web_type'=>2.2,
+                'name_path'=>'pickup-car',
+                'type'=>1
             ],
             [
                 'name' => 'Меню пользователя',
-                'type'=>0,
-                'name_path'=>'setting-menu_group'
+                'web_type'=>3.1,
+                'name_path'=>'setting-menu_group',
+                'type'=>1
             ],
             [
                 'name' => 'Поля заявки',
-                'type'=>0,
-                'name_path'=>'setting-menu_app_field'
+                'web_type'=>3.2,
+                'name_path'=>'setting-menu_app_field',
+                'type'=>1
             ],
             [
                 'name' => 'Срок доставки',
-                'type'=>0,
-                'name_path'=>'setting-config_time_list'
+                'web_type'=>3.3,
+                'name_path'=>'setting-config_time_list',
+                'type'=>1
             ],
             [
                 'name' => 'Филиалы',
-                'type'=>0,
-                'name_path'=>'branch'
+                'web_type'=>3.4,
+                'name_path'=>'branch',
+                'type'=>1
             ],
             [
                 'name' => 'Список сервис',
-                'type'=>0,
-                'name_path'=>'service-list'
+                'web_type'=>4.1,
+                'name_path'=>'service-list',
+                'type'=>1
             ],
 
             [
                 'name' => 'Список ползаватели',
-                'type'=>0,
-                'name_path'=>'service-user_add'
+                'web_type'=>4.2,
+                'name_path'=>'service-user_add',
+                'type'=>1
             ],
 
             [
                 'name' => 'Сервисный центр',
-                'type'=>0,
-                'name_path'=>'service'
+                'web_type'=>4.3,
+                'name_path'=>'service',
+                'type'=>1
             ],
 
             //menus for mobile
             [
                 'name'=>'Склад',
-                'type'=> 1,
-                'step'=>0
+                'app_type'=> 1.1,
+                'type'=>2
             ],
             [
                 'name'=>'Доставка',
-                'type'=> 1,
-                'step'=>0
+                'app_type'=> 1.2,
+                'type'=>2
             ],
             [
                 'name'=>'Доставлено',
-                'type'=> 1,
-                'step'=>0
+                'app_type'=> 1.3,
+                'type'=>2
             ],
             [
                 'name'=>'Склад',
-                'type'=> 1,
-                'step'=>1
+                'app_type'=> 2.1,
+                'type'=>2
             ],
             [
                 'name'=>'Доставка',
-                'type'=> 1,
-                'step'=>1
+                'app_type'=> 2.2,
+                'type'=>2
             ],
             [
                 'name'=>'Доставлено',
-                'type'=> 1,
-                'step'=>1
+                'app_type'=> 2.3,
+                'type'=>2
             ],
             [
                 'name'=>'Входящие заявки от другого',
-                'type'=> 1
+                'app_type'=> 3.1,
+                'type'=>2
             ],
             [
                 'name'=>'Входящие заявки',
-                'type'=> 1
+                'app_type'=> 3.2,
+                'type'=>2
             ],
             [
                 'name'=>'Принято',
-                'type'=> 1
+                'app_type'=> 3.3,
+                'type'=>2
             ],
             [
                 'name'=>'Оставлен в сервис центре',
-                'type'=> 1
+                'app_type'=> 3.4,
+                'type'=>2
             ],
             [
                 'name'=>'Забрали из сервис центра',
-                'type'=> 1
+                'app_type'=> 3.5,
+                'type'=>2
             ],
             [
                 'name'=>'Отправлен в магазин',
-                'type'=> 1
+                'app_type'=> 3.6,
+                'type'=>2
             ],
             [
                 'name'=>'Заполненные заявки',
-                'type'=> 1
+                'app_type'=> 3.7,
+                'type'=>2
             ],
         ];
         $user_permissions = [

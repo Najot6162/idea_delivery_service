@@ -10,7 +10,7 @@ class Menus extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','type','step','name-path'
+        'name','app_type','name-path','web_type','type'
     ];
 
 
