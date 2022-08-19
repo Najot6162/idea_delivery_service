@@ -88,7 +88,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-all-problem-service', [ProblemController::class, 'getAllProblemServices']);
     Route::get('/get-problem-service/{id}', [ProblemController::class, 'getProblemService']);
     Route::delete('/problem-service/{id}', [ProblemController::class, 'deleteProblemService']);
-
+    Route::get('/get-all-users-with-branch',[UserController::class,'getAllUsersWithBranch']);
+    Route::put('/update-user-branch/{id}', [UserController::class, 'updateUserBranch']);
     //Dashboard Api
     Route::get('/get-counts', [DashboardController::class, 'getCounts']);
 
@@ -102,7 +103,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-users', [UserController::class, 'getUsers']);
     Route::put('/update-user/{id}', [UserController::class, 'updateUser']);
     Route::put('/update-user-active/{id}', [UserController::class, 'updateUserActive']);
-    Route::put('/update-user-branch/{id}', [UserController::class, 'updateUserBranch']);
+
     Route::get('/get-all-users', [UserController::class, 'getAllUsers']);
     Route::post('/create-user', [UserController::class, 'createUser']);
     Route::post('/create-fcm-token/{id}', [NotificationController::class, 'createFcmToken']);

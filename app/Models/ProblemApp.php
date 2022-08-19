@@ -33,7 +33,7 @@ class ProblemApp extends Model
 
     public function problem_product()
     {
-        return $this->hasMany(ProblemTimeStep::class, 'problem_uuid', 'uuid');
+        return $this->hasMany(ProblemProduct::class, 'problem_uuid', 'uuid');
     }
 
     public function branch()

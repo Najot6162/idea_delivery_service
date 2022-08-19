@@ -131,7 +131,7 @@ class ProblemController extends Controller
         $pageCount = $request['page'] ?? "10";
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-        $problems = ProblemApp::with(['problem_time_step', 'user',
+        $problems = ProblemApp::with(['problem_time_step','problem_product',
             'problem_time_step.user', 'problem_time_step.branch', 'agents', 'branch', 'files'])
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
@@ -139,13 +139,13 @@ class ProblemController extends Controller
             ->whereIn('status', $request->status ?? [1,5,10,15,20,25,30,35,40,45,50,99]);
 
         if ($start_date) {
-            $problems->where('data_order', '>=', $start_date);
+            $problems->where('date_order', '>=', $start_date);
         }
         if ($end_date) {
-            $problems->where('data_order', '<=', $end_date);
+            $problems->where('date_order', '<=', $end_date);
         }
         if ($start_date && $end_date) {
-            $problems->whereBetween('data_order', [$start_date, $end_date]);
+            $problems->whereBetween('date_order', [$start_date, $end_date]);
         }
         if ($request->user_id) {
             $problems->whereIn('user_id', $request->user_id);
@@ -250,7 +250,6 @@ class ProblemController extends Controller
             'address' => 'required',
             'phone' => 'required'
         ]);
-
         $problem_service = new ProblemService();
         $problem_service->title = $request->title;
         $problem_service->address = $request->address;

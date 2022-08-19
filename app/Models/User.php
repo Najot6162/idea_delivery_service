@@ -41,6 +41,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserPermission::class, 'role_id', 'role_id');
     }
+    public function userBranch()
+    {
+        return $this->hasMany(BranchList::class, 'id', 'branch_id');
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

@@ -30,10 +30,10 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
-        if ($request->car_model_id){
+        if ($request->car_model_id) {
             $user->car_model_id = $request->car_model_id;
         }
-        if($request->role_id){
+        if ($request->role_id) {
             $user->role_id = $request->role_id;
         }
         $user->active = $request->active;
@@ -58,7 +58,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
-        if ($request->car_model_id){
+        if ($request->car_model_id) {
             $user->car_model_id = $request->car_model_id;
         }
         $user->active = $request->active;
@@ -134,9 +134,10 @@ class UserController extends Controller
 
     public function getAllDriversOnlyActive(Request $request)
     {
-        $users = User::with('carModel')->where('role_id', 4)->where("active",0)->get();
+        $users = User::with('carModel')->where('role_id', 4)->where("active", 0)->get();
         return BranchResource::collection($users);
     }
+
     public function getDelivery(Request $request, $id)
     {
         $search = $request['search'] ?? "";
@@ -144,7 +145,7 @@ class UserController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
-        $delviery = DeliveryApp::with(['pickup_time', 'pickup_time.user','pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
+        $delviery = DeliveryApp::with(['pickup_time', 'pickup_time.user', 'pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
             'files', 'user', 'config_time', 'delivery_product', 'delivery_client', 'agents'])->where('driver_id', $id)
             ->where('status_time', 'LIKE', "%$search%")
             ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20, 25, 30, 35, 40])
@@ -221,6 +222,10 @@ class UserController extends Controller
 
     public function updateUserBranch(Request $request, $id)
     {
+        $request->validate([
+            'branch_id' => 'required'
+        ]);
+
         $users = User::findOrFail($id);
         $users->branch_id = $request->branch_id;
         if ($users->save()) {
@@ -258,10 +263,19 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->phone = $request->phone;
-        $user->password = bcrypt($request->password);
-        $user->active = $request->active;
-        $user->role_id = $request->role_id;
-        $user->branch_id = $request->branch_id;
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+        if ($request->active) {
+            $user->active = $request->active;
+        }
+        if ($request->role_id) {
+            $user->role_id = $request->role_id;
+        }
+        if ($request->branch_id) {
+            $user->branch_id = $request->branch_id;
+        }
+
         if ($user->save()) {
             return response()->json([
                 'status_code' => 201,
@@ -275,6 +289,14 @@ class UserController extends Controller
         $search = $request['search'] ?? "";
         $pageCount = $request['page'] ?? "10";
         $users = User::with(['carModel', 'userPermission'])->where('name', 'LIKE', "%$search%")->paginate($pageCount);
+        return $users;
+    }
+
+    public function getAllUsersWithBranch(Request $request)
+    {
+        $search = $request['search'] ?? "";
+        $pageCount = $request['page'] ?? "10";
+        $users = User::with(['userBranch'])->where('name', 'LIKE', "%$search%")->paginate($pageCount);
         return $users;
     }
 
