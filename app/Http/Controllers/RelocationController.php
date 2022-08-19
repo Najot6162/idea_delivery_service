@@ -42,7 +42,9 @@ class RelocationController extends Controller
 
 
         $branches = [
-            'branch_id' => [],
+            'branch_send_id' => [],
+            'branch_receive_id'=>[]
+
         ];
         $branch = BranchList::where('token', $request[0]['SkladSendID'])->get();
 
@@ -56,10 +58,28 @@ class RelocationController extends Controller
                 echo "BranchList saved  ";
             };
             $branch = BranchList::where('token', $request[0]['SkladSendID'])->get();
-            array_push($branches['branch_id'], $branch[0]['id']);
+            array_push($branches['branch_send_id'], $branch[0]['id']);
         } else {
-            array_push($branches['branch_id'], $branch[0]['id']);
+            array_push($branches['branch_send_id'], $branch[0]['id']);
         }
+
+
+        $branch = BranchList::where('token', $request[0]['SkladRecieveID'])->get();
+        if ($branch->isEmpty()) {
+            $branchList = new BranchList();
+
+            $branchList->title = $request[0]['SkladRecieve'];
+            $branchList->token = $request[0]['SkladRecieveID'];
+
+            if ($branchList->save()) {
+                echo "BranchList saved  ";
+            };
+            $branch = BranchList::where('token', $request[0]['SkladRecieveID'])->get();
+            array_push($branches['branch_receive_id'], $branch[0]['id']);
+        } else {
+            array_push($branches['branch_receive_id'], $branch[0]['id']);
+        }
+
 
         $order_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder']);
         $date_order = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder'])->format('Y-m-d');
@@ -78,9 +98,8 @@ class RelocationController extends Controller
         $relocation->order_date=$date_order;
         $relocation->date_recieve = $request[0]['DataRecieve'];
         $relocation->content = $request[0]['Content'];
-        $relocation->branch_send_id = $branches['branch_id'][0];
-        $relocation->branch_recieve = $request[0]['SkladRecieve'];
-        $relocation->branch_recieve_id = $request[0]['SkladRecieveID'];
+        $relocation->branch_send_id = $branches['branch_send_id'][0];
+        $relocation->branch_receive_id = $branches['branch_receive_id'][0];
         $relocation->namer_order = $request[0]['NamerOrder'];
         $relocation->id_1c = $request[0]['Id1C'];
         $relocation->config_time_id = $config_time_id;
@@ -129,15 +148,15 @@ class RelocationController extends Controller
         $end_date = $request->end_date;
         $branchs = BranchList::get();
         $send_branches = array();
-        $recieve_branches = array();
+        $receive_branches = array();
         foreach ($branchs as $branch) {
             array_push($send_branches, $branch->id);
         }
         foreach ($branchs as $branch) {
-            array_push($recieve_branches, $branch->token);
+            array_push($receive_branches, $branch->id);
         }
         $relocations = RelocationApp::with(['relocation_product', 'config_time', 'relocation_time_step',
-            'relocation_time_step.user','relocation_time_step.user.carModel', 'branch', 'agents'])
+            'relocation_time_step.user','relocation_time_step.user.carModel', 'agents','send_branch','receive_branch'])
             ->withCount('relocation_product')
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
@@ -146,7 +165,7 @@ class RelocationController extends Controller
 //            ->whereBetween('date_order', [$start_date, $end_date])
             ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20])
             ->whereIn('branch_send_id', $request->branch_send_id ?? $send_branches)
-            ->whereIn('branch_recieve_id', $request->branch_recieve_id ?? $recieve_branches);
+            ->whereIn('branch_receive_id', $request->branch_recieve_id ?? $receive_branches);
 
         if ($start_date) {
             $relocations->where('order_date', '>=', $start_date);

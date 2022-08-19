@@ -11,7 +11,7 @@ class RelocationApp extends Model
 
     protected $fillable = [
         'uuid', 'agent_id', 'document_id', 'provodka', 'data_order',
-        'content', 'branch_send_id', 'branch_recieve_id', 'branch_recieve',
+        'content', 'branch_send_id', 'branch_receive_id',
         'namer_order', 'id_1c', 'status', 'driver_id','config_time_id', 'status_time','step','order_date'
     ];
 
@@ -30,11 +30,14 @@ class RelocationApp extends Model
         return $this->hasOne(ConfigTime::class, 'id', 'config_time_id');
     }
 
-    public function branch()
+    public function send_branch()
     {
         return $this->hasOne(BranchList::class, 'id', 'branch_send_id');
     }
-
+    public function receive_branch()
+    {
+        return $this->hasOne(BranchList::class, 'id', 'branch_receive_id');
+    }
 
     public function agents()
     {

@@ -25,9 +25,8 @@ return new class extends Migration {
             $table->string('order_date');
             $table->string('date_recieve');
             $table->text('content')->nullable();
-            $table->string('branch_send_id');
-            $table->string('branch_recieve_id');
-            $table->string('branch_recieve');
+            $table->integer('branch_send_id');
+            $table->integer('branch_receive_id');
             $table->string('namer_order');
             $table->string('id_1c');
             $table->integer('status');
