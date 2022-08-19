@@ -182,7 +182,7 @@ class DashboardController extends Controller
                 $query->where('status', 1);
             },
             'delivery_app as delivery_app_count_ready' => function (Builder $query) {
-                $query->whereIn('status', [5, 10, 15, 20, 30, 40]);
+                $query->whereIn('status', [5, 10, 15, 20, 25, 30, 35, 40]);
             },
             'relocation_app',
             'relocation_app as relocationApp_count_by_date' => function (Builder $query) use ($request) {
@@ -192,7 +192,7 @@ class DashboardController extends Controller
                 $query->where('status', 1);
             },
             'relocation_app as relocation_app_count_ready' => function (Builder $query) {
-                $query->whereIn('status', [5, 10, 20]);
+                $query->whereIn('status', [5, 10, 15, 20]);
             },
         ])->get();
 
