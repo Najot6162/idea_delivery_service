@@ -100,23 +100,23 @@ class DashboardController extends Controller
             },
             'relocationApp',
             'relocationApp as relocationApp_count_status_time_one' => function (Builder $query) use ($request) {
-                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 1);
             },
             'relocationApp as relocationApp_count_status_time_two' => function (Builder $query) use ($request) {
-                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 2);
             },
             'relocationApp as relocationApp_count_status_time_three' => function (Builder $query) use ($request) {
-                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 3);
             },
             'relocationApp as relocationApp_count_status_time_four' => function (Builder $query) use ($request) {
-                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 4);
             },
             'relocationApp as relocationApp_all_count' => function (Builder $query) use ($request) {
-                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
             },
         ])->orderBy('deliveryApp_count_status_time_one', 'desc')->where('role_id', 4)->get();
 
@@ -147,23 +147,23 @@ class DashboardController extends Controller
         $relocation_count_driver = User::withCount([
             'relocationApp',
             'relocationApp as relocationApp_count_status_time_one' => function (Builder $query) use ($request) {
-                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 1);
             },
             'relocationApp as relocationApp_count_status_time_two' => function (Builder $query) use ($request) {
-                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 2);
             },
             'relocationApp as relocationApp_count_status_time_three' => function (Builder $query) use ($request) {
-                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 3);
             },
             'relocationApp as relocationApp_count_status_time_four' => function (Builder $query) use ($request) {
-                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
                 $query->where('status_time', 4);
             },
             'relocationApp as relocationApp_all_count' => function (Builder $query) use ($request) {
-                $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
+                $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
             },
         ])->orderBy('relocationApp_count_status_time_one', 'desc')->where('role_id', 4)->get();
         $CountDelviery = [

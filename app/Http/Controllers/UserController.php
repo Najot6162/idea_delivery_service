@@ -134,7 +134,7 @@ class UserController extends Controller
 
     public function getAllDriversOnlyActive(Request $request)
     {
-        $users = User::with('carModel')->where('role_id', 4)->where("active", 0)->get();
+        $users = User::with('carModel')->where('role_id', 4)->where("active", 1)->get();
         return BranchResource::collection($users);
     }
 
