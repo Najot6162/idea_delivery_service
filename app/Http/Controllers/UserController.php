@@ -215,7 +215,7 @@ class UserController extends Controller
         $users = User::findOrFail($id);
         $users->active = $request->active;
         if ($users->save()) {
-            return "update active in users";
+            return "update active in user";
         }
 
     }
