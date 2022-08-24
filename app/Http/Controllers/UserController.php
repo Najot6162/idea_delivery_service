@@ -305,4 +305,9 @@ class UserController extends Controller
         $menus = Menus::where('app_type', $request->type)->orderBy('id', 'asc')->get();
         return $menus;
     }
+
+    public function getUser(Request $request,$id){
+        $users = User::findOrFail($id);
+        return $users;
+    }
 }

@@ -103,7 +103,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-users', [UserController::class, 'getUsers']);
     Route::put('/update-user/{id}', [UserController::class, 'updateUser']);
     Route::put('/update-user-active/{id}', [UserController::class, 'updateUserActive']);
-
+    Route::get('/get-user/{id}',[UserController::class,'getUser']);
     Route::get('/get-all-users', [UserController::class, 'getAllUsers']);
     Route::post('/create-user', [UserController::class, 'createUser']);
     Route::post('/create-fcm-token/{id}', [NotificationController::class, 'createFcmToken']);
