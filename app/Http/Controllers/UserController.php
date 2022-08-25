@@ -306,8 +306,8 @@ class UserController extends Controller
         return $menus;
     }
 
-    public function getUser(Request $request,$id){
-        $users = User::findOrFail($id);
+    public function getUser($id){
+        $users = User::with(['carModel', 'userPermission'])->where('id', $id);
         return $users;
     }
 }

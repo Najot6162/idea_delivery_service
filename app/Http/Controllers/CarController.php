@@ -40,30 +40,32 @@ class CarController extends Controller
 
     public function updateCar(Request $request, $id)
     {
-        if ($request->status) {
+            $request->validate([
+                'number' => 'required',
+                'model' => 'required',
+                'active' => 'required'
+            ]);
             $car = CarModel::findOrFail($id);
+            $car->number = $request->number;
+            $car->model = $request->model;
             $car->active = $request->active;
+
             if ($car->save()) {
-                echo "car update";
-            }
-        }
+                echo "car updated  ";
+            };
 
-        $request->validate([
-            'number' => 'required',
-            'model' => 'required',
-            'active' => 'required'
-        ]);
-        $car = CarModel::findOrFail($id);
-        $car->number = $request->number;
-        $car->model = $request->model;
-        $car->active = $request->active;
-
-        if ($car->save()) {
-            echo "car updated  ";
-        };
-        return true;
     }
-
+    public function updateOnlyActiveCar(Request $request,$id){
+        $car = CarModel::findOrFail($id);
+        $car->active = $request->active;
+        if ($car->save()) {
+            echo "car active updated  ";
+        };
+    }
+    public function getCar($id){
+        $car = CarModel::findOrFail($id);
+        return $car;
+    }
     public function deleteCar($id)
     {
         $car = CarModel::findOrFail($id);
