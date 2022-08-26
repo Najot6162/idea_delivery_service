@@ -503,28 +503,28 @@ class UserSeeder extends Seeder
         ];
 
 
-        foreach ($menus as $key => $value) {
-            Menus::create($value);
-        }
-        foreach ($role_lists as $key => $value) {
-            RoleList::create($value);
-        }
-        foreach ($user_permissions as $key => $value) {
-            UserPermission::create($value);
-        }
+//        foreach ($menus as $key => $value) {
+//            Menus::create($value);
+//        }
+//        foreach ($role_lists as $key => $value) {
+//            RoleList::create($value);
+//        }
+//        foreach ($user_permissions as $key => $value) {
+//            UserPermission::create($value);
+//        }
         foreach ($users as $key => $value) {
             User::create($value);
         }
-
-        foreach ($car_models as $key => $value) {
-            CarModel::create($value);
-        }
-
-        foreach ($regions as $key => $value) {
-            BranchRegion::create($value);
-        }
-        foreach ($config_time as $key => $value) {
-            ConfigTime::create($value);
-        }
+//
+//        foreach ($car_models as $key => $value) {
+//            CarModel::create($value);
+//        }
+//
+//        foreach ($regions as $key => $value) {
+//            BranchRegion::create($value);
+//        }
+//        foreach ($config_time as $key => $value) {
+//            ConfigTime::create($value);
+//        }
     }
 }

@@ -63,7 +63,7 @@ class CarController extends Controller
         };
     }
     public function getCar($id){
-        $car = CarModel::findOrFail($id);
+        $car = CarModel::with('car_term')->findOrFail($id);
         return $car;
     }
     public function deleteCar($id)

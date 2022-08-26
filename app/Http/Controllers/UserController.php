@@ -68,7 +68,7 @@ class UserController extends Controller
         return true;
     }
 
-    public function getAllDrivers(Request $request)
+    public function  getAllDrivers(Request $request)
     {
         $search = $request['search'] ?? "";
         $pageCount = $request['page'] ?? "10";
@@ -137,6 +137,10 @@ class UserController extends Controller
         $users = User::with('carModel')->where('role_id', 4)->where("active", 1)->get();
         return BranchResource::collection($users);
     }
+    public function getDriver(Request $request,$id){
+        $drvier = User::with('carModel')->where('role_id', 4)->findOrFail($id);
+        return $drvier;
+    }
 
     public function getDelivery(Request $request, $id)
     {
@@ -177,8 +181,9 @@ class UserController extends Controller
         $menus = UserPermission::with('menus')
             ->where('role_id', $request->role_id)
             ->whereHas('menus', function ($q) use ($request) {
-                $q->where('app_type', 'LIKE', $request->type);
-            })->orderBy('menu_id', 'asc')
+                $q->where('type', 1);
+            })
+            ->orderBy('menu_id', 'asc')
             ->get();
         return $menus;
     }
@@ -188,7 +193,7 @@ class UserController extends Controller
         $menus = UserPermission::with('menus')
             ->where('role_id', $id)
             ->whereHas('menus', function ($q) use ($request) {
-                $q->where('app_type', 1);
+                $q->where('type', 2);
             })->orderBy('menu_id', 'asc')
             ->get();
         return $menus;
@@ -216,6 +221,16 @@ class UserController extends Controller
         $users->active = $request->active;
         if ($users->save()) {
             return "update active in user";
+        }
+
+    }
+
+    public function UserIsDelete(Request $request, $id)
+    {
+        $users = User::findOrFail($id);
+        $users->is_deleted = $request->is_deleted;
+        if ($users->save()) {
+            return "update is deleted in user";
         }
 
     }

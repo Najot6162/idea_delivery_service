@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-all-driver', [UserController::class, 'getAllDrivers']);//->middleware(['driver']);
     Route::get('/get-delivery/{id}', [UserController::class, 'getDelivery']);
     Route::get('/get-driver-only-active', [UserController::class, 'getAllDriversOnlyActive']);
+    Route::get('/get-driver/{id}', [UserController::class, 'getDriver']);
     //Car Api
     Route::post('/create-car', [CarController::class, 'createCar']);
     Route::put('/update-car/{id}', [CarController::class, 'updateCar']);
@@ -72,8 +73,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-car-term/{id}', [CarController::class, 'getCarTerm']);
     Route::put('/update-car-term/{id}', [CarController::class, 'updateCarTerm']);
     Route::delete('/delete-car/{id}', [CarController::class, 'deleteCar']);
-    Route::put('/update-active-car/{id}',[CarController::class,'updateOnlyActiveCar']);
-    Route::get('/get-car/{id}',[CarController::class,'getCar']);
+    Route::put('/update-active-car/{id}', [CarController::class, 'updateOnlyActiveCar']);
+    Route::get('/get-car/{id}', [CarController::class, 'getCar']);
 
     //Call Center Api
     Route::get('/get-all-call-delivery', [CallCenterController::class, 'getAllCallDelivery']);
@@ -90,7 +91,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-all-problem-service', [ProblemController::class, 'getAllProblemServices']);
     Route::get('/get-problem-service/{id}', [ProblemController::class, 'getProblemService']);
     Route::delete('/problem-service/{id}', [ProblemController::class, 'deleteProblemService']);
-    Route::get('/get-all-users-with-branch',[UserController::class,'getAllUsersWithBranch']);
+    Route::get('/get-all-users-with-branch', [UserController::class, 'getAllUsersWithBranch']);
     Route::put('/update-user-branch/{id}', [UserController::class, 'updateUserBranch']);
     //Dashboard Api
     Route::get('/get-counts', [DashboardController::class, 'getCounts']);
@@ -105,17 +106,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-users', [UserController::class, 'getUsers']);
     Route::put('/update-user/{id}', [UserController::class, 'updateUser']);
     Route::put('/update-user-active/{id}', [UserController::class, 'updateUserActive']);
-    Route::get('/get-user/{id}',[UserController::class,'getUser']);
+    Route::get('/get-user/{id}', [UserController::class, 'getUser']);
     Route::get('/get-all-users', [UserController::class, 'getAllUsers']);
     Route::post('/create-user', [UserController::class, 'createUser']);
     Route::post('/create-fcm-token/{id}', [NotificationController::class, 'createFcmToken']);
     Route::get('/get-auth-user', [AuthController::class, 'getAuthUser']);
+    Route::put('/user-deleted/{id}',[UserController::class,'UserIsDelete']);
 
     //Api for Mobile app
     Route::post('/upload-app', [FileController::class, 'uploadAppFile']);
 
 });
-Route::get('/download-image',[FileController::class,'downlodImageFile']);
+Route::get('/download-image', [FileController::class, 'downlodImageFile']);
 //Api for Mobile app
 Route::get('/download-app', [FileController::class, 'getDownload']);
 Route::get('/read-json-app-file', [FileController::class, 'readAppJsonFile']);

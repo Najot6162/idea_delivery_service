@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->string('car_model')->nullable();
             $table->integer('car_model_id')->nullable();
             $table->integer('active')->nullable();
-            //$table->enum('active',['0','1'])->nullable();
+            $table->integer('is_deleted')->nullable()->default('0');
             $table->integer('branch_id')->nullable();
             $table->string('name')->nullable();
             $table->timestamp('login_verified_at')->nullable();
