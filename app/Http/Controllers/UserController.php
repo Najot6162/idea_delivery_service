@@ -176,7 +176,7 @@ class UserController extends Controller
         return $roles;
     }
 
-    public function getPermission(Request $request)
+    public function     getPermission(Request $request)
     {
         $menus = UserPermission::with('menus')
             ->where('role_id', $request->role_id)
