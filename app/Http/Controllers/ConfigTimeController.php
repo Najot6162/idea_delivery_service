@@ -76,7 +76,7 @@ class ConfigTimeController extends Controller
 
     public function getAllConfigTime(Request $request)
     {
-        $config_times = ConfigTime::get();
+        $config_times = ConfigTime::with('user')->get();
         return $config_times;
     }
 }
