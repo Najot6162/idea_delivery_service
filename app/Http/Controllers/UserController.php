@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BranchList;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Resources\BranchResource;
@@ -72,7 +73,11 @@ class UserController extends Controller
     {
         $search = $request['search'] ?? "";
         $pageCount = $request['page'] ?? "10";
-
+        $branchs = BranchList::get();
+        $branches = array();
+        foreach ($branchs as $branch) {
+            array_push($branches, $branch->id);
+        }
         $users = User::with('carModel')->withCount([
             'deliveryApp',
             'deliveryApp as count_status_five' => function (Builder $query) use ($request) {
@@ -125,9 +130,14 @@ class UserController extends Controller
                 $q->where('number', 'LIKE', "%$search%");
                 $q->orWhere('model', 'LIKE', "%$search%");
             })
+            ->whereIn('branch_id', $request->branch_id ?? $branches)
             ->orWhere('name', 'LIKE', "%$search%")
-            ->orWhere('phone', 'LIKE', "%$search%")
-            ->orWhere('address', 'LIKE', "%$search%");
+            ->orwhere('phone', 'LIKE', "%$search%")
+            ->orwhere('address', 'LIKE', "%$search%");
+
+        if ($request->branch_id) {
+            $users->whereIn('branch_id', $request->branch_id);
+        }
 
         return BranchResource::collection($users->paginate($pageCount));
     }

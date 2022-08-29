@@ -15,15 +15,15 @@ class BranchController extends Controller
         $validator = Validator::make($request->all(),[
              'title'=>'required',
              'token'=>'required',
-             'region_id'=>'required'
             ]);
 
          $branchList = new BranchList();
 
          $branchList->title = $request->title;
          $branchList->token=$request->token;
-         $branchList->region_id = $request->region_id;
-
+         if ($request->region_id){
+             $branchList->region_id = $request->region_id;
+         }
          if($branchList->save()){
              echo "branchList saved  ";
          };
