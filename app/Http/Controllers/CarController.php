@@ -34,7 +34,7 @@ class CarController extends Controller
     public function getAllCars(Request $request)
     {
         $pageCount = $request['page'] ?? "10";
-        $cars = CarModel::with('car_term')->paginate($pageCount);
+        $cars = CarModel::with('car_term')->paginate($request->perPage);
         return BranchResource::collection($cars);
     }
 

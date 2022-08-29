@@ -216,7 +216,6 @@ class DeliveryController extends Controller
     public function gettAllDelivery(Request $request)
     {
         $search = $request['search'] ?? "";
-        $pageCount = $request['page'] ?? "10";
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $deliveries = DeliveryApp::with(['pickup_time', 'pickup_time.user','pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
@@ -246,6 +245,6 @@ class DeliveryController extends Controller
             $deliveries->where('online', $request->online);
         }
 
-        return BranchResource::collection($deliveries->paginate($pageCount));
+        return BranchResource::collection($deliveries->paginate($request->perPage));
     }
 }

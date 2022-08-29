@@ -151,7 +151,7 @@ class ProblemController extends Controller
             $problems->whereIn('user_id', $request->user_id);
         }
 
-        return BranchResource::collection($problems->paginate($pageCount));
+        return BranchResource::collection($problems->paginate($request->perPage));
     }
 
     public function updateProblem(Request $request, $id)
@@ -240,7 +240,7 @@ class ProblemController extends Controller
         if ($request->branch_id) {
             $problem->whereIn('branch_id', $request->branch_id);
         }
-        return BranchResource::collection($problem->paginate($pageCount));
+        return BranchResource::collection($problem->paginate($request->perPage));
     }
 
     public function createProblemService(Request $request)
@@ -274,7 +274,7 @@ class ProblemController extends Controller
         $search = $request['search'] ?? "";
         $pageCount = $request['page'] ?? "10";
 
-        $problem_services = ProblemService::where('title', 'LIKE', "%$search%")->paginate($pageCount);
+        $problem_services = ProblemService::where('title', 'LIKE', "%$search%")->paginate($request->perPage);
         return $problem_services;
     }
 

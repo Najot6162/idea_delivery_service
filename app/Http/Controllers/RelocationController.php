@@ -180,7 +180,7 @@ class RelocationController extends Controller
             $relocations->whereIn('driver_id', $request->driver_id);
         }
 
-        return BranchResource::collection($relocations->paginate($pageCount));
+        return BranchResource::collection($relocations->paginate($request->perPage));
     }
 
     public function updateRelocation(Request $request, $id)
@@ -249,6 +249,6 @@ class RelocationController extends Controller
             $relocation->whereBetween('date_order', [$start_date, $end_date]);
         }
 
-        return BranchResource::collection($relocation->paginate($pageCount));
+        return BranchResource::collection($relocation->paginate($request->perPage));
     }
 }

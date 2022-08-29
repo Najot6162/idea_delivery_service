@@ -138,7 +138,7 @@ class UserController extends Controller
         }
 
 
-        return BranchResource::collection($users->paginate($pageCount));
+        return BranchResource::collection($users->paginate($request->perPage));
     }
 
     public function getAllDriversOnlyActive(Request $request)
@@ -178,7 +178,7 @@ class UserController extends Controller
             $delviery->whereIn('branch_id', $request->branch_id);
         }
 
-        return BranchResource::collection($delviery->paginate($pageCount));
+        return BranchResource::collection($delviery->paginate($request->perPage));
     }
 
     public function roleGroup()

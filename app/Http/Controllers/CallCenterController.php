@@ -40,6 +40,6 @@ class CallCenterController extends Controller
             $deliveries->where('online', $request->online);
         }
 
-        return BranchResource::collection($deliveries->paginate($pageCount));
+        return BranchResource::collection($deliveries->paginate($request->perPage));
     }
 }
