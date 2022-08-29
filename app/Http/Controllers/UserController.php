@@ -69,7 +69,7 @@ class UserController extends Controller
         return true;
     }
 
-    public function  getAllDrivers(Request $request)
+    public function getAllDrivers(Request $request)
     {
         $search = $request['search'] ?? "";
         $pageCount = $request['page'] ?? "10";
@@ -82,13 +82,13 @@ class UserController extends Controller
             'deliveryApp',
             'deliveryApp as count_status_five' => function (Builder $query) use ($request) {
                 if ($request->start_date) {
-                    $query->where('order_date', '>=', $request->start_date);
+                    $query->where('date_order', '>=', $request->start_date);
                 }
                 if ($request->end_date) {
-                    $query->where('order_date', '<=', $request->end_date);
+                    $query->where('date_order', '<=', $request->end_date);
                 }
                 if ($request->start_date && $request->end_date) {
-                    $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
+                    $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
                 }
                 if ($request->branch_id) {
                     $query->whereIn('branch_id', $request->branch_id);
@@ -97,13 +97,13 @@ class UserController extends Controller
             },
             'deliveryApp as count_status_ten' => function (Builder $query) use ($request) {
                 if ($request->start_date) {
-                    $query->where('order_date', '>=', $request->start_date);
+                    $query->where('date_order', '>=', $request->start_date);
                 }
                 if ($request->end_date) {
-                    $query->where('order_date', '<=', $request->end_date);
+                    $query->where('date_order', '<=', $request->end_date);
                 }
                 if ($request->start_date && $request->end_date) {
-                    $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
+                    $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
                 }
                 if ($request->branch_id) {
                     $query->whereIn('branch_id', $request->branch_id);
@@ -112,32 +112,31 @@ class UserController extends Controller
             },
             'deliveryApp as count_status_forty' => function (Builder $query) use ($request) {
                 if ($request->start_date) {
-                    $query->where('order_date', '>=', $request->start_date);
+                    $query->where('date_order', '>=', $request->start_date);
                 }
                 if ($request->end_date) {
-                    $query->where('order_date', '<=', $request->end_date);
+                    $query->where('date_order', '<=', $request->end_date);
                 }
                 if ($request->start_date && $request->end_date) {
-                    $query->whereBetween('order_date', [$request->start_date, $request->end_date]);
+                    $query->whereBetween('date_order', [$request->start_date, $request->end_date]);
                 }
                 if ($request->branch_id) {
                     $query->whereIn('branch_id', $request->branch_id);
                 }
                 $query->where('status', 40);
             },
-        ])->where('role_id', 4)
-            ->whereHas('carModel', function ($q) use ($search) {
+        ])->where('role_id', 4);
+
+        if ($request->search) {
+            $users->whereHas('carModel', function ($q) use ($search) {
                 $q->where('number', 'LIKE', "%$search%");
                 $q->orWhere('model', 'LIKE', "%$search%");
             })
-            ->whereIn('branch_id', $request->branch_id ?? $branches)
-            ->orWhere('name', 'LIKE', "%$search%")
-            ->orwhere('phone', 'LIKE', "%$search%")
-            ->orwhere('address', 'LIKE', "%$search%");
-
-        if ($request->branch_id) {
-            $users->whereIn('branch_id', $request->branch_id);
+                ->orWhere('name', 'LIKE', "%$search%")
+                ->orwhere('phone', 'LIKE', "%$search%")
+                ->orwhere('address', 'LIKE', "%$search%");
         }
+
 
         return BranchResource::collection($users->paginate($pageCount));
     }
@@ -147,7 +146,9 @@ class UserController extends Controller
         $users = User::with('carModel')->where('role_id', 4)->where("active", 1)->get();
         return BranchResource::collection($users);
     }
-    public function getDriver(Request $request,$id){
+
+    public function getDriver(Request $request, $id)
+    {
         $drvier = User::with('carModel')->where('role_id', 4)->findOrFail($id);
         return $drvier;
     }
@@ -186,7 +187,7 @@ class UserController extends Controller
         return $roles;
     }
 
-    public function     getPermission(Request $request)
+    public function getPermission(Request $request)
     {
         $menus = UserPermission::with('menus')
             ->where('role_id', $request->role_id)
@@ -331,7 +332,8 @@ class UserController extends Controller
         return $menus;
     }
 
-    public function getUser($id){
+    public function getUser($id)
+    {
         $users = User::with(['carModel', 'userPermission'])->where('id', $id);
         return $users;
     }
