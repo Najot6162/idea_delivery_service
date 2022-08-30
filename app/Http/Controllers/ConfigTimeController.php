@@ -58,6 +58,12 @@ class ConfigTimeController extends Controller
         $config_time->active = $request->active;
 
         if ($config_time->save()) {
+            $config_times = ConfigTime::whereNotIn('id', [$config_time->id])->get();
+            foreach ($config_times as $time) {
+                $config_time = ConfigTime::findOrFail($time->id);
+                $config_time->active = 0;
+                $config_time->save();
+            }
             return response()->json([
                 'status_code' => 201,
                 'message' => 'saved'
@@ -68,7 +74,6 @@ class ConfigTimeController extends Controller
     public function updateConfigTime(Request $request)
     {
         $config_times = ConfigTime::whereNotIn('id', [$request->id])->get();
-
         foreach ($config_times as $time) {
             $config_time = ConfigTime::findOrFail($time->id);
             $config_time->active = 0;
