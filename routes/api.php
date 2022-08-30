@@ -66,6 +66,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-delivery/{id}', [UserController::class, 'getDelivery']);
     Route::get('/get-driver-only-active', [UserController::class, 'getAllDriversOnlyActive']);
     Route::get('/get-driver/{id}', [UserController::class, 'getDriver']);
+
     //Car Api
     Route::post('/create-car', [CarController::class, 'createCar']);
     Route::put('/update-car/{id}', [CarController::class, 'updateCar']);
@@ -99,7 +100,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Permission Api
     Route::get('/get-roles_group', [UserController::class, 'roleGroup']);
     Route::get('/get-permission', [UserController::class, 'getPermission']);
-    Route::put('/update-permisson/{id}', [UserController::class, 'updatePermission']);
+    Route::put('/update-permission', [UserController::class, 'updatePermission']);
     Route::get('/get-menus', [UserController::class, 'getMenus']);
 
     //Users Api

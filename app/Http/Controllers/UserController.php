@@ -210,19 +210,20 @@ class UserController extends Controller
         return $menus;
     }
 
-    public function updatePermission(Request $request, $id)
+    public function updatePermission(Request $request)
     {
-        $user_permission = UserPermission::findOrFail($id);
-        $user_permission->value = $request->value;
-        if ($user_permission->save()) {
-            echo "updated permisson";
+        foreach ($request->toArray() as $req) {
+            $user_permission = UserPermission::findOrFail($req['id']);
+            $user_permission->value = $req['value'];
+            if ($user_permission->save()) {
+                echo "  updated permission\n";
+            }
         }
     }
 
     public function getUsers(Request $request)
     {
         $users = User::where('role_id', $request->role_id)->get();
-
         return $users;
     }
 
