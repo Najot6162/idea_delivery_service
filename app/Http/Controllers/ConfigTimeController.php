@@ -73,13 +73,13 @@ class ConfigTimeController extends Controller
             $config_time = ConfigTime::findOrFail($time->id);
             $config_time->active = 0;
             if ($config_time->save()) {
-                echo "config_time updated in active  ";
+                echo " updated inactive config_time \n";
             };
         }
         $config_time = ConfigTime::findOrFail($request->id);
         $config_time->active = 1;
         if ($config_time->save()) {
-            echo "config_time updated  ";
+            echo " updated active config_time   ";
         };
     }
 
