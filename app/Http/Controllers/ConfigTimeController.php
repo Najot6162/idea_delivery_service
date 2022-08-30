@@ -12,7 +12,7 @@ class ConfigTimeController extends Controller
 {
     public function checkTime(Request $request)
     {
-        $deliveries = DeliveryApp::whereNotIn('status', ['15','20', '25', '30', '40'])->get();
+        $deliveries = DeliveryApp::whereNotIn('status', ['15', '20', '25', '30', '40'])->get();
         $config_time = ConfigTime::where('active', '1')->first();
         $time = $config_time->time;
         $time1 = $time / 3;
@@ -58,19 +58,26 @@ class ConfigTimeController extends Controller
         $config_time->active = $request->active;
 
         if ($config_time->save()) {
-            echo "config_time saved  ";
+            return response()->json([
+                'status_code' => 201,
+                'message' => 'saved'
+            ], 201);
         };
     }
 
-    public function updateConfigTime(Request $request, $id)
+    public function updateConfigTime(Request $request)
     {
-        $config_time = ConfigTime::findOrFail($id);
-        if ($request->time){
-            $config_time->time = $request->time;
+        $config_times = ConfigTime::whereNotIn('id', [$request->id])->get();
+
+        foreach ($config_times as $time) {
+            $config_time = ConfigTime::findOrFail($time->id);
+            $config_time->active = 0;
+            if ($config_time->save()) {
+                echo "config_time updated in active  ";
+            };
         }
-      if ($request->active){
-          $config_time->active = $request->active;
-      }
+        $config_time = ConfigTime::findOrFail($request->id);
+        $config_time->active = 1;
         if ($config_time->save()) {
             echo "config_time updated  ";
         };

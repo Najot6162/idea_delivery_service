@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //ConfigTime Api
     Route::get('/check-time', [ConfigTimeController::class, 'checkTime']);
     Route::post('/crete-config-time', [ConfigTimeController::class, 'creteConfigTime']);
-    Route::put('/update-config-time/{id}', [ConfigTimeController::class, 'updateConfigTime']);
+    Route::put('/update-config-time', [ConfigTimeController::class, 'updateConfigTime']);
     Route::get('/get-all-config-time', [ConfigTimeController::class, 'getAllConfigTime']);
 
     //Branch Api
