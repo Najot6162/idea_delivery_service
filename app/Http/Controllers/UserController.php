@@ -273,11 +273,16 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
-        $user->active = $request->active;
+
+        if ($request->is_deleted) {
+            $user->is_deleted = $request->is_deleted;
+        }
+        if ($request->active) {
+            $user->active = $request->active;
+        }
         if ($user->save()) {
             echo "user updated";
         };
-        return true;
     }
 
     public function createUser(Request $request)

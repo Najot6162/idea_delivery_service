@@ -112,7 +112,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/create-user', [UserController::class, 'createUser']);
     Route::post('/create-fcm-token/{id}', [NotificationController::class, 'createFcmToken']);
     Route::get('/get-auth-user', [AuthController::class, 'getAuthUser']);
-    Route::put('/user-deleted/{id}',[UserController::class,'UserIsDelete']);
+    Route::put('/update-user-deleted/{id}',[UserController::class,'UserIsDelete']);
 
     //Api for Mobile app
     Route::post('/upload-app', [FileController::class, 'uploadAppFile']);
