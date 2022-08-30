@@ -340,7 +340,7 @@ class UserController extends Controller
 
     public function getUser($id)
     {
-        $users = User::with(['carModel', 'userPermission'])->where('id', $id);
+        $users = User::with(['carModel', 'userPermission'])->findOrFail($id);
         return $users;
     }
 }
