@@ -17,4 +17,8 @@ class ConfigTime extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+    public function deliveryApp()
+    {
+        return $this->hasMany(DeliveryApp::class,'config_time_id','id');
+    }
 }

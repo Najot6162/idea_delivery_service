@@ -66,9 +66,12 @@ class ConfigTimeController extends Controller
     public function updateConfigTime(Request $request, $id)
     {
         $config_time = ConfigTime::findOrFail($id);
-        $config_time->time = $request->time;
-        $config_time->active = $request->active;
-
+        if ($request->time){
+            $config_time->time = $request->time;
+        }
+      if ($request->active){
+          $config_time->active = $request->active;
+      }
         if ($config_time->save()) {
             echo "config_time updated  ";
         };
@@ -76,7 +79,7 @@ class ConfigTimeController extends Controller
 
     public function getAllConfigTime(Request $request)
     {
-        $config_times = ConfigTime::with('user')->get();
+        $config_times = ConfigTime::with('user')->withCount('deliveryApp')->get();
         return $config_times;
     }
 }
