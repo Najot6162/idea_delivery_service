@@ -10,7 +10,7 @@ class ConfigTime extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'time', 'count_app', 'active'
+        'user_id', 'time', 'active'
     ];
 
     public function user()

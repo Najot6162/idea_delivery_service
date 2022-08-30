@@ -16,7 +16,6 @@ return new class extends Migration {
             $table->id();
             $table->integer('user_id');
             $table->integer('time');
-            $table->integer('count_app')->nullable();
             $table->integer('active')->nullable();
             $table->timestamps();
         });

@@ -55,7 +55,6 @@ class ConfigTimeController extends Controller
         $config_time = new ConfigTime();
         $config_time->user_id = $request->user_id;
         $config_time->time = $request->time;
-        //$config_time->count_app = $request->count_app;
         $config_time->active = $request->active;
 
         if ($config_time->save()) {
