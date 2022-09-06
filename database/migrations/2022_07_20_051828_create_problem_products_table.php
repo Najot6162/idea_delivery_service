@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->string('imel_id');
             $table->integer('product_amount');
             $table->integer('product_code');
-            $table->enum('active', ['0', '1'])->nullable();
+            $table->integer('active')->nullable();
             $table->timestamps();
         });
     }

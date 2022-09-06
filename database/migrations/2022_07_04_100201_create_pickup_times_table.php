@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->integer('branch_id')->nullable();
             $table->integer('month_uniq')->nullable();
             $table->text('comment')->nullable();
-            $table->enum('active', ['0', '1'])->default('0')->nullable();
+            $table->integer('active')->default(0)->nullable();
             $table->timestamps();
         });
     }
