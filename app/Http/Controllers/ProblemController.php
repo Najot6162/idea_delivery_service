@@ -254,9 +254,7 @@ class ProblemController extends Controller
         $problem_service->title = $request->title;
         $problem_service->address = $request->address;
         $problem_service->phone = $request->phone;
-        if ($request->status) {
-            $problem_service->status = $request->status;
-        }
+        $problem_service->status = $request->status;
 
         if ($problem_service->save()) {
             echo " problem service created";
