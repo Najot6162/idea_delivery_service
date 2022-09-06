@@ -131,12 +131,12 @@ class ProblemController extends Controller
         $pageCount = $request['page'] ?? "10";
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-        $problems = ProblemApp::with(['problem_time_step','problem_product',
+        $problems = ProblemApp::with(['problem_time_step', 'problem_product',
             'problem_time_step.user', 'problem_time_step.branch', 'agents', 'branch', 'files'])
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
             })
-            ->whereIn('status', $request->status ?? [1,5,10,15,20,25,30,35,40,45,50,99]);
+            ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 99]);
 
         if ($start_date) {
             $problems->where('date_order', '>=', $start_date);
@@ -165,7 +165,7 @@ class ProblemController extends Controller
         if ($request->is_problem) {
             $problem->is_problem = $request->is_problem;
         };
-        if($request->service_id){
+        if ($request->service_id) {
             $problem->service_id = $request->service_id;
         }
         $problem->status = $request->status;
@@ -226,7 +226,7 @@ class ProblemController extends Controller
         }
         $problem = ProblemApp::where('user_id', $id)
             ->where('step', 'LIKE', "%$search%")
-            ->whereIn('status', $request->status ?? [1,5,10,15,20,25,30,35,40,45,50,99]);
+            ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 99]);
 
         if ($start_date) {
             $problem->where('date_order', '>=', $start_date);
@@ -287,9 +287,8 @@ class ProblemController extends Controller
         $problem_service->title = $request->title;
         $problem_service->address = $request->address;
         $problem_service->phone = $request->phone;
-        if ($request->status) {
-            $problem_service->status = $request->status;
-        }
+        $problem_service->status = $request->status;
+
 
         if ($problem_service->save()) {
             echo " problem service updated";
