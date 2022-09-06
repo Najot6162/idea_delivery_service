@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('title');
             $table->string('address');
             $table->string('phone');
-            $table->integer('status');
+            $table->enum('status', ['0', '1'])->nullable();
             $table->timestamps();
         });
     }
