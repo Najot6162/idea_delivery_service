@@ -243,6 +243,12 @@ class ProblemController extends Controller
         return BranchResource::collection($problem->paginate($request->perPage));
     }
 
+    public function getProblemItem(Request $request,$id){
+        $problem = ProblemApp::with(['problem_time_step', 'problem_product',
+            'problem_time_step.user', 'problem_time_step.branch', 'agents', 'branch', 'files'])->findOrFail($id);
+        return$problem;
+    }
+    //problem service
     public function createProblemService(Request $request)
     {
         $validator = Validator::make($request->all(), [

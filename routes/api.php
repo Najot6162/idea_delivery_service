@@ -84,6 +84,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/create-problem', [ProblemController::class, 'createProblem']);
     Route::get('/get-all-problems', [ProblemController::class, 'getAllProblems']);
     Route::put('/update-problem/{id}', [ProblemController::class, 'updateProblem']);
+    Route::get('/get-problem-item/{id}',[ProblemController::class,'getProblemItem']);
     Route::get('/get-problem/{id}', [ProblemController::class, 'getProblem']);
 
     //Service Center
