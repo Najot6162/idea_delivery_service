@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/create-branch', [BranchController::class, 'createBranch']);
     Route::put('/update-branch/{id}', [BranchController::class, 'updateBranch']);
     Route::get('/get-all-branchs', [BranchController::class, 'getAllBranch']);
-    Route::get('/get-all-regions',[BranchController::class,'getAllBranchRegion']);
+    Route::get('/get-all-regions', [BranchController::class, 'getAllBranchRegion']);
     //Relocation Api
     Route::post('/create-relocation', [RelocationController::class, 'CreateRelocation']);
     Route::get('/get-all-relocation', [RelocationController::class, 'getAllRelocation']);
@@ -84,7 +84,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/create-problem', [ProblemController::class, 'createProblem']);
     Route::get('/get-all-problems', [ProblemController::class, 'getAllProblems']);
     Route::put('/update-problem/{id}', [ProblemController::class, 'updateProblem']);
-    Route::get('/get-problem-item/{id}',[ProblemController::class,'getProblemItem']);
+    Route::get('/get-problem-item/{id}', [ProblemController::class, 'getProblemItem']);
+    Route::post('/add-comment', [ProblemController::class, 'addCommentToTimeStep']);
+
     Route::get('/get-problem/{id}', [ProblemController::class, 'getProblem']);
 
     //Service Center
@@ -113,13 +115,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/create-user', [UserController::class, 'createUser']);
     Route::post('/create-fcm-token/{id}', [NotificationController::class, 'createFcmToken']);
     Route::get('/get-auth-user', [AuthController::class, 'getAuthUser']);
-    Route::put('/update-user-deleted/{id}',[UserController::class,'UserIsDelete']);
+    Route::put('/update-user-deleted/{id}', [UserController::class, 'UserIsDelete']);
 
     //Api for Mobile app
     Route::post('/upload-app', [FileController::class, 'uploadAppFile']);
 
 });
-Route::get('/download-image', [FileController::class, 'downlodImageFile']);
+Route::get('/download-image', [FileController::class, 'downloadImageFile']);
 //Api for Mobile app
 Route::get('/download-app', [FileController::class, 'getDownload']);
 Route::get('/read-json-app-file', [FileController::class, 'readAppJsonFile']);

@@ -22,7 +22,7 @@ class RelocationApp extends Model
 
     public function relocation_time_step()
     {
-        return $this->hasMany(RelocationTimeStep::class, 'relocation_uuid', 'uuid');
+        return $this->hasMany(RelocationTimeStep::class, 'relocation_uuid', 'uuid')->orderBy('step','asc');
     }
 
     public function config_time()

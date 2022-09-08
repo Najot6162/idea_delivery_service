@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -132,7 +133,7 @@ class ProblemController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $problems = ProblemApp::with(['problem_time_step', 'problem_product',
-            'problem_time_step.user', 'problem_time_step.branch', 'agents', 'branch', 'files'])
+            'problem_time_step.user', 'problem_time_step.branch','problem_time_step.comment', 'agents', 'branch', 'files'])
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
             })
@@ -243,11 +244,13 @@ class ProblemController extends Controller
         return BranchResource::collection($problem->paginate($request->perPage));
     }
 
-    public function getProblemItem(Request $request,$id){
+    public function getProblemItem(Request $request, $id)
+    {
         $problem = ProblemApp::with(['problem_time_step', 'problem_product',
-            'problem_time_step.user', 'problem_time_step.branch', 'agents', 'branch', 'files'])->findOrFail($id);
-        return$problem;
+            'problem_time_step.user', 'problem_time_step.branch','problem_time_step.comment', 'agents', 'branch', 'files'])->findOrFail($id);
+        return $problem;
     }
+
     //problem service
     public function createProblemService(Request $request)
     {
@@ -306,6 +309,19 @@ class ProblemController extends Controller
         $problem_service = ProblemService::findOrFail($id);
         if ($problem_service->delete()) {
             return "deleted problem service";
+        }
+    }
+
+    public function addCommentToTimeStep(Request $request)
+    {
+        $comment = new Comment();
+        $comment->step_id = $request->step_id;
+        $comment->message = $request->message;
+        if ($comment->save()) {
+            return response()->json([
+                'status_code' => 201,
+                'message' => 'comment created'
+            ], 201);
         }
     }
 }

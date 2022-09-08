@@ -18,7 +18,7 @@ class ProblemApp extends Model
 
     public function problem_time_step()
     {
-        return $this->hasMany(ProblemTimeStep::class, 'problem_uuid', 'uuid');
+        return $this->hasMany(ProblemTimeStep::class, 'problem_uuid', 'uuid')->orderBy('step','asc');
     }
 
     public function problem_service()
@@ -48,6 +48,6 @@ class ProblemApp extends Model
 
     public function files()
     {
-        return $this->hasMany(Files::class, 'app_uuid', 'uuid');
+        return $this->hasOne(Files::class, 'app_uuid', 'uuid');
     }
 }

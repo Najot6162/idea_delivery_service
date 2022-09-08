@@ -29,7 +29,7 @@ class FileController extends Controller
             "version" => $request->latest_version,
             "code" => $request->code_version,
             "file_path" => $path,
-            "url"=>'http://devserv.gx.uz/api/download-app'
+            "url" => 'http://devserv.gx.uz/api/download-app'
         ];
         Storage::disk('public')->put('/app/app.json', json_encode($data));
 
@@ -39,16 +39,12 @@ class FileController extends Controller
     public function getDownload()
     {
         $app_json = json_decode(file_get_contents(storage_path() . "/app/public/app/app.json"), true);
-        $file= storage_path(). "/app/".$app_json['file_path'];
+        $file = storage_path() . "/app/" . $app_json['file_path'];
 
-        $headers = array(
-            'Content-Type: application/pdf',
-        );
-
-        return response()->file($file ,[
-            'Content-Type'=>'application/vnd.android.package-archive',
-            'Content-Disposition'=> 'attachment; filename="idea-delivery.apk"',
-        ]) ;
+        return response()->file($file, [
+            'Content-Type' => 'application/vnd.android.package-archive',
+            'Content-Disposition' => 'attachment; filename="idea-delivery.apk"',
+        ]);
     }
 
     public function readAppJsonFile()
@@ -67,7 +63,7 @@ class FileController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 201);
+            return response()->json(['error' => $validator->errors()], 400);
         }
         $path = $request->file('image')->store('public/images');
 
@@ -80,11 +76,9 @@ class FileController extends Controller
         };
     }
 
-    public function downlodImageFile(){
-
-         $filePath = public_path("storage/images/pJ1g5AC2WmhXMafAmrAoRRHr10ReG3OAkBL1v3H6.jpg",true);
-//        $headers = ['Content-Type: application/jpg'];
-//        $fileName = time().'.png';
-        return response()->file($filePath);
+    public function downloadImageFile(Request $request)
+    {
+        $filePath = storage_path("app/$request->url", true);
+        return response()->download($filePath);
     }
 }

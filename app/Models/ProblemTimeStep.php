@@ -27,4 +27,7 @@ class ProblemTimeStep extends Model
     {
         return $this->hasOne(BranchList::class, 'id', 'branch_id');
     }
+    public function comment(){
+        return $this->hasMany(Comment::class,'step_id','id')->orderBy('created_at','asc');
+    }
 }
