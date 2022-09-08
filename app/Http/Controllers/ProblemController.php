@@ -133,7 +133,7 @@ class ProblemController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $problems = ProblemApp::with(['problem_time_step', 'problem_product',
-            'problem_time_step.user', 'problem_time_step.branch','problem_time_step.comment', 'agents', 'branch', 'files'])
+            'problem_time_step.user', 'problem_time_step.branch','problem_time_step.comment.user', 'agents', 'branch', 'files'])
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
             })
@@ -247,7 +247,7 @@ class ProblemController extends Controller
     public function getProblemItem(Request $request, $id)
     {
         $problem = ProblemApp::with(['problem_time_step', 'problem_product',
-            'problem_time_step.user', 'problem_time_step.branch','problem_time_step.comment', 'agents', 'branch', 'files'])->findOrFail($id);
+            'problem_time_step.user', 'problem_time_step.branch','problem_time_step.comment.user', 'agents', 'branch', 'files'])->findOrFail($id);
         return $problem;
     }
 
@@ -317,6 +317,7 @@ class ProblemController extends Controller
         $comment = new Comment();
         $comment->step_id = $request->step_id;
         $comment->message = $request->message;
+        $comment->user_id = $request->user_id;
         if ($comment->save()) {
             return response()->json([
                 'status_code' => 201,
