@@ -133,7 +133,7 @@ class ProblemController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $problems = ProblemApp::with(['problem_time_step', 'problem_product',
-            'problem_time_step.user', 'problem_time_step.branch','problem_time_step.comment.user', 'agents', 'branch', 'files'])
+            'problem_time_step.user', 'problem_time_step.branch','problem_time_step.comment.user', 'agents', 'branch', 'files','problem_service'])
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
             })
@@ -207,7 +207,7 @@ class ProblemController extends Controller
             return "updated problem app";
         }
 
-    }
+        }
 
     public function getProblem(Request $request, $id)
     {

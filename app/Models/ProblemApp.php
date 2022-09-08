@@ -23,7 +23,7 @@ class ProblemApp extends Model
 
     public function problem_service()
     {
-        return $this->hasMany(ProblemService::class, 'problem_uuid', 'uuid');
+        return $this->hasMany(ProblemService::class, 'id', 'service_id');
     }
 
     public function agents()

@@ -121,7 +121,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/upload-app', [FileController::class, 'uploadAppFile']);
 
 });
-Route::get('/download-image', [FileController::class, 'downloadImageFile']);
+Route::get('/download-image/{url}', [FileController::class, 'downloadImageFile']);
 //Api for Mobile app
 Route::get('/download-app', [FileController::class, 'getDownload']);
 Route::get('/read-json-app-file', [FileController::class, 'readAppJsonFile']);
