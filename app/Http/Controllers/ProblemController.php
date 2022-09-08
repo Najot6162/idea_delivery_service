@@ -204,7 +204,7 @@ class ProblemController extends Controller
             echo "time_step saved  ";
         };
         if ($problem->save()) {
-            return "updated ptoblem";
+            return "updated problem app";
         }
 
     }
