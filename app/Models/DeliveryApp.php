@@ -50,7 +50,7 @@ class DeliveryApp extends Model
 
     public function pickup_time()
     {
-        return $this->hasMany(PickupTime::class, 'app_uuid', 'uuid')->orderBy('step','asc');
+        return $this->hasMany(PickupTime::class, 'app_uuid', 'uuid')->where('active','1')->orderBy('step','asc');
     }
 
     public function delivery_product()

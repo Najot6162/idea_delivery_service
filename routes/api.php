@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/create-delivery', [DeliveryController::class, 'CreateDelivery']);
     Route::get('/get-all-delivery', [DeliveryController::class, 'gettAllDelivery']);//->middleware(['admin']);
     Route::put('/update-delivery/{id}', [DeliveryController::class, 'updateDelivery']); //->middleware(['admin']);
-
+    Route::put('/back-step/{id}',[DeliveryController::class,'backStep']);
     //File Upload
     Route::post('/upload_file', [FileController::class, 'uploadFile']);//->middleware(['admin']);
 

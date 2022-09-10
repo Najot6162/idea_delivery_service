@@ -198,6 +198,7 @@ class DeliveryController extends Controller
         $pickup_time = new PickupTime();
         $pickup_time->app_uuid = $delivery->uuid;
         $pickup_time->step = $request->step;
+        $pickup_time->active = '1';
         if ($request->branch_step) {
             $pickup_time->branch_id = $request->branch_step;
         } else {
@@ -246,5 +247,18 @@ class DeliveryController extends Controller
         }
 
         return BranchResource::collection($deliveries->paginate($request->perPage));
+    }
+    public function backStep(Request $request,$id){
+
+        echo $id;
+        $delivery = DeliveryApp::findOrFail($id);
+        $delivery->status = $request->status;
+        $delivery->save();
+        $pickup_times = PickupTime::where('app_uuid',$delivery->uuid)->where('step',$request->step)->first();
+        $pickup_time = PickupTime::findOrFail($pickup_times->id);
+        $pickup_time->active = "0";
+        $pickup_time->save();
+        $delivery->save();
+        return "updated step";
     }
 }
