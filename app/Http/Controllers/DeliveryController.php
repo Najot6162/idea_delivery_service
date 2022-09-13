@@ -179,8 +179,8 @@ class DeliveryController extends Controller
     public function updateDelivery(Request $request, $id)
     {
         $delivery = DeliveryApp::findOrFail($id);
-        if ($request->step !== 1) {
-            $delivery->driver_id = $request->user_id;
+        if ($request->driver_id) {
+            $delivery->driver_id = $request->driver_id;
         }
         if ($request->step==5){
             //send notification
