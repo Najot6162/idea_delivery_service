@@ -180,6 +180,10 @@ class ProblemController extends Controller
             $time_step->branch_id = $request->branch_id;
         }
 
+        if ($request->comment){
+            $time_step->comment = $request->comment;
+        }
+
         if ($request->new_product) {
             $problem = ProblemProduct::findOrFail($id);
             $problem->active = 0;

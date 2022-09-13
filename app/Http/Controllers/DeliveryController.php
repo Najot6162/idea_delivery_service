@@ -204,6 +204,9 @@ class DeliveryController extends Controller
         } else {
             $pickup_time->user_id = $request->user_id;
         }
+        if ($request->comment){
+            $pickup_time->comment = $request->comment;
+        }
 
         if ($pickup_time->save()) {
             echo "pickup_time saved  ";

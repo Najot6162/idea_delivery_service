@@ -204,7 +204,9 @@ class RelocationController extends Controller
         $time_step->relocation_uuid = $relocation->uuid;
         $time_step->step = $request->step;
         $time_step->user_id = $user->id;
-
+        if ($request->comment){
+            $time_step->comment = $request->comment;
+        }
         if ($time_step->save()) {
             echo "time_step saved  ";
         };
