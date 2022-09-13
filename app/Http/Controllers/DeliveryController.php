@@ -179,13 +179,14 @@ class DeliveryController extends Controller
     public function updateDelivery(Request $request, $id)
     {
         $delivery = DeliveryApp::findOrFail($id);
+
         if ($request->driver_id) {
             $delivery->driver_id = $request->driver_id;
         }
         if ($request->step==5){
             //send notification
             $notife = new NotificationController();
-            $notife->sendNotification($request->user_id);
+            $notife->sendNotification($request->driver_id);
         }
         if ($request->branch_step) {
             $delivery->branch_step = $request->branch_step;
@@ -263,5 +264,27 @@ class DeliveryController extends Controller
         $pickup_time->save();
         $delivery->save();
         return "updated step";
+    }
+    public function updatePickupTime(Request $request,$id){
+
+        $delivery = DeliveryApp::findOrFail($id);
+        if ($request->driver_id) {
+            $delivery->driver_id = $request->driver_id;
+        }
+        if ($request->step==5){
+            //send notification
+            $notife = new NotificationController();
+            $notife->sendNotification($request->driver_id);
+        }
+        $pickup_times = PickupTime::where('app_uuid',$delivery->uuid)->where('step',$request->step)->first();
+        $pickup_time = PickupTime::findOrFail($pickup_times->id);
+        $pickup_time->user_id = $request->user_id;
+        if ($request->comment){
+            $pickup_time->comment = $request->comment;
+        }
+        $delivery->save();
+        if ($pickup_time->save()){
+            return "updated step";
+        }
     }
 }
