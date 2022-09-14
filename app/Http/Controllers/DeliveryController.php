@@ -183,6 +183,12 @@ class DeliveryController extends Controller
         if ($request->driver_id) {
             $delivery->driver_id = $request->driver_id;
         }
+        if ($request->order_date){
+            $order_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->order_date);
+            $date_order = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->order_date)->format('Y-m-d');
+            $delivery->order_date = $order_date;
+            $delivery->date_order=$date_order;
+        }
         if ($request->step==5){
             //send notification
             $notife = new NotificationController();
@@ -199,7 +205,7 @@ class DeliveryController extends Controller
         $pickup_time = new PickupTime();
         $pickup_time->app_uuid = $delivery->uuid;
         $pickup_time->step = $request->step;
-        $pickup_time->active = '1';
+        $pickup_time->active = $request->active;
         if ($request->branch_step) {
             $pickup_time->branch_id = $request->branch_step;
         } else {
