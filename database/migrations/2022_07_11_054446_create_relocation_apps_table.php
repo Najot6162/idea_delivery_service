@@ -33,7 +33,6 @@ return new class extends Migration {
             $table->integer('driver_id')->nullable();
             $table->integer('config_time_id')->nullable();
             $table->integer('status_time')->nullable();
-            $table->integer('step')->nullable();
             $table->timestamps();
         });
     }
