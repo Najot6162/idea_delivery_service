@@ -27,9 +27,9 @@ class AuthController extends Controller
 
         if (!Auth::attempt($credentials)) {
             return response()->json([
-                'status_code' => 404,
-                'message' => 'Unauthorized'
-            ], 404);
+                'status_code' => 400,
+                'message' => 'Bad Request'
+            ], 400);
         }
         $user = User::with(['userPermission', 'userPermission.menus', 'carModel'])->where('phone', $request->phone)->first();
         $tokenResult = $user->createToken('authToken')->plainTextToken;
