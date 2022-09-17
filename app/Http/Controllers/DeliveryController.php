@@ -96,7 +96,7 @@ class DeliveryController extends Controller
         $delivery->order_id = $request[0]['NamerOrder'];
         $delivery->online = $request[0]['Online'];
         $delivery->order_date = $order_date;
-        $delivery->date_order=$date_order;
+        $delivery->date_order = $date_order;
         $delivery->date_create = $request[0]['DataCreate'];
         $delivery->document_id = $request[0]['DokumentId'];
         $delivery->provodka = $request[0]['PRAVODKA'];
@@ -183,13 +183,13 @@ class DeliveryController extends Controller
         if ($request->driver_id) {
             $delivery->driver_id = $request->driver_id;
         }
-        if ($request->order_date){
+        if ($request->order_date) {
             $order_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->order_date);
             $date_order = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->order_date)->format('Y-m-d');
             $delivery->order_date = $order_date;
-            $delivery->date_order=$date_order;
+            $delivery->date_order = $date_order;
         }
-        if ($request->step==5 && $request->driver_id){
+        if ($request->step == 5 && $request->driver_id) {
             //send notification
             $notife = new NotificationController();
             $notife->sendNotification($request->driver_id);
@@ -198,14 +198,14 @@ class DeliveryController extends Controller
             $delivery->branch_step = $request->branch_step;
         }
         $delivery->status = $request->step;
-        if ($request->status_time){
+        if ($request->status_time) {
             $delivery->status_time = $request->status_time;
         }
 
         $pickup_time = new PickupTime();
         $pickup_time->app_uuid = $delivery->uuid;
         $pickup_time->step = $request->step;
-        if ($request->step==1){
+        if ($request->step == 1) {
             $pickup_time->created_at = $delivery->order_date;
         }
         $pickup_time->active = $request->active;
@@ -214,7 +214,7 @@ class DeliveryController extends Controller
         } else {
             $pickup_time->user_id = $request->user_id;
         }
-        if ($request->comment){
+        if ($request->comment) {
             $pickup_time->comment = $request->comment;
         }
 
@@ -232,12 +232,12 @@ class DeliveryController extends Controller
         $search = $request['search'] ?? "";
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-        $deliveries = DeliveryApp::with(['pickup_time', 'pickup_time.user','pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
+        $deliveries = DeliveryApp::with(['pickup_time', 'pickup_time.user', 'pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
             'files', 'user', 'config_time', 'delivery_product', 'delivery_client', 'agents'])
-                ->whereHas('agents', function ($q) use ($search) {
-                    $q->where('agent', 'LIKE', "%$search%");
-                })
-            ->whereIn('status', $request->status ?? [1, 5,10,15,20,25,30,35,40])
+            ->whereHas('agents', function ($q) use ($search) {
+                $q->where('agent', 'LIKE', "%$search%");
+            })
+            ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20, 25, 30, 35, 40])
             ->whereIn('status_time', $request->status_time ?? [1, 2, 3, 4]);
 
         if ($start_date) {
@@ -261,37 +261,44 @@ class DeliveryController extends Controller
 
         return BranchResource::collection($deliveries->paginate($request->perPage));
     }
-    public function backStep(Request $request,$id){
+
+    public function backStep(Request $request, $id)
+    {
         $delivery = DeliveryApp::findOrFail($id);
         $delivery->status = $request->status;
         $delivery->save();
-        $pickup_time = PickupTime::where('app_uuid',$delivery->uuid)->where('step',$request->step)->where('active','1')->first();
+        $pickup_time = PickupTime::where('app_uuid', $delivery->uuid)->where('step', $request->step)->where('active', '1')->first();
         $pickup_timed = PickupTime::findOrFail($pickup_time->id);
         $pickup_timed->active = $request->active;
-        if($pickup_timed->save()){
+        if ($pickup_timed->save()) {
             return "updated step";
         }
 
     }
-    public function updatePickupTime(Request $request,$id){
+
+    public function updatePickupTime(Request $request, $id)
+    {
 
         $delivery = DeliveryApp::findOrFail($id);
         if ($request->driver_id) {
             $delivery->driver_id = $request->driver_id;
         }
-        if ($request->step==5){
+        if ($request->step == 5 && $request->driver_id) {
             //send notification
             $notife = new NotificationController();
             $notife->sendNotification($request->driver_id);
         }
-        $pickup_times = PickupTime::where('app_uuid',$delivery->uuid)->where('step',$request->step)->first();
+        $pickup_times = PickupTime::where('app_uuid', $delivery->uuid)->where('step', $request->step)->first();
         $pickup_time = PickupTime::findOrFail($pickup_times->id);
-        $pickup_time->user_id = $request->user_id;
-        if ($request->comment){
+        if ($request->user_id) {
+            $pickup_time->user_id = $request->user_id;
+        }
+        if ($request->comment) {
             $pickup_time->comment = $request->comment;
         }
+        $pickup_time->active = $request->active;
 
-        if ($pickup_time->save() && $delivery->save()){
+        if ($pickup_time->save() && $delivery->save()) {
             return "updated step";
         }
     }
