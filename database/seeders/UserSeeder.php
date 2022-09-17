@@ -203,21 +203,21 @@ class UserSeeder extends Seeder
                 'name_path'=>'setting-menu_group',
                 'type'=>1
             ],
-            [
-                'name' => 'Поля заявки',
-                'web_type'=>3.2,
-                'name_path'=>'setting-menu_app_field',
-                'type'=>1
-            ],
+//            [
+//                'name' => 'Поля заявки',
+//                'web_type'=>3.2,
+//                'name_path'=>'setting-menu_app_field',
+//                'type'=>1
+//            ],
             [
                 'name' => 'Срок доставки',
-                'web_type'=>3.3,
+                'web_type'=>3.2,
                 'name_path'=>'setting-config_time_list',
                 'type'=>1
             ],
             [
                 'name' => 'Филиалы',
-                'web_type'=>3.4,
+                'web_type'=>3.3,
                 'name_path'=>'branch',
                 'type'=>1
             ],
@@ -359,17 +359,6 @@ class UserSeeder extends Seeder
                 'role_id' => 1,
                 'menu_id' => 10,
                 'value' => 0,
-            ],
-            [
-                'role_id' => 1,
-                'menu_id' => 11,
-                'value' => 1,
-            ]
-            ,
-            [
-                'role_id' => 1,
-                'menu_id' => 12,
-                'value' => 1,
             ],
             [
                 'role_id' => 2,
