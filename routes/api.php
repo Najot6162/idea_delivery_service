@@ -78,8 +78,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/update-active-car/{id}', [CarController::class, 'updateOnlyActiveCar']);
     Route::get('/get-car/{id}', [CarController::class, 'getCar']);
 
-    //Call Center Api
-    Route::get('/get-all-call-delivery', [CallCenterController::class, 'getAllCallDelivery']);
+//    //Call Center Api
+//    Route::get('/get-all-call-delivery', [CallCenterController::class, 'getAllCallDelivery']);
 
     //Service Api
     Route::post('/create-problem', [ProblemController::class, 'createProblem']);

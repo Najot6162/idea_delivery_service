@@ -178,12 +178,12 @@ class UserSeeder extends Seeder
                 'name_path'=>'pick-list',
                 'type'=>1
             ],
-            [
-                'name' => 'Колл-центр',
-                'web_type'=>1.3,
-                'name_path'=>'call_center',
-                'type'=>1
-            ],
+//            [
+//                'name' => 'Колл-центр',
+//                'web_type'=>1.3,
+//                'name_path'=>'call_center',
+//                'type'=>1
+//            ],
             [
                 'name' => 'Водители',
                 'web_type'=>2.1,

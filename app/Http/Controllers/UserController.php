@@ -125,7 +125,7 @@ class UserController extends Controller
                 }
                 $query->where('status', 40);
             },
-        ])->where('role_id', 4);
+        ])->where('role_id', 4)->where('active','1');
 
         if ($request->search) {
             $users->whereHas('carModel', function ($q) use ($search) {
