@@ -270,13 +270,16 @@ class DeliveryController extends Controller
         $pickup_time = PickupTime::where('app_uuid', $delivery->uuid)->where('step', $request->step)->where('active', '1')->first();
         $pickup_timed = PickupTime::findOrFail($pickup_time->id);
         $pickup_timed->active = $request->active;
+        $pickup_timed->save();
 
-        if ($request->step == 5) {
+        if ($request->step==5) {
             $pickup_time = PickupTime::where('app_uuid', $delivery->uuid)->where('step', 1)->where('active', '1')->first();
             $pickup_timed = PickupTime::findOrFail($pickup_time->id);
             $pickup_timed->active = $request->active;
+            $pickup_timed->save();
         }
-        if ($pickup_timed->save() && $delivery->save()) {
+
+        if ($delivery->save()) {
         return "updated step";
     }
 
