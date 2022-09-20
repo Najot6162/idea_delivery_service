@@ -125,7 +125,7 @@ class UserController extends Controller
                 }
                 $query->where('status', 40);
             },
-        ])->where('role_id', 4)->where('active','1');
+        ])->where('role_id', 4)->where('active', '1');
 
         if ($request->search) {
             $users->whereHas('carModel', function ($q) use ($search) {
@@ -199,6 +199,7 @@ class UserController extends Controller
         return $menus;
     }
 
+
     public function getPermissionForMobile(Request $request, $id)
     {
         $menus = UserPermission::with('menus')
@@ -219,6 +220,26 @@ class UserController extends Controller
                 echo "  updated permission\n";
             }
         }
+    }
+
+    public function createRoleWithPermission(Request $request)
+    {
+        $role_list = new RoleList();
+        $role_list->name = $request->name;
+        $role_list->save();
+
+        foreach ($request['permissions'] as $permit) {
+            $user_permission = new UserPermission();
+            $user_permission->role_id = $role_list->id;
+            $user_permission->menu_id = $permit['menu_id'];
+            $user_permission->value = $permit['value'];
+            $user_permission->save();
+        }
+        return response()->json([
+            'status_code' => 201,
+            'message' => 'create role'
+        ], 201);
+
     }
 
     public function getUsers(Request $request)

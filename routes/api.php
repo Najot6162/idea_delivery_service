@@ -38,8 +38,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/create-delivery', [DeliveryController::class, 'CreateDelivery']);
     Route::get('/get-all-delivery', [DeliveryController::class, 'gettAllDelivery']);//->middleware(['admin']);
     Route::put('/update-delivery/{id}', [DeliveryController::class, 'updateDelivery']); //->middleware(['admin']);
-    Route::put('/back-step/{id}',[DeliveryController::class,'backStep']);
-    Route::put('/update-pickup-time/{id}',[DeliveryController::class,'updatePickupTime']);
+    Route::put('/back-step/{id}', [DeliveryController::class, 'backStep']);
+    Route::put('/update-pickup-time/{id}', [DeliveryController::class, 'updatePickupTime']);
     //File Upload
     Route::post('/upload_file', [FileController::class, 'uploadFile']);//->middleware(['admin']);
 
@@ -98,6 +98,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/problem-service/{id}', [ProblemController::class, 'deleteProblemService']);
     Route::get('/get-all-users-with-branch', [UserController::class, 'getAllUsersWithBranch']);
     Route::put('/update-user-branch/{id}', [UserController::class, 'updateUserBranch']);
+
     //Dashboard Api
     Route::get('/get-counts', [DashboardController::class, 'getCounts']);
 
@@ -106,6 +107,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-permission', [UserController::class, 'getPermission']);
     Route::put('/update-permission', [UserController::class, 'updatePermission']);
     Route::get('/get-menus', [UserController::class, 'getMenus']);
+    Route::post('/create-role-permission', [UserController::class, 'createRoleWithPermission']);
 
     //Users Api
     Route::get('/get-users', [UserController::class, 'getUsers']);
