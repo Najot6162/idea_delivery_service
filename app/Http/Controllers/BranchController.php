@@ -15,9 +15,16 @@ class BranchController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required',
+            'title' => 'required|unique:branch_lists',
             'token' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status_code' => 400,
+                'message' => 'Bad Request'
+            ], 400);
+        }
 
         $branchList = new BranchList();
 

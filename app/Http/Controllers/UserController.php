@@ -18,15 +18,17 @@ class UserController extends Controller
     public function createDriver(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'phone' => 'required',
-            'name' => 'required',
-            'password' => 'required'
+            'phone' => 'required|unique:users',
+            'name' => 'required|unique:users',
+            'password' => 'required|unique:users'
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 500);
+            return response()->json([
+                'status_code' => 400,
+                'message' => 'Bad Request'
+            ], 400);
         }
-
         $user = new User();
         $user->name = $request->name;
         $user->phone = $request->phone;
@@ -310,9 +312,17 @@ class UserController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'phone' => 'required',
-            'name' => 'required',
+            'phone' => 'required|unique:users',
+            'name' => 'required|unique:users',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status_code' => 400,
+                'message' => 'Bad Request'
+            ], 400);
+        }
+
         $user = new User();
         $user->name = $request->name;
         $user->phone = $request->phone;

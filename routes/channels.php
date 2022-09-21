@@ -19,3 +19,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('channel.product',function ($user){
     return true;
 });
+
+//Broadcast::channel('channel.notification.{user_id}',function ($user, $user_id){
+//    return $user->id == $user_id;
+//});

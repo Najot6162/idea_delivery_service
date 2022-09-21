@@ -14,10 +14,17 @@ class CarController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'number' => 'required',
+            'number' => 'required|unique:car_models',
             'model' => 'required',
             'active' => 'requred'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status_code' => 400,
+                'message' => 'Bad Request'
+            ], 400);
+        }
 
         $car = new CarModel();
         $car->number = $request->number;

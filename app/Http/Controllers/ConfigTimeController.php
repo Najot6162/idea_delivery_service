@@ -49,8 +49,15 @@ class ConfigTimeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
-            'time' => 'required',
+            'time' => 'required|unique:config_times',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status_code' => 400,
+                'message' => 'Bad Request'
+            ], 400);
+        }
 
         $config_time = new ConfigTime();
         $config_time->user_id = $request->user_id;
