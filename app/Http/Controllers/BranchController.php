@@ -66,7 +66,7 @@ class BranchController extends Controller
     public function createRegion(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:branch_lists'
+            'name' => 'required|unique:branch_regions'
         ]);
 
         if ($validator->fails()) {
