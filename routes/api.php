@@ -14,7 +14,7 @@ use App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\ProblemController;
 use \App\Http\Controllers\NotificationController;
 use \App\Http\Controllers\FileController;
-
+use \Illuminate\Support\Facades\Broadcast;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,7 +29,7 @@ use \App\Http\Controllers\FileController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Broadcast::routes(['middleware'=>'auth:api']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
