@@ -33,53 +33,53 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('123456'),
                 'role_id' => 1
             ],
-            [
-                'email' => 'xxx@gmail.com',
-                'is_admin' => 0,
-                'phone' => '998901234562',
-                'address' => 'Yunusobod',
-                'car_model_id' => 1,
-                'active' => 1,
-                'branch_id' => 1,
-                'name' => 'driver',
-                'password' => bcrypt('123456'),
-                'role_id' => 4
-            ],
-            [
-                'email' => 'zzz@gmail.com',
-                'is_admin' => 0,
-                'phone' => '998901234563',
-                'address' => 'Yunusobod',
-                'car_model_id' => 1,
-                'active' => 1,
-                'branch_id' => 1,
-                'name' => 'driver',
-                'password' => bcrypt('123456'),
-                'role_id' => 3
-            ],
-            [
-                'email' => 'driver@gmail.com',
-                'is_admin' => 1,
-                'phone' => '998901234564',
-                'address' => 'Yunusobod',
-                'active' => 1,
-                'branch_id' => 1,
-                'name' => 'admin',
-                'password' => bcrypt('123456'),
-                'role_id' => 4
-            ],
-            [
-                'email' => 'driver5@gmail.com',
-                'is_admin' => 0,
-                'phone' => '998901234565',
-                'address' => 'Yunusobod',
-                'car_model_id' => 1,
-                'active' => 1,
-                'branch_id' => 1,
-                'name' => 'driver',
-                'password' => bcrypt('123456'),
-                'role_id' => 5
-            ]
+//            [
+//                'email' => 'xxx@gmail.com',
+//                'is_admin' => 0,
+//                'phone' => '998901234562',
+//                'address' => 'Yunusobod',
+//                'car_model_id' => 1,
+//                'active' => 1,
+//                'branch_id' => 1,
+//                'name' => 'driver',
+//                'password' => bcrypt('123456'),
+//                'role_id' => 4
+//            ],
+//            [
+//                'email' => 'zzz@gmail.com',
+//                'is_admin' => 0,
+//                'phone' => '998901234563',
+//                'address' => 'Yunusobod',
+//                'car_model_id' => 1,
+//                'active' => 1,
+//                'branch_id' => 1,
+//                'name' => 'driver',
+//                'password' => bcrypt('123456'),
+//                'role_id' => 3
+//            ],
+//            [
+//                'email' => 'driver@gmail.com',
+//                'is_admin' => 1,
+//                'phone' => '998901234564',
+//                'address' => 'Yunusobod',
+//                'active' => 1,
+//                'branch_id' => 1,
+//                'name' => 'admin',
+//                'password' => bcrypt('123456'),
+//                'role_id' => 4
+//            ],
+//            [
+//                'email' => 'driver5@gmail.com',
+//                'is_admin' => 0,
+//                'phone' => '998901234565',
+//                'address' => 'Yunusobod',
+//                'car_model_id' => 1,
+//                'active' => 1,
+//                'branch_id' => 1,
+//                'name' => 'driver',
+//                'password' => bcrypt('123456'),
+//                'role_id' => 5
+//            ]
         ];
         $car_models = [
             [
@@ -150,18 +150,6 @@ class UserSeeder extends Seeder
         $role_lists = [
             [
                 'name' => 'Administrators',
-            ],
-            [
-                'name' => 'Office',
-            ],
-            [
-                'name' => 'Service Center',
-            ],
-            [
-                'name' => 'Водители и доставщики',
-            ],
-            [
-                'name' => 'филиал',
             ]
         ];
 
@@ -360,135 +348,75 @@ class UserSeeder extends Seeder
                 'menu_id' => 10,
                 'value' => 0,
             ],
-            [
-                'role_id' => 2,
-                'menu_id' => 1,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 2,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 3,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 4,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 5,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 6,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 7,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 8,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 9,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 10,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 11,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 2,
-                'menu_id' => 12,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 4,
-                'menu_id' => 13,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 4,
-                'menu_id' => 14,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 4,
-                'menu_id' => 15,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 4,
-                'menu_id' => 16,
-                'value' => 1,
-            ]
-            ,
-            [
-                'role_id' => 4,
-                'menu_id' => 17,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 4,
-                'menu_id' => 18,
-                'value' => 0,
-            ]
-            ,
-            [
-                'role_id' => 4,
-                'menu_id' => 19,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 4,
-                'menu_id' => 20,
-                'value' => 0,
-            ]
-            ,
-            [
-                'role_id' => 4,
-                'menu_id' => 21,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 4,
-                'menu_id' => 22,
-                'value' => 0,
-            ]
-            ,
-            [
-                'role_id' => 4,
-                'menu_id' => 23,
-                'value' => 1,
-            ],
-            [
-                'role_id' => 4,
-                'menu_id' => 24,
-                'value' => 0,
-            ],
-            [
-                'role_id' => 4,
-                'menu_id' => 25,
-                'value' => 0,
-            ]
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 11,
+//                'value' => 1,
+//            ],
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 12,
+//                'value' => 0,
+//            ],
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 13,
+//                'value' => 0,
+//            ],
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 14,
+//                'value' => 1,
+//            ]
+//            ,
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 15,
+//                'value' => 1,
+//            ],
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 16,
+//                'value' => 0,
+//            ]
+//            ,
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 17,
+//                'value' => 1,
+//            ],
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 18,
+//                'value' => 0,
+//            ]
+//            ,
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 19,
+//                'value' => 1,
+//            ],
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 20,
+//                'value' => 0,
+//            ]
+//            ,
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 21,
+//                'value' => 1,
+//            ],
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 22,
+//                'value' => 0,
+//            ],
+//            [
+//                'role_id' => 4,
+//                'menu_id' => 23,
+//                'value' => 0,
+//            ]
         ];
 
 
