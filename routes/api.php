@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/update-branch/{id}', [BranchController::class, 'updateBranch']);
     Route::get('/get-all-branchs', [BranchController::class, 'getAllBranch']);
     Route::get('/get-all-regions', [BranchController::class, 'getAllBranchRegion']);
+    Route::post('/create-region',[BranchController::class,'createRegion']);
     //Relocation Api
     Route::post('/create-relocation', [RelocationController::class, 'CreateRelocation']);
     Route::get('/get-all-relocation', [RelocationController::class, 'getAllRelocation']);

@@ -41,7 +41,6 @@ class BranchController extends Controller
 
     public function updateBranch(Request $request, $id)
     {
-
         $branch = BranchList::findOrFail($id);
         $branch->region_id = $request->region_id;
 
@@ -62,5 +61,28 @@ class BranchController extends Controller
     {
         $branch_regions = BranchRegion::get();
         return $branch_regions;
+    }
+
+    public function createRegion(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:branch_lists'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status_code' => 400,
+                'message' => 'Bad Request'
+            ], 400);
+        }
+        $region = new BranchRegion();
+        $region->name = $request->name;
+        if ($region->save()) {
+            return response()->json([
+                'status_code' => 201,
+                'message' => 'region created'
+            ], 201);
+        }
+
     }
 }
