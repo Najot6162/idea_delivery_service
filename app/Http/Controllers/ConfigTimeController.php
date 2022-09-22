@@ -55,7 +55,7 @@ class ConfigTimeController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status_code' => 400,
-                'message' => 'Bad Request'
+                'message' => $validator->errors()
             ], 400);
         }
 

@@ -20,7 +20,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status_code' => 400,
-                'message' => 'Bad Request'
+                'message' => $validator->errors()
             ], 400);
         }
         $credentials = request(['phone', 'password']);

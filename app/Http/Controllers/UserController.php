@@ -19,14 +19,14 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'phone' => 'required|unique:users',
-            'name' => 'required|unique:users',
+            'name' => 'required',
             'password' => 'required|unique:users'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'status_code' => 400,
-                'message' => 'Bad Request'
+                'message' => $validator->errors()
             ], 400);
         }
         $user = new User();
@@ -319,7 +319,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status_code' => 400,
-                'message' => 'Bad Request'
+                'message' => $validator->errors()
             ], 400);
         }
 
