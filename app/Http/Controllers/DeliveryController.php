@@ -278,7 +278,7 @@ class DeliveryController extends Controller
     {
         $delivery = DeliveryApp::findOrFail($id);
         $delivery->status = $request->status;
-        if ($request->driver_id){
+        if ($request->driver_id ||$request->driver_id==null){
             $delivery->driver_id = $request->driver_id;
         }
         $pickup_time = PickupTime::where('app_uuid', $delivery->uuid)->where('step', $request->step)->where('active', '1')->first();
