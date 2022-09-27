@@ -183,7 +183,7 @@ class DeliveryController extends Controller
             ], 201);
 
 
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             echo $exception;
         }
     }
@@ -245,7 +245,7 @@ class DeliveryController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $deliveries = DeliveryApp::with(['pickup_time', 'pickup_time.user', 'pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
-            'files', 'user', 'config_time', 'delivery_product', 'delivery_client', 'agents','driver'])
+            'files', 'user', 'config_time', 'delivery_product', 'delivery_client', 'agents', 'driver'])
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
             })
@@ -278,7 +278,7 @@ class DeliveryController extends Controller
     {
         $delivery = DeliveryApp::findOrFail($id);
         $delivery->status = $request->status;
-        if ($request->driver_id ||$request->driver_id==null){
+        if ($request->driver_id || $request->driver_id == null) {
             $delivery->driver_id = $request->driver_id;
         }
         $pickup_time = PickupTime::where('app_uuid', $delivery->uuid)->where('step', $request->step)->where('active', '1')->first();
