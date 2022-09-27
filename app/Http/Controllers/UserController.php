@@ -179,9 +179,6 @@ class UserController extends Controller
         if ($request->branch_id) {
             $delviery->whereIn('branch_id', $request->branch_id);
         }
-        if ($request->status){
-            $delviery->status = $request->status;
-        }
         return BranchResource::collection($delviery->paginate($request->perPage));
     }
 
