@@ -72,4 +72,7 @@ class DeliveryApp extends Model
     {
         return $this->hasOne(CarModel::class, 'id', 'car_model_id');
     }
+    public function driver(){
+        return $this->hasOne(User::class, 'id', 'driver_id');
+    }
 }
