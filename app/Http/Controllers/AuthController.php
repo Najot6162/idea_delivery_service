@@ -112,7 +112,7 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $baseUrl = url('/');
+        $baseUrl = url('http://devserv.gx.uz');
         $response = Http::post("{$baseUrl}/oauth/token", [
             'refresh_token' => $request->refresh_token,
             'client_id' => config('passport.password_grant_client.id'),
