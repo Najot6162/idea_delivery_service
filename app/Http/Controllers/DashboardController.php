@@ -195,7 +195,6 @@ class DashboardController extends Controller
                 $query->whereIn('status', [5, 10, 15, 20]);
             },
         ])->get();
-    echo $end_date;
 
         $allCount = [
             'count_days' => $date_count_arr,
