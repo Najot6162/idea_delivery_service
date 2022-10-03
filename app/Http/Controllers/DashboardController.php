@@ -18,10 +18,10 @@ class DashboardController extends Controller
 
         //Calculate Count by Date
         $currentDateTime = Carbon::now();
-        $OneDay = Carbon::now()->subDay()->format('Y-m-d');
-        $week = Carbon::now()->subDays(7)->format('Y-m-d');
-        $month = Carbon::now()->subDays(30)->format('Y-m-d');
-        $year = Carbon::now()->subYear()->format('Y-m-d');
+        $OneDay = Carbon::now()->addDay()->format('Y-m-d');
+        $week = Carbon::now()->addDays(7)->format('Y-m-d');
+        $month = Carbon::now()->addDays(30)->format('Y-m-d');
+        $year = Carbon::now()->addYear()->format('Y-m-d');
         $count_day = DeliveryApp::whereBetween('date_order', [$OneDay, $currentDateTime])->count();
         $count_week = DeliveryApp::whereBetween('date_order', [$week, $currentDateTime])->count();
         $count_month = DeliveryApp::whereBetween('date_order', [$month, $currentDateTime])->count();
