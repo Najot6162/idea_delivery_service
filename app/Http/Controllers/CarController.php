@@ -16,7 +16,7 @@ class CarController extends Controller
         $validator = Validator::make($request->all(), [
             'number' => 'required|unique:car_models',
             'model' => 'required',
-            'active' => 'requred'
+            'active' => 'required'
         ]);
 
         if ($validator->fails()) {

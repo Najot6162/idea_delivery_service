@@ -165,7 +165,7 @@ class UserController extends Controller
         $delviery = DeliveryApp::with(['pickup_time', 'pickup_time.user', 'pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
             'files', 'user', 'config_time', 'delivery_product', 'delivery_client', 'agents'])->where('driver_id', $id)
             ->where('status_time', 'LIKE', "%$search%")
-            ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20, 25, 30, 35, 40])
+            ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20, 25, 30,35, 40])
             ->whereIn('status_time', $request->status_time ?? [1, 2, 3, 4]);
         if ($start_date) {
             $delviery->where('order_date', '>=', $start_date);
