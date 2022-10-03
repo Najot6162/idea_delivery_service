@@ -17,7 +17,7 @@ class DashboardController extends Controller
         $end_date = \Carbon\Carbon::parse($request->end_date)->addDay()->format('Y-m-d');
 
         //Calculate Count by Date
-        $currentDateTime = Carbon::now();
+        $currentDateTime = Carbon::now()->format('Y-m-d');
         $currentDateTimePlus = Carbon::now()->addDay()->format('Y-m-d');
         $OneDay = Carbon::now()->subDay()->format('Y-m-d');
         $week = Carbon::now()->subDays(7)->format('Y-m-d');
