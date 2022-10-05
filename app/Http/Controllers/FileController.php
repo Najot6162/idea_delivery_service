@@ -78,7 +78,7 @@ class FileController extends Controller
         };
     }
 
-    public function downloadImageFile($url)
+    public function downloadImageFile($month,$url)
     {
              $filePath = storage_path("app/public/images/"."$month/"."$url");
             return response()->download($filePath);
