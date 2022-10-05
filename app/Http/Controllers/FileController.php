@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Files;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
@@ -65,20 +66,23 @@ class FileController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
-        $path = $request->file('image')->store('public/images');
-
+//        $path = $request->file('image')->store('public/images');
+        $today = Carbon::now();
+        $path = $request->file('image')->store('public/images/'.$today->year.'-'.$today->month);
         $file = new Files;
         $file->app_uuid = $request->app_uuid;
         $file->order_url = $path;
 
         if ($file->save()) {
-            echo " file saved  ";
+            return response()->json(['success'=>'file saved']);
         };
     }
 
     public function downloadImageFile($url)
     {
-        $filePath = storage_path("app/public/images/$url", true);
-        return response()->download($filePath);
+//        $filePath = storage_path("app/public/images/$url", true);
+//        dd(Storage::path('public\images'));
+//        dd($url);
+        return Storage::download("public\images\\$url");
     }
 }
