@@ -37,7 +37,7 @@ Route::group(['namespace' => 'Api'], function () {
 
     Route::post('/login', [AuthController:: class, 'login']);
     Route::post('/login_grant', [AuthController::class, 'loginGrant']);
-    Route::get('/download-image/{url}', [FileController::class, 'downloadImageFile']);
+    Route::get('/download-image/{month}/{url}', [FileController::class, 'downloadImageFile']);
 
     Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/logout', [AuthController::class, 'logout']);
