@@ -156,7 +156,7 @@ class RelocationController extends Controller
             array_push($receive_branches, $branch->id);
         }
         $relocations = RelocationApp::with(['relocation_product', 'config_time', 'relocation_time_step',
-            'relocation_time_step.user','relocation_time_step.user.carModel', 'agents','send_branch','receive_branch'])
+            'relocation_time_step.user','relocation_time_step.user.carModel', 'agents','send_branch','receive_branch','driver'])
             ->withCount('relocation_product')
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
