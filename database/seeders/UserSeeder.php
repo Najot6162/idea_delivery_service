@@ -363,6 +363,264 @@ class UserSeeder extends Seeder
                 'menu_id' => 10,
                 'value' => 0,
             ],
+
+            [
+                'role_id' => 2,
+                'menu_id' => 1,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 2,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 3,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 4,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 5,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 6,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 7,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 8,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 9,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 2,
+                'menu_id' => 10,
+                'value' => 0,
+            ],
+
+
+            [
+                'role_id' => 3,
+                'menu_id' => 1,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 3,
+                'menu_id' => 2,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 3,
+                'menu_id' => 3,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 3,
+                'menu_id' => 4,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 3,
+                'menu_id' => 5,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 3,
+                'menu_id' => 6,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 3,
+                'menu_id' => 7,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 3,
+                'menu_id' => 8,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 3,
+                'menu_id' => 9,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 3,
+                'menu_id' => 10,
+                'value' => 0,
+            ],
+
+
+            [
+                'role_id' => 4,
+                'menu_id' => 1,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 2,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 3,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 4,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 5,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 6,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 7,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 8,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 9,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 4,
+                'menu_id' => 10,
+                'value' => 0,
+            ],
+
+            [
+                'role_id' => 5,
+                'menu_id' => 1,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 5,
+                'menu_id' => 2,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 5,
+                'menu_id' => 3,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 5,
+                'menu_id' => 4,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 5,
+                'menu_id' => 5,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 5,
+                'menu_id' => 6,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 5,
+                'menu_id' => 7,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 5,
+                'menu_id' => 8,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 5,
+                'menu_id' => 9,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 5,
+                'menu_id' => 10,
+                'value' => 0,
+            ],
+
+
+            [
+                'role_id' => 6,
+                'menu_id' => 1,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 6,
+                'menu_id' => 2,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 6,
+                'menu_id' => 3,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 6,
+                'menu_id' => 4,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 6,
+                'menu_id' => 5,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 6,
+                'menu_id' => 6,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 6,
+                'menu_id' => 7,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 6,
+                'menu_id' => 8,
+                'value' => 1,
+            ],
+            [
+                'role_id' => 6,
+                'menu_id' => 9,
+                'value' => 0,
+            ],
+            [
+                'role_id' => 6,
+                'menu_id' => 10,
+                'value' => 0,
+            ],
 //            [
 //                'role_id' => 4,
 //                'menu_id' => 11,
