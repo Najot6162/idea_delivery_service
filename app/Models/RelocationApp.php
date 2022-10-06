@@ -43,5 +43,7 @@ class RelocationApp extends Model
     {
         return $this->hasOne(Agent::class, 'agent_id', 'agent_id');
     }
-
+    public function driver(){
+        return $this->hasOne(User::class, 'id', 'driver_id');
+    }
 }
