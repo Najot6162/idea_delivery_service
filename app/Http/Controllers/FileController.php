@@ -80,7 +80,8 @@ class FileController extends Controller
 
     public function downloadImageFile($month,$url)
     {
-             $filePath = storage_path("app/public/images/"."$month/"."$url");
-            return response()->download($filePath);
+        $filePath = storage_path("app/public/images/"."$month/"."$url");
+        echo $filePath;
+        return response()->download($filePath);
     }
 }

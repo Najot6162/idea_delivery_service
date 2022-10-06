@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\WebsocketDemoEvent;
+use App\Http\Controllers\NotificationController;
 use App\Http\Resources\BranchResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -305,23 +306,23 @@ class DeliveryController extends Controller
         $delivery = DeliveryApp::findOrFail($id);
         if ($request->driver_id) {
             $delivery->driver_id = $request->driver_id;
-        }
-        if ($request->step == 5 && $request->driver_id) {
-            //send notification
             $notife = new NotificationController();
             $notife->sendNotification($request->driver_id);
         }
-        $pickup_times = PickupTime::where('app_uuid', $delivery->uuid)->where('step', $request->step)->first();
+        $pickup_times = PickupTime::where('app_uuid', $delivery->uuid)->where('step', 5)->first();
         $pickup_time = PickupTime::findOrFail($pickup_times->id);
-        if ($request->user_id) {
-            $pickup_time->user_id = $request->user_id;
-        }
-        if ($request->comment) {
-            $pickup_time->comment = $request->comment;
-        }
-        $pickup_time->active = $request->active;
+        $pickup_time->active = 0;
+        $pickup_time->save();
 
-        if ($pickup_time->save() && $delivery->save()) {
+        $step_log = new PickupTime();
+        $step_log->active = 1;
+        $step_log->user_id = $request->driver_id;
+        $step_log->app_uuid = $delivery->uuid;
+        $step_log->step = 5;
+        if ($request->comment) {
+            $step_log->comment = $request->comment;
+        }
+        if ($step_log->save() && $delivery->save()) {
             return "updated step";
         }
     }
