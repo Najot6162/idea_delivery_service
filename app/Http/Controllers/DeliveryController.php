@@ -309,10 +309,8 @@ class DeliveryController extends Controller
             $notife->sendNotification($request->driver_id);
         }
         $pickup_times = PickupTime::where('app_uuid', $delivery->uuid)->where('step', 5)->where('active','1')->first();
-        echo $pickup_times;
         $pickup_time = PickupTime::findOrFail($pickup_times->id);
         $pickup_time->active = "0";
-        echo $pickup_times;
       if ($pickup_time->save() && $delivery->save()){
         $step_log = new PickupTime();
         $step_log->active = "1";
