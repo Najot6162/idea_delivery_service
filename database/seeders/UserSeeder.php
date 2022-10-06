@@ -150,6 +150,21 @@ class UserSeeder extends Seeder
         $role_lists = [
             [
                 'name' => 'Administrators',
+            ],
+            [
+                'name' => 'Managers',
+            ],
+            [
+                'name' => 'Warehouse Manager',
+            ],
+            [
+                'name' => 'Driver',
+            ],
+            [
+                'name' => 'Service Center',
+            ],
+            [
+                'name' => 'Branch',
             ]
         ];
 
