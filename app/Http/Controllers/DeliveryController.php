@@ -311,8 +311,8 @@ class DeliveryController extends Controller
         $pickup_times = PickupTime::where('app_uuid', $delivery->uuid)->where('step', 5)->first();
         $pickup_time = PickupTime::findOrFail($pickup_times->id);
         $pickup_time->active = "0";
-        $pickup_time->save();
 
+      if ($pickup_time->save()){
         $step_log = new PickupTime();
         $step_log->active = "1";
         $step_log->user_id = $request->driver_id;
@@ -324,5 +324,7 @@ class DeliveryController extends Controller
         if ($step_log->save() && $delivery->save()) {
             return "updated step";
         }
+    }
+
     }
 }
