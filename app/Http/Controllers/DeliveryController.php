@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Events\WebsocketDemoEvent;
-use App\Http\Controllers\NotificationController;
 use App\Http\Resources\BranchResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
