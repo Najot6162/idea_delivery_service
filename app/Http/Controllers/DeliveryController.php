@@ -192,6 +192,15 @@ class DeliveryController extends Controller
     {
         $delivery = DeliveryApp::findOrFail($id);
 
+        if ($delivery->status == 1) {
+            $pickup_time = new PickupTime();
+            $pickup_time->app_uuid = $delivery->uuid;
+            $pickup_time->step = 1;
+            $pickup_time->created_at = $delivery->order_date;
+            $pickup_time->user_id = Auth::user()->id;
+            $pickup_time->active = "1";
+            $pickup_time->save();
+        }
         if ($request->driver_id) {
             $delivery->driver_id = $request->driver_id;
         }

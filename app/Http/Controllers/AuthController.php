@@ -38,7 +38,6 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'Bearer',
             'expires_in' => $expiration,
-            'user' => $user
         ]);
     }
 
