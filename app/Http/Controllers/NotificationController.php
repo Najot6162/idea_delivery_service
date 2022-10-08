@@ -44,7 +44,8 @@ class NotificationController extends Controller
         return back()->with('success', 'Notification send successfully.');
     }
 
-    public function createFcmToken(Request $request,$id){
+    public function createFcmToken(Request $request, $id)
+    {
         $validator = Validator::make(
             request()->all(),
             [
@@ -60,8 +61,8 @@ class NotificationController extends Controller
         $user = User::findOrFail($id);
 
         $user->fcm_token = $request->fcm_token;
-        if ($user->save()){
-            echo "saved fcm token.";
+        if ($user->save()) {
+            return response()->json(['success' => 'saved fcm token']);
         }
     }
 }

@@ -49,7 +49,7 @@ class AuthController extends Controller
         $token->revoke();
         $token->delete();
 
-            if ($request->user()->fcm_token) {
+        if ($request->user()->fcm_token) {
             $user = User::findOrFail($request->user()->id);
             $user->fcm_token = null;
             $user->save();
@@ -96,11 +96,12 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return response()->json([
-            'result'=>$result,
+            'result' => $result,
             'user' => $user,
-            "data"=>"ok"
+            "data" => "ok"
         ]);
     }
+
     public function refreshToken(Request $request)
     {
         $validator = Validator::make($request->all(), [

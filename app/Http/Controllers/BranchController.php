@@ -34,7 +34,7 @@ class BranchController extends Controller
             $branchList->region_id = $request->region_id;
         }
         if ($branchList->save()) {
-            echo "branchList saved  ";
+            return response()->json(['success' => 'branchList saved']);
         };
 
     }
@@ -45,7 +45,7 @@ class BranchController extends Controller
         $branch->region_id = $request->region_id;
 
         if ($branch->save()) {
-            echo "branchList updated  ";
+            return response()->json(['success' => 'branchList updated']);
         };
     }
 
@@ -57,7 +57,7 @@ class BranchController extends Controller
         return BranchResource::collection($br);
     }
 
-    public function getAllBranchRegion(Request $request)
+    public function getAllBranchRegion()
     {
         $branch_regions = BranchRegion::get();
         return $branch_regions;

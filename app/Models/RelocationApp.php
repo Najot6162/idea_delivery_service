@@ -12,7 +12,7 @@ class RelocationApp extends Model
     protected $fillable = [
         'uuid', 'agent_id', 'document_id', 'provodka', 'data_order',
         'content', 'branch_send_id', 'branch_receive_id',
-        'namer_order', 'id_1c', 'status', 'driver_id','config_time_id', 'status_time','step','order_date'
+        'namer_order', 'id_1c', 'status', 'driver_id', 'config_time_id', 'status_time', 'step', 'order_date'
     ];
 
     public function relocation_product()
@@ -22,7 +22,7 @@ class RelocationApp extends Model
 
     public function relocation_time_step()
     {
-        return $this->hasMany(RelocationTimeStep::class, 'relocation_uuid', 'uuid')->orderBy('step','asc');
+        return $this->hasMany(RelocationTimeStep::class, 'relocation_uuid', 'uuid')->orderBy('step', 'asc');
     }
 
     public function config_time()
@@ -34,6 +34,7 @@ class RelocationApp extends Model
     {
         return $this->hasOne(BranchList::class, 'id', 'branch_send_id');
     }
+
     public function receive_branch()
     {
         return $this->hasOne(BranchList::class, 'id', 'branch_receive_id');
@@ -43,7 +44,9 @@ class RelocationApp extends Model
     {
         return $this->hasOne(Agent::class, 'agent_id', 'agent_id');
     }
-    public function driver(){
+
+    public function driver()
+    {
         return $this->hasOne(User::class, 'id', 'driver_id');
     }
 }

@@ -40,44 +40,48 @@ class CarController extends Controller
 
     public function getAllCars(Request $request)
     {
-        $pageCount = $request['page'] ?? "10";
         $cars = CarModel::with('car_term')->paginate($request->perPage);
         return BranchResource::collection($cars);
     }
 
     public function updateCar(Request $request, $id)
     {
-            $request->validate([
-                'number' => 'required',
-                'model' => 'required',
-                'active' => 'required'
-            ]);
-            $car = CarModel::findOrFail($id);
-            $car->number = $request->number;
-            $car->model = $request->model;
-            $car->active = $request->active;
+        $request->validate([
+            'number' => 'required',
+            'model' => 'required',
+            'active' => 'required'
+        ]);
+        $car = CarModel::findOrFail($id);
+        $car->number = $request->number;
+        $car->model = $request->model;
+        $car->active = $request->active;
 
-            if ($car->save()) {
-                echo "car updated  ";
-            };
+        if ($car->save()) {
+            return response()->json(['success' => 'car updated']);
+        };
 
     }
-    public function updateOnlyActiveCar(Request $request,$id){
+
+    public function updateOnlyActiveCar(Request $request, $id)
+    {
         $car = CarModel::findOrFail($id);
         $car->active = $request->active;
         if ($car->save()) {
-            echo "car active updated  ";
+            return response()->json(['success' => 'car active updated']);
         };
     }
-    public function getCar($id){
+
+    public function getCar($id)
+    {
         $car = CarModel::with('car_term')->findOrFail($id);
         return $car;
     }
+
     public function deleteCar($id)
     {
         $car = CarModel::findOrFail($id);
         if ($car->delete()) {
-            return "Deleted";
+            return response()->json(['success' => 'car deleted']);
         }
     }
 
@@ -105,9 +109,9 @@ class CarController extends Controller
             ], 400);
         }
 
-        $car_term = CarTerm::where('car_model_id',$request->car_model_id)->first();
+        $car_term = CarTerm::where('car_model_id', $request->car_model_id)->first();
 
-        if ($car_term){
+        if ($car_term) {
             $car_term = CarTerm::findOrFail($car_term->id);
             $car_term->car_model_id = $request->car_model_id;
             $car_term->insure_date = $request->insure_date;
@@ -116,9 +120,9 @@ class CarController extends Controller
             $car_term->technical_date = $request->technical_date;
             $car_term->attorney = $request->attorney;
             if ($car_term->save()) {
-            echo "car_term updated  ";
+                return response()->json(['success' => 'car_term updated']);
             }
-        }else{
+        } else {
             $car_term = new CarTerm();
             $car_term->car_model_id = $request->car_model_id;
             $car_term->insure_date = $request->insure_date;
@@ -128,7 +132,7 @@ class CarController extends Controller
             $car_term->attorney = $request->attorney;
 
             if ($car_term->save()) {
-                echo "car_term created  ";
+                return response()->json(['success' => 'car_term created']);
             }
         }
     }

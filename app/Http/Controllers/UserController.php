@@ -66,9 +66,8 @@ class UserController extends Controller
         }
         $user->active = $request->active;
         if ($user->save()) {
-            echo "Driver updated";
+            return response()->json(['success' => 'Driver updated']);
         };
-        return true;
     }
 
     public function getAllDrivers(Request $request)
@@ -165,7 +164,7 @@ class UserController extends Controller
         $delviery = DeliveryApp::with(['pickup_time', 'pickup_time.user', 'pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
             'files', 'user', 'config_time', 'delivery_product', 'delivery_client', 'agents'])->where('driver_id', $id)
             ->where('status_time', 'LIKE', "%$search%")
-            ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20, 25, 30,35, 40])
+            ->whereIn('status', $request->status ?? [1, 5, 10, 15, 20, 25, 30, 35, 40])
             ->whereIn('status_time', $request->status_time ?? [1, 2, 3, 4]);
         if ($start_date) {
             $delviery->where('order_date', '>=', $start_date);
@@ -218,7 +217,7 @@ class UserController extends Controller
             $user_permission = UserPermission::findOrFail($req['id']);
             $user_permission->value = $req['value'];
             if ($user_permission->save()) {
-                echo "  updated permission\n";
+                return response()->json(["success" => "updated permission\n"]);
             }
         }
     }
@@ -254,7 +253,7 @@ class UserController extends Controller
         $users = User::findOrFail($id);
         $users->active = $request->active;
         if ($users->save()) {
-            return "update active in user";
+            return response()->json(["success" => "update active in user"]);
         }
 
     }
@@ -264,7 +263,7 @@ class UserController extends Controller
         $users = User::findOrFail($id);
         $users->is_deleted = $request->is_deleted;
         if ($users->save()) {
-            return "update is deleted in user";
+            return response()->json(["success" => "update is deleted in user"]);
         }
 
     }
@@ -278,7 +277,7 @@ class UserController extends Controller
         $users = User::findOrFail($id);
         $users->branch_id = $request->branch_id;
         if ($users->save()) {
-            return "update branch_id in users";
+            return response()->json(["success" => "update branch_id in users"]);
         }
     }
 
@@ -303,7 +302,7 @@ class UserController extends Controller
             $user->active = $request->active;
         }
         if ($user->save()) {
-            echo "user updated";
+            return response()->json(["success" => "user updated"]);
         };
     }
 

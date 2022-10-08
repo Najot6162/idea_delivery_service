@@ -23,63 +23,16 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'email' => 'admin@gmail.com',
+                'email' => 'test@gmail.com',
                 'is_admin' => 1,
-                'phone' => '998901234561',
+                'phone' => '998901234567',
                 'address' => 'Yunusobod',
                 'active' => 1,
                 'branch_id' => 1,
                 'name' => 'admin',
-                'password' => bcrypt('123456'),
+                'password' => bcrypt('test123'),
                 'role_id' => 1
-            ],
-//            [
-//                'email' => 'xxx@gmail.com',
-//                'is_admin' => 0,
-//                'phone' => '998901234562',
-//                'address' => 'Yunusobod',
-//                'car_model_id' => 1,
-//                'active' => 1,
-//                'branch_id' => 1,
-//                'name' => 'driver',
-//                'password' => bcrypt('123456'),
-//                'role_id' => 4
-//            ],
-//            [
-//                'email' => 'zzz@gmail.com',
-//                'is_admin' => 0,
-//                'phone' => '998901234563',
-//                'address' => 'Yunusobod',
-//                'car_model_id' => 1,
-//                'active' => 1,
-//                'branch_id' => 1,
-//                'name' => 'driver',
-//                'password' => bcrypt('123456'),
-//                'role_id' => 3
-//            ],
-//            [
-//                'email' => 'driver@gmail.com',
-//                'is_admin' => 1,
-//                'phone' => '998901234564',
-//                'address' => 'Yunusobod',
-//                'active' => 1,
-//                'branch_id' => 1,
-//                'name' => 'admin',
-//                'password' => bcrypt('123456'),
-//                'role_id' => 4
-//            ],
-//            [
-//                'email' => 'driver5@gmail.com',
-//                'is_admin' => 0,
-//                'phone' => '998901234565',
-//                'address' => 'Yunusobod',
-//                'car_model_id' => 1,
-//                'active' => 1,
-//                'branch_id' => 1,
-//                'name' => 'driver',
-//                'password' => bcrypt('123456'),
-//                'role_id' => 5
-//            ]
+            ]
         ];
         $car_models = [
             [
@@ -181,12 +134,6 @@ class UserSeeder extends Seeder
                 'name_path'=>'pick-list',
                 'type'=>1
             ],
-//            [
-//                'name' => 'Колл-центр',
-//                'web_type'=>1.3,
-//                'name_path'=>'call_center',
-//                'type'=>1
-//            ],
             [
                 'name' => 'Водители',
                 'web_type'=>2.1,
@@ -206,12 +153,6 @@ class UserSeeder extends Seeder
                 'name_path'=>'setting-menu_group',
                 'type'=>1
             ],
-//            [
-//                'name' => 'Поля заявки',
-//                'web_type'=>3.2,
-//                'name_path'=>'setting-menu_app_field',
-//                'type'=>1
-//            ],
             [
                 'name' => 'Срок доставки',
                 'web_type'=>3.2,

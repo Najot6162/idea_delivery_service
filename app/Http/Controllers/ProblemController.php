@@ -58,9 +58,7 @@ class ProblemController extends Controller
             $branchList->title = $request[0]['Sklad'];
             $branchList->token = $request[0]['SkladID'];
 
-            if ($branchList->save()) {
-                echo "BranchList saved  ";
-            };
+            $branchList->save();
             $branch = BranchList::where('token', $request[0]['SkladID'])->get();
             array_push($branches['branch_id'], $branch[0]['id']);
         } else {
@@ -90,9 +88,7 @@ class ProblemController extends Controller
         $problem->id_1c = $request[0]['Id1C'];
         $problem->status_app = $request[0]['status'];
         $problem->status = 1;
-        if ($problem->save()) {
-            echo "problem app saved ";
-        }
+        $problem->save();
 
         $agent = Agent::where('agent_id', $request[0]['AGENTID'])->get();
 
@@ -101,9 +97,7 @@ class ProblemController extends Controller
             $agent->agent_id = $request[0]['AGENTID'];
             $agent->agent = $request[0]['AGENT'];
 
-            if ($agent->save()) {
-                echo "agent app saved";
-            }
+            $agent->save();
         }
 
         foreach ($request[0]['goods'] as $good) {
@@ -133,7 +127,7 @@ class ProblemController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $problems = ProblemApp::with(['problem_time_step', 'problem_product',
-            'problem_time_step.user', 'problem_time_step.branch','problem_time_step.comment.user', 'agents', 'branch', 'files','problem_service'])
+            'problem_time_step.user', 'problem_time_step.branch', 'problem_time_step.comment.user', 'agents', 'branch', 'files', 'problem_service'])
             ->whereHas('agents', function ($q) use ($search) {
                 $q->where('agent', 'LIKE', "%$search%");
             })
@@ -180,16 +174,14 @@ class ProblemController extends Controller
             $time_step->branch_id = $request->branch_id;
         }
 
-        if ($request->comment){
+        if ($request->comment) {
             $time_step->comment = $request->comment;
         }
 
         if ($request->new_product) {
             $problem = ProblemProduct::findOrFail($id);
             $problem->active = 0;
-            if ($problem->save()) {
-                echo "problem saved  ";
-            };
+            $problem->save();
             $problem_product = new ProblemProduct();
             $problem_product->problem_uuid = $problem->uuid;
             $problem_product->product_name = $request->product_name;
@@ -199,19 +191,15 @@ class ProblemController extends Controller
             $problem_product->product_amount = $request->product_amount;
             $problem_product->product_code = $request->product_code;
             $problem_product->code = 1;
-            if ($problem_product->save()) {
-                echo " problem_product saved  ";
-            };
+            $problem_product->save();
 
         }
-        if ($time_step->save()) {
-            echo "time_step saved  ";
-        };
-        if ($problem->save()) {
-            return "updated problem app";
+        $time_step->save();
+        $problem->save();
+        if ($time_step->save() && $problem->save()) {
+            return response()->json(['success' => 'saved ']);
         }
-
-        }
+    }
 
     public function getProblem(Request $request, $id)
     {
@@ -251,7 +239,7 @@ class ProblemController extends Controller
     public function getProblemItem(Request $request, $id)
     {
         $problem = ProblemApp::with(['problem_time_step', 'problem_product',
-            'problem_time_step.user', 'problem_time_step.branch','problem_time_step.comment.user', 'agents', 'branch', 'files'])->findOrFail($id);
+            'problem_time_step.user', 'problem_time_step.branch', 'problem_time_step.comment.user', 'agents', 'branch', 'files'])->findOrFail($id);
         return $problem;
     }
 
@@ -263,6 +251,14 @@ class ProblemController extends Controller
             'address' => 'required',
             'phone' => 'required'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status_code' => 400,
+                'message' => $validator->errors()
+            ], 400);
+        }
+
         $problem_service = new ProblemService();
         $problem_service->title = $request->title;
         $problem_service->address = $request->address;
@@ -270,7 +266,7 @@ class ProblemController extends Controller
         $problem_service->status = $request->status;
 
         if ($problem_service->save()) {
-            echo " problem service created";
+            return response()->json(['success' => 'problem service created']);
         }
     }
 
@@ -296,6 +292,13 @@ class ProblemController extends Controller
             'address' => 'required',
             'phone' => 'required'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status_code' => 400,
+                'message' => $validator->errors()
+            ], 400);
+        }
         $problem_service = ProblemService::findOrFail($id);
         $problem_service->title = $request->title;
         $problem_service->address = $request->address;
@@ -304,7 +307,7 @@ class ProblemController extends Controller
 
 
         if ($problem_service->save()) {
-            echo " problem service updated";
+            return response()->json(['success' => 'problem service updated']);
         }
     }
 
@@ -312,7 +315,7 @@ class ProblemController extends Controller
     {
         $problem_service = ProblemService::findOrFail($id);
         if ($problem_service->delete()) {
-            return "deleted problem service";
+            return response()->json(['success' => 'deleted problem service']);
         }
     }
 

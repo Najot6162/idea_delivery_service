@@ -38,7 +38,7 @@ class ConfigTimeController extends Controller
             }
 
             if ($delivery->save()) {
-                echo "status time updated";
+                return response()->json(['success' => 'status time updated']);
             };
         }
 
@@ -84,15 +84,13 @@ class ConfigTimeController extends Controller
         foreach ($config_times as $time) {
             $config_time = ConfigTime::findOrFail($time->id);
             $config_time->active = 0;
-            if ($config_time->save()) {
-                echo " updated inactive config_time \n";
-            };
+            $config_time->save();
         }
         $config_time = ConfigTime::findOrFail($request->id);
         $config_time->active = 1;
-        if ($config_time->save()) {
-            echo " updated active config_time   ";
-        };
+        $config_time->save();
+
+        return response()->json(['success' => 'config time updated']);
     }
 
     public function getAllConfigTime(Request $request)

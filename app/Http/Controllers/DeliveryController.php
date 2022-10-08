@@ -24,34 +24,7 @@ class DeliveryController extends Controller
     public function CreateDelivery(Request $request)
     {
         try {
-
-
             $uuid = Str::uuid()->toString();
-
-            $validator = Validator::make($request->all(), [
-                $request[0]['AGENTID'] => 'required',
-                $request[0]['AGENT'] => 'required',
-                $request[0]['DokumentId'] => 'required',
-                $request[0]['PRAVODKA'] => 'required',
-                $request[0]['DataOrder'] => 'required',
-                $request[0]['Content'] => 'required',
-                $request[0]['Orinter'] => 'required',
-                $request[0]['DataCreate'] => 'required',
-                $request[0]['Sklad'] => 'required',
-                $request[0]['SkladID'] => 'required',
-                $request[0]['SkladSale'] => 'required',
-                $request[0]['SkladSaleID'] => 'required',
-                $request[0]['Online'] => 'required',
-                $request[0]['DostavkaStore'] => 'required',
-                $request[0]['NamerOrder'] => 'required',
-                $request[0]['GUID'] => 'required',
-                $request[0]['GUIDID'] => 'required',
-                $request[0]['GroupPrice'] => 'required',
-                $request[0]['VidOplata'] => 'required',
-                $request[0]['Oplachena'] => 'required',
-                $request[0]['Id1C'] => 'required',
-            ]);
-
             $user = Auth::user();
             $branches = [
                 'branch_id' => [],
@@ -63,11 +36,8 @@ class DeliveryController extends Controller
                 $branchList = new BranchList();
 
                 $branchList->title = $request[0]['Sklad'];
-                $branchList->token = $request[0]['SkladID'];
-
-                if ($branchList->save()) {
-                    echo "BranchList saved  ";
-                };
+                $branchList->token = $request[0]['SkladID'];;
+                $branchList->save();
                 $branch = BranchList::where('token', $request[0]['SkladID'])->get();
                 array_push($branches['branch_id'], $branch[0]['id']);
             } else {
@@ -81,9 +51,7 @@ class DeliveryController extends Controller
                 $branchList->title = $request[0]['SkladSale'];
                 $branchList->token = $request[0]['SkladSaleID'];
 
-                if ($branchList->save()) {
-                    echo "BranchList saved  ";
-                };
+                $branchList->save();
                 $branch = BranchList::where('token', $request[0]['SkladSaleID'])->get();
                 array_push($branches['branch_sale_id'], $branch[0]['id']);
             } else {
@@ -129,19 +97,14 @@ class DeliveryController extends Controller
             //$delivery->driver_manager = ?
 
 
-            if ($delivery->save()) {
-                echo " Delivery_app  saved  ";
-            }
+            $delivery->save();
 
             $agent = Agent::where('agent_id', $request[0]['AGENTID'])->get();
             if ($agent->isEmpty()) {
                 $agent = new Agent();
                 $agent->agent_id = $request[0]['AGENTID'];
                 $agent->agent = $request[0]['AGENT'];
-
-                if ($agent->save()) {
-                    echo "agent app saved";
-                }
+                $agent->save();
             }
 
             foreach ($request[0]['goods'] as $good) {
@@ -156,9 +119,7 @@ class DeliveryController extends Controller
                 $delivery_products->sales = $good['sales'];
                 $delivery_products->sales_id = $good['salesid'];
 
-                if ($delivery_products->save()) {
-                    echo " Delivery_products saved  ";
-                };
+                $delivery_products->save();
             };
             $delivery_client = new Client();
             $delivery_client->name = $request[0]['AGENT'];
@@ -171,9 +132,7 @@ class DeliveryController extends Controller
             //$delivery_client->passport=?
             //$delivery_client->status?
 
-            if ($delivery_client->save()) {
-                echo " Delivery_client saved  ";
-            };
+            $delivery_client->save();
             $deliveryApp = DeliveryApp::with(['pickup_time', 'pickup_time.user', 'pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
                 'files', 'user', 'config_time', 'delivery_product', 'delivery_client', 'agents'])->findOrFail($delivery->id);
             broadcast(new WebsocketDemoEvent(['product' => $deliveryApp]));
@@ -239,13 +198,9 @@ class DeliveryController extends Controller
             $pickup_time->comment = $request->comment;
         }
 
-        if ($pickup_time->save()) {
-            echo "pickup_time saved  ";
-        };
-
-        if ($delivery->save()) {
-            echo "delivery updated  ";
-        };
+        if ($pickup_time->save() && $delivery->save()) {
+            return response()->json(['success' => 'Delivery updated']);
+        }
     }
 
     public function gettAllDelivery(Request $request)
@@ -303,7 +258,7 @@ class DeliveryController extends Controller
         }
 
         if ($delivery->save()) {
-            return "updated step";
+            return response()->json(['success' => 'updated step']);
         }
 
     }
@@ -317,22 +272,22 @@ class DeliveryController extends Controller
             $notife = new NotificationController();
             $notife->sendNotification($request->driver_id);
         }
-        $pickup_times = PickupTime::where('app_uuid', $delivery->uuid)->where('step', 5)->where('active','1')->first();
+        $pickup_times = PickupTime::where('app_uuid', $delivery->uuid)->where('step', 5)->where('active', '1')->first();
         $pickup_time = PickupTime::findOrFail($pickup_times->id);
         $pickup_time->active = "0";
-      if ($pickup_time->save() && $delivery->save()){
-        $step_log = new PickupTime();
-        $step_log->active = "1";
-        $step_log->user_id = $request->driver_id;
-        $step_log->app_uuid = $delivery->uuid;
-        $step_log->step = 5;
-        if ($request->comment) {
-            $step_log->comment = $request->comment;
+        if ($pickup_time->save() && $delivery->save()) {
+            $step_log = new PickupTime();
+            $step_log->active = "1";
+            $step_log->user_id = $request->driver_id;
+            $step_log->app_uuid = $delivery->uuid;
+            $step_log->step = 5;
+            if ($request->comment) {
+                $step_log->comment = $request->comment;
+            }
+            if ($step_log->save()) {
+                return response()->json(['success' => 'updated step']);
+            }
         }
-        if ($step_log->save() ) {
-            return "updated step";
-        }
-    }
 
     }
 }

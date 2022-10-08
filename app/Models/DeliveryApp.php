@@ -50,7 +50,7 @@ class DeliveryApp extends Model
 
     public function pickup_time()
     {
-        return $this->hasMany(PickupTime::class, 'app_uuid', 'uuid')->where('active','1')->orderBy('step','asc');
+        return $this->hasMany(PickupTime::class, 'app_uuid', 'uuid')->where('active', '1')->orderBy('step', 'asc');
     }
 
     public function delivery_product()
@@ -72,7 +72,9 @@ class DeliveryApp extends Model
     {
         return $this->hasOne(CarModel::class, 'id', 'car_model_id');
     }
-    public function driver(){
+
+    public function driver()
+    {
         return $this->hasOne(User::class, 'id', 'driver_id');
     }
 }

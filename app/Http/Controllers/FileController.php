@@ -34,7 +34,7 @@ class FileController extends Controller
         ];
         Storage::disk('public')->put('/app/app.json', json_encode($data));
 
-        return "saved";
+        return response()->json(['success' => 'file saved']);
     }
 
     public function getDownload()
@@ -68,19 +68,19 @@ class FileController extends Controller
         }
 //        $path = $request->file('image')->store('public/images');
         $today = Carbon::now();
-        $path = $request->file('image')->store('public/images/'.$today->year.'-'.$today->month);
+        $path = $request->file('image')->store('public/images/' . $today->year . '-' . $today->month);
         $file = new Files;
         $file->app_uuid = $request->app_uuid;
         $file->order_url = $path;
 
         if ($file->save()) {
-            return response()->json(['success'=>'file saved']);
+            return response()->json(['success' => 'file saved']);
         };
     }
 
-    public function downloadImageFile($month,$url)
+    public function downloadImageFile($month, $url)
     {
-        $filePath = storage_path("app/public/images/"."$month/"."$url");
+        $filePath = storage_path("app/public/images/" . "$month/" . "$url");
         echo $filePath;
         return response()->download($filePath);
     }
