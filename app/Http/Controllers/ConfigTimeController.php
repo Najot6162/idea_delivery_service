@@ -17,7 +17,6 @@ class ConfigTimeController extends Controller
         $time = $config_time->time;
         $time1 = $time / 3;
         $time2 = $time1 * 2;
-
         foreach ($deliveries as $delivery) {
             // $start_date = Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $delivery->order_date);
             $start_date = $delivery->order_date;
@@ -36,13 +35,11 @@ class ConfigTimeController extends Controller
             } else {
                 $delivery->status_time = 4;
             }
-
             if ($delivery->save()) {
                 return response()->json(['success' => 'status time updated']);
             };
         }
-
-        return true;
+        return response()->json(['success' => 'ok']);
     }
 
     public function creteConfigTime(Request $request)
@@ -51,19 +48,16 @@ class ConfigTimeController extends Controller
             'user_id' => 'required',
             'time' => 'required|unique:config_times',
         ]);
-
         if ($validator->fails()) {
             return response()->json([
                 'status_code' => 400,
                 'message' => $validator->errors()
             ], 400);
         }
-
         $config_time = new ConfigTime();
         $config_time->user_id = $request->user_id;
         $config_time->time = $request->time;
         $config_time->active = $request->active;
-
         if ($config_time->save()) {
             $config_times = ConfigTime::whereNotIn('id', [$config_time->id])->get();
             foreach ($config_times as $time) {
@@ -89,10 +83,8 @@ class ConfigTimeController extends Controller
         $config_time = ConfigTime::findOrFail($request->id);
         $config_time->active = 1;
         $config_time->save();
-
         return response()->json(['success' => 'config time updated']);
     }
-
     public function getAllConfigTime(Request $request)
     {
         $config_times = ConfigTime::with('user')->withCount('deliveryApp')->get();

@@ -22,7 +22,6 @@ class UserController extends Controller
             'name' => 'required',
             'password' => 'required|unique:users'
         ]);
-
         if ($validator->fails()) {
             return response()->json([
                 'status_code' => 400,
@@ -50,7 +49,6 @@ class UserController extends Controller
 
     public function updateDriver(Request $request, $id)
     {
-
         $request->validate([
             'phone' => 'required',
             'name' => 'required',
@@ -73,7 +71,6 @@ class UserController extends Controller
     public function getAllDrivers(Request $request)
     {
         $search = $request['search'] ?? "";
-        $pageCount = $request['page'] ?? "10";
         $branchs = BranchList::get();
         $branches = array();
         foreach ($branchs as $branch) {
@@ -137,8 +134,6 @@ class UserController extends Controller
                 ->orwhere('phone', 'LIKE', "%$search%")
                 ->orwhere('address', 'LIKE', "%$search%");
         }
-
-
         return BranchResource::collection($users->paginate($request->perPage));
     }
 
@@ -157,7 +152,6 @@ class UserController extends Controller
     public function getDelivery(Request $request, $id)
     {
         $search = $request['search'] ?? "";
-        $pageCount = $request['page'] ?? "10";
         $start_date = $request->start_date;
         $end_date = $request->end_date;
 
@@ -336,7 +330,6 @@ class UserController extends Controller
         if ($request->branch_id) {
             $user->branch_id = $request->branch_id;
         }
-
         if ($user->save()) {
             return response()->json([
                 'status_code' => 201,

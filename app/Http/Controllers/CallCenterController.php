@@ -8,7 +8,6 @@ use App\Models\DeliveryApp;
 
 class CallCenterController extends Controller
 {
-
     public function getAllCallDelivery(Request $request)
     {
         $search = $request['search'] ?? "5465sds4654";

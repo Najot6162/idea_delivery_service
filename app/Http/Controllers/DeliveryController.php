@@ -31,10 +31,8 @@ class DeliveryController extends Controller
                 'branch_sale_id' => []
             ];
             $branch = BranchList::where('token', $request[0]['SkladID'])->get();
-
             if ($branch->isEmpty()) {
                 $branchList = new BranchList();
-
                 $branchList->title = $request[0]['Sklad'];
                 $branchList->token = $request[0]['SkladID'];;
                 $branchList->save();
@@ -43,14 +41,11 @@ class DeliveryController extends Controller
             } else {
                 array_push($branches['branch_id'], $branch[0]['id']);
             }
-
             $branch = BranchList::where('token', $request[0]['SkladSaleID'])->get();
             if ($branch->isEmpty()) {
                 $branchList = new BranchList();
-
                 $branchList->title = $request[0]['SkladSale'];
                 $branchList->token = $request[0]['SkladSaleID'];
-
                 $branchList->save();
                 $branch = BranchList::where('token', $request[0]['SkladSaleID'])->get();
                 array_push($branches['branch_sale_id'], $branch[0]['id']);
@@ -84,19 +79,8 @@ class DeliveryController extends Controller
             $delivery->status = 1;
             $delivery->branch_id = $branches['branch_id'][0];
             $delivery->branch_sale_id = $branches['branch_sale_id'][0];
-            //$delivery->change_date = $dt->?
-            //$delivery->change_status = ?
             $delivery->config_time_id = $config_time_id;
-            //$delivery->end_time = $dt->?
             $delivery->status_time = 1;
-            //$delivery->different_status_time = ?
-            //$delivery->add_hours = ?
-            //$delivery->delivery_type = ?
-            //$delivery->delivered_branch = ?
-            //$delivery->confirm_cancelled = ?
-            //$delivery->driver_manager = ?
-
-
             $delivery->save();
 
             $agent = Agent::where('agent_id', $request[0]['AGENTID'])->get();
@@ -106,7 +90,6 @@ class DeliveryController extends Controller
                 $agent->agent = $request[0]['AGENT'];
                 $agent->save();
             }
-
             foreach ($request[0]['goods'] as $good) {
                 $delivery_products = new DeliveryProduct();
                 $delivery_products->delivery_uuid = $uuid;
@@ -118,21 +101,13 @@ class DeliveryController extends Controller
                 $delivery_products->product_code = $good['code'];
                 $delivery_products->sales = $good['sales'];
                 $delivery_products->sales_id = $good['salesid'];
-
                 $delivery_products->save();
             };
             $delivery_client = new Client();
             $delivery_client->name = $request[0]['AGENT'];
-            //$delivery_client->address =?
-            //$delivery_client->address_real = ?
-            //$delivery_client->address_passport = ?
             $delivery_client->client_id = $request[0]['AGENTID'];
-            //$delivery_client->code?
-            //$delivery_client->phone = ?
-            //$delivery_client->passport=?
-            //$delivery_client->status?
-
             $delivery_client->save();
+
             $deliveryApp = DeliveryApp::with(['pickup_time', 'pickup_time.user', 'pickup_time.user.carModel', 'pickup_time.branch', 'branch', 'branch_sale',
                 'files', 'user', 'config_time', 'delivery_product', 'delivery_client', 'agents'])->findOrFail($delivery->id);
             broadcast(new WebsocketDemoEvent(['product' => $deliveryApp]));
@@ -140,8 +115,6 @@ class DeliveryController extends Controller
                 'status_code' => 201,
                 'message' => 'all data saved'
             ], 201);
-
-
         } catch (Exception $exception) {
             echo $exception;
         }
@@ -150,7 +123,6 @@ class DeliveryController extends Controller
     public function updateDelivery(Request $request, $id)
     {
         $delivery = DeliveryApp::findOrFail($id);
-
         if ($delivery->status == 1) {
             $pickup_time = new PickupTime();
             $pickup_time->app_uuid = $delivery->uuid;
@@ -181,7 +153,6 @@ class DeliveryController extends Controller
         if ($request->status_time) {
             $delivery->status_time = $request->status_time;
         }
-
         $pickup_time = new PickupTime();
         $pickup_time->app_uuid = $delivery->uuid;
         $pickup_time->step = $request->step;
@@ -197,7 +168,6 @@ class DeliveryController extends Controller
         if ($request->comment) {
             $pickup_time->comment = $request->comment;
         }
-
         if ($pickup_time->save() && $delivery->save()) {
             return response()->json(['success' => 'Delivery updated']);
         }
@@ -234,7 +204,6 @@ class DeliveryController extends Controller
         if ($request->online) {
             $deliveries->where('online', $request->online);
         }
-
         return BranchResource::collection($deliveries->paginate($request->perPage));
     }
 
@@ -256,16 +225,13 @@ class DeliveryController extends Controller
             $pickup_timed->active = $request->active;
             $pickup_timed->save();
         }
-
         if ($delivery->save()) {
             return response()->json(['success' => 'updated step']);
         }
-
     }
 
     public function updatePickupTime(Request $request, $id)
     {
-
         $delivery = DeliveryApp::findOrFail($id);
         if ($request->driver_id) {
             $delivery->driver_id = $request->driver_id;
@@ -288,6 +254,5 @@ class DeliveryController extends Controller
                 return response()->json(['success' => 'updated step']);
             }
         }
-
     }
 }

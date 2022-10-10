@@ -13,21 +13,17 @@ class BranchController extends Controller
 
     public function createBranch(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'title' => 'required|unique:branch_lists',
             'token' => 'required',
         ]);
-
         if ($validator->fails()) {
             return response()->json([
                 'status_code' => 400,
                 'message' => $validator->errors()
             ], 400);
         }
-
         $branchList = new BranchList();
-
         $branchList->title = $request->title;
         $branchList->token = $request->token;
         if ($request->region_id) {
@@ -36,7 +32,6 @@ class BranchController extends Controller
         if ($branchList->save()) {
             return response()->json(['success' => 'branchList saved']);
         };
-
     }
 
     public function updateBranch(Request $request, $id)
@@ -68,7 +63,6 @@ class BranchController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:branch_regions'
         ]);
-
         if ($validator->fails()) {
             return response()->json([
                 'status_code' => 400,
@@ -83,6 +77,5 @@ class BranchController extends Controller
                 'message' => 'region created'
             ], 201);
         }
-
     }
 }

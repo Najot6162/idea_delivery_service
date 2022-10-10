@@ -21,42 +21,32 @@ class RelocationController extends Controller
     public function CreateRelocation(Request $request)
     {
         $uuid = Str::uuid()->toString();
-
         $branches = [
             'branch_send_id' => [],
             'branch_receive_id' => []
-
         ];
         $branch = BranchList::where('token', $request[0]['SkladSendID'])->get();
-
         if ($branch->isEmpty()) {
             $branchList = new BranchList();
-
             $branchList->title = $request[0]['SkladSend'];
             $branchList->token = $request[0]['SkladSendID'];
-
             $branchList->save();
             $branch = BranchList::where('token', $request[0]['SkladSendID'])->get();
             array_push($branches['branch_send_id'], $branch[0]['id']);
         } else {
             array_push($branches['branch_send_id'], $branch[0]['id']);
         }
-
-
         $branch = BranchList::where('token', $request[0]['SkladRecieveID'])->get();
         if ($branch->isEmpty()) {
             $branchList = new BranchList();
-
             $branchList->title = $request[0]['SkladRecieve'];
             $branchList->token = $request[0]['SkladRecieveID'];
-
             $branchList->save();
             $branch = BranchList::where('token', $request[0]['SkladRecieveID'])->get();
             array_push($branches['branch_receive_id'], $branch[0]['id']);
         } else {
             array_push($branches['branch_receive_id'], $branch[0]['id']);
         }
-
 
         $order_date = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder']);
         $date_order = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder'])->format('Y-m-d');
@@ -89,7 +79,6 @@ class RelocationController extends Controller
             $agent = new Agent();
             $agent->agent_id = $request[0]['AGENTID'];
             $agent->agent = $request[0]['AGENT'];
-
             $agent->save();
         }
 
@@ -150,7 +139,6 @@ class RelocationController extends Controller
         if ($request->driver_id) {
             $relocations->whereIn('driver_id', $request->driver_id);
         }
-
         return BranchResource::collection($relocations->paginate($request->perPage));
     }
 
@@ -164,7 +152,6 @@ class RelocationController extends Controller
             //send notification
             $notife = new NotificationController();
             $notife->sendNotification($request->driver_id);
-
         }
         $relocation->status = $request->step;
         if ($request->status_time) {
@@ -179,7 +166,7 @@ class RelocationController extends Controller
             $time_step->comment = $request->comment;
         }
         if ($time_step->save() && $relocation->save()) {
-            return response()->json(['success' => 'deleted problem service']);
+            return response()->json(['success' => 'updated problem service']);
         }
     }
 
@@ -215,7 +202,6 @@ class RelocationController extends Controller
         if ($start_date && $end_date) {
             $relocation->whereBetween('date_order', [$start_date, $end_date]);
         }
-
         return BranchResource::collection($relocation->paginate($request->perPage));
     }
 }

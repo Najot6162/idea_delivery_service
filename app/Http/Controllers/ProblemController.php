@@ -23,35 +23,10 @@ class ProblemController extends Controller
         $user = Auth::user();
         $data_order = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $request[0]['DataOrder']);
 
-        $validator = Validator::make($request->all(), [
-            $request[0]['AGENTID'] => 'required',
-            $request[0]['AGENT'] => 'required',
-            $request[0]['DokumentId'] => 'required',
-            $request[0]['PRAVODKA'] => 'required',
-            $request[0]['DataOrder'] => 'required',
-            $request[0]['Content'] => 'required',
-            $request[0]['status'] => 'required',
-            $request[0]['Dokumentfoundations'] => 'required',
-            $request[0]['Dokumentfoundationsid'] => 'required',
-            $request[0]['Sklad'] => 'required',
-            $request[0]['SkladID'] => 'required',
-            $request[0]['NakNumber'] => 'required',
-            $request[0]['NakData'] => 'required',
-            $request[0]['diffekt'] => 'required',
-            $request[0]['complekt'] => 'required',
-            $request[0]['NamerOrder'] => 'required',
-            $request[0]['GUID'] => 'required',
-            $request[0]['GUIDID'] => 'required',
-            $request[0]['sales'] => 'required',
-            $request[0]['salesid'] => 'required',
-            $request[0]['Id1C'] => 'required',
-        ]);
         $branches = [
             'branch_id' => []
         ];
-
         $branch = BranchList::where('token', $request[0]['SkladID'])->get();
-
         if ($branch->isEmpty()) {
             $branchList = new BranchList();
 
@@ -109,9 +84,7 @@ class ProblemController extends Controller
             $problem_product->imel_id = $good['IMEIId'];
             $problem_product->product_amount = $good['amount'];
             $problem_product->product_code = $good['code'];
-            if ($problem_product->save()) {
-                echo " problem_product saved  ";
-            };
+            $problem_product->save();
         };
 
         return response()->json([
@@ -123,7 +96,6 @@ class ProblemController extends Controller
     public function getAllProblems(Request $request)
     {
         $search = $request['search'] ?? "";
-        $pageCount = $request['page'] ?? "10";
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $problems = ProblemApp::with(['problem_time_step', 'problem_product',
@@ -194,8 +166,6 @@ class ProblemController extends Controller
             $problem_product->save();
 
         }
-        $time_step->save();
-        $problem->save();
         if ($time_step->save() && $problem->save()) {
             return response()->json(['success' => 'saved ']);
         }
@@ -204,10 +174,8 @@ class ProblemController extends Controller
     public function getProblem(Request $request, $id)
     {
         $search = $request['search'] ?? "";
-        $pageCount = $request['page'] ?? "10";
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-
         $branchs = BranchList::get();
         $send_branches = array();
         $recieve_branches = array();
@@ -304,7 +272,6 @@ class ProblemController extends Controller
         $problem_service->address = $request->address;
         $problem_service->phone = $request->phone;
         $problem_service->status = $request->status;
-
 
         if ($problem_service->save()) {
             return response()->json(['success' => 'problem service updated']);
